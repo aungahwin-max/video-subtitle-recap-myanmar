@@ -39,7 +39,7 @@
       margin: 0;
       color: #f1f5f9;
     }
-    input[type="file"], select, textarea, input[type="range"] {
+    input[type="file"], select, textarea, input[type="range"], input[type="text"], input[type="number"] {
       width: 100%;
       box-sizing: border-box;
       background-color: #0f172a;
@@ -48,10 +48,6 @@
       border-radius: 6px;
       padding: 10px;
       font-size: 0.9rem;
-    }
-    textarea {
-      resize: vertical;
-      height: 85px;
     }
     button {
       background-color: #0284c7;
@@ -67,7 +63,6 @@
       background-color: #0369a1;
     }
     
-    /* Video Box & Layers */
     .video-wrapper {
       width: 100%;
       display: flex;
@@ -103,10 +98,9 @@
       pointer-events: none;
       z-index: 5;
     }
-    /* ဗီဒီယိုပေါ်က မြန်မာစာတန်းထိုး Style */
     .subtitle-overlay {
       position: absolute;
-      bottom: 15%;
+      bottom: 14%;
       left: 5%;
       width: 90%;
       text-align: center;
@@ -132,42 +126,74 @@
     .btn-sync:active {
       background-color: #059669;
     }
+    .btn-export {
+      background-color: #8b5cf6;
+    }
+    .btn-export:active {
+      background-color: #7c3aed;
+    }
+    .btn-add {
+      background-color: #334155;
+      font-size: 0.85rem;
+      padding: 8px;
+    }
+
+    /* Dialogue Timeline Item */
+    .dialogue-box {
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 10px;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .dialogue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .dialogue-header select {
+      flex: 1;
+      padding: 6px;
+    }
+    .time-inputs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+    .time-inputs input {
+      padding: 4px 6px;
+      font-size: 0.8rem;
+    }
   </style>
 </head>
 <body>
 
   <div>
     <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">မြန်မာစာတန်းထိုးနှင့် AI အသံ ဗီဒီယိုပေါင်းစပ်စနစ်</p>
+    <p class="sub">Multi-Voice AI အသံနှင့် SRT Subtitle Export/Import စနစ်</p>
   </div>
 
-  <!-- အဆင့် ၁ - ဗီဒီယို တင်ရန် -->
+  <!-- အဆင့် ၁ - ဗီဒီယို -->
   <div class="card">
     <h2>၁။ Video ဖိုင် ရွေးချယ်ပါ</h2>
     <input type="file" id="videoInput" accept="video/*">
     <div class="video-wrapper">
       <div class="video-container" id="videoContainer">
-        <video id="videoPreview" playsinline></video>
+        <video id="videoPreview" playsinline controls></video>
         <div class="blur-overlay" id="blurOverlay"></div>
         <div class="subtitle-overlay" id="subtitleOverlay"></div>
       </div>
     </div>
   </div>
 
-  <!-- အဆင့် ၂ - ဗီဒီယို Size -->
+  <!-- အဆင့် ၂ - Blur Mask -->
   <div class="card">
-    <h2>၂။ Video အချိုးအစား (Aspect Ratio)</h2>
-    <select id="aspectRatio">
-      <option value="auto">မူရင်းအတိုင်း (Original)</option>
-      <option value="9/16">9:16 (TikTok / Reels / Shorts)</option>
-      <option value="16/9">16:9 (YouTube Standard)</option>
-      <option value="1/1">1:1 (Square)</option>
-    </select>
-  </div>
-
-  <!-- အဆင့် ၃ - စာသားဖုံး Blur Box အပြင်အဆင် -->
-  <div class="card">
-    <h2>၃။ မူရင်းစာတန်းဖုံးအုပ်မည့် Blur Box</h2>
+    <h2>၂။ မူရင်းစာတန်းဖုံးအုပ်မည့် Blur Box</h2>
     <div class="control-row">
       <label>အထက်/အောက် ရွှေ့ရန် (Position Y):</label>
       <input type="range" id="posY" min="0" max="85" value="14">
@@ -186,14 +212,63 @@
     </div>
   </div>
 
-  <!-- အဆင့် ၄ - ဇာတ်ညွှန်းနှင့် အသံ/စာတန်းထိုး တပြိုင်နက်ဖွင့်စနစ် -->
+  <!-- အဆင့် ၃ - SRT Import & Export -->
   <div class="card">
-    <h2>၄။ မြန်မာစာတန်းထိုးနှင့် AI အသံထွက်</h2>
-    <textarea id="scriptText" placeholder="ဒီနေရာတွင် မြန်မာလို ဖတ်ပြစေလိုသော စာသားကို ရိုက်ထည့်ပါ..."></textarea>
-    
-    <button class="btn-sync" id="playRecapBtn">▶️ Recap (ဗီဒီယို + အသံ + စာတန်း) အစမ်းဖွင့်မည်</button>
-    
-    <audio id="audioEngine" style="display:none;"></audio>
+    <h2>၃။ SRT စာတန်းထိုး (Import / Export)</h2>
+    <label style="font-size: 0.85rem; color: #94a3b8;">ဖုန်းထဲရှိ .srt ဖိုင် ထည့်သွင်းရန်:</label>
+    <input type="file" id="srtFileInput" accept=".srt">
+    <button class="btn-export" id="exportSrtBtn">📥 SRT ဖိုင်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
+  </div>
+
+  <!-- အဆင့် ၄ - စကားပြောခန်း Timeline -->
+  <div class="card">
+    <h2>၄။ စကားပြောခန်းများ နှင့် အသံခွဲခြားခြင်း</h2>
+    <div id="dialogueList" style="display: flex; flex-direction: column; gap: 10px;">
+      
+      <!-- လိုင်း ၁ -->
+      <div class="dialogue-box">
+        <div class="dialogue-header">
+          <select class="voice-role">
+            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
+            <option value="girl" selected>👧 မိန်းကလေးသံ</option>
+            <option value="boy">👦 ကောင်လေးသံ</option>
+            <option value="man">👨 လူကြီးသံ</option>
+            <option value="woman">👩 မိန်းမကြီးသံ</option>
+          </select>
+        </div>
+        <div class="time-inputs">
+          <span>စတင်ချိန် (စက္ကန့်):</span>
+          <input type="number" class="time-start" value="0" step="0.5">
+          <span>ပြီးဆုံးချိန်:</span>
+          <input type="number" class="time-end" value="3" step="0.5">
+        </div>
+        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ရှင် အခု ဘာလုပ်နေတာလဲ...</textarea>
+      </div>
+
+      <!-- လိုင်း ၂ -->
+      <div class="dialogue-box">
+        <div class="dialogue-header">
+          <select class="voice-role">
+            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
+            <option value="boy" selected>👦 ကောင်လေးသံ</option>
+            <option value="girl">👧 မိန်းကလေးသံ</option>
+            <option value="man">👨 လူကြီးသံ</option>
+            <option value="woman">👩 မိန်းမကြီးသံ</option>
+          </select>
+        </div>
+        <div class="time-inputs">
+          <span>စတင်ချိန် (စက္ကန့်):</span>
+          <input type="number" class="time-start" value="3.5" step="0.5">
+          <span>ပြီးဆုံးချိန်:</span>
+          <input type="number" class="time-end" value="6.5" step="0.5">
+        </div>
+        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ငါ မင်းကို ကာကွယ်ပေးမလို့လေ...</textarea>
+      </div>
+
+    </div>
+
+    <button type="button" class="btn-add" id="addDialogueBtn">➕ စကားပြောခန်းအသစ် ထပ်ထည့်မည်</button>
+    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ Video + AI အသံစုံ Recap အစမ်းဖွင့်မည်</button>
     <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8;"></span>
   </div>
 
@@ -203,17 +278,18 @@
     const videoPreview = document.getElementById('videoPreview');
     const blurOverlay = document.getElementById('blurOverlay');
     const subtitleOverlay = document.getElementById('subtitleOverlay');
-    const aspectRatio = document.getElementById('aspectRatio');
 
     const posY = document.getElementById('posY');
     const boxWidth = document.getElementById('boxWidth');
     const boxHeight = document.getElementById('boxHeight');
     const blurStrength = document.getElementById('blurStrength');
 
-    const scriptText = document.getElementById('scriptText');
+    const dialogueList = document.getElementById('dialogueList');
+    const addDialogueBtn = document.getElementById('addDialogueBtn');
     const playRecapBtn = document.getElementById('playRecapBtn');
-    const audioEngine = document.getElementById('audioEngine');
     const syncStatus = document.getElementById('syncStatus');
+    const exportSrtBtn = document.getElementById('exportSrtBtn');
+    const srtFileInput = document.getElementById('srtFileInput');
 
     videoInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -223,10 +299,6 @@
       }
     });
 
-    aspectRatio.addEventListener('change', function(e) {
-      videoContainer.style.aspectRatio = e.target.value === 'auto' ? '' : e.target.value;
-    });
-
     function updateBlurBox() {
       blurOverlay.style.bottom = `${posY.value}%`;
       blurOverlay.style.width = `${boxWidth.value}%`;
@@ -234,8 +306,6 @@
       blurOverlay.style.height = `${boxHeight.value}px`;
       blurOverlay.style.backdropFilter = `blur(${blurStrength.value}px)`;
       blurOverlay.style.webkitBackdropFilter = `blur(${blurStrength.value}px)`;
-      
-      // စာတန်းထိုးနေရာကို Blur Box ပေါ် ကွက်တိ အံဝင်စေရန် ချိတ်ဆက်ထားခြင်း
       subtitleOverlay.style.bottom = `${posY.value}%`;
     }
 
@@ -244,55 +314,195 @@
     boxHeight.addEventListener('input', updateBlurBox);
     blurStrength.addEventListener('input', updateBlurBox);
 
-    // စာရိုက်လိုက်တာနဲ့ ဗီဒီယိုပေါ်မှာ Subtitle တပြိုင်နက် ပြသခြင်း
-    scriptText.addEventListener('input', function() {
-      subtitleOverlay.innerText = scriptText.value;
+    // အသံစရိုက်လက္ခဏာ သတ်မှတ်ချက်များ
+    const voiceProfiles = {
+      narrator: { pitch: 1.0, rate: 0.95 },
+      boy: { pitch: 1.25, rate: 1.0 },
+      girl: { pitch: 1.5, rate: 1.05 },
+      man: { pitch: 0.65, rate: 0.85 },
+      woman: { pitch: 1.1, rate: 0.95 }
+    };
+
+    // Dialogue အသစ်ထည့်ခြင်း
+    addDialogueBtn.addEventListener('click', function() {
+      const div = document.createElement('div');
+      div.className = 'dialogue-box';
+      div.innerHTML = `
+        <div class="dialogue-header">
+          <select class="voice-role">
+            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
+            <option value="boy">👦 ကောင်လေးသံ</option>
+            <option value="girl">👧 မိန်းကလေးသံ</option>
+            <option value="man">👨 လူကြီးသံ</option>
+            <option value="woman">👩 မိန်းမကြီးသံ</option>
+          </select>
+          <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
+        </div>
+        <div class="time-inputs">
+          <span>စတင်ချိန်:</span>
+          <input type="number" class="time-start" value="0" step="0.5">
+          <span>ပြီးဆုံးချိန်:</span>
+          <input type="number" class="time-end" value="3" step="0.5">
+        </div>
+        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ..."></textarea>
+      `;
+      dialogueList.appendChild(div);
     });
 
-    // ဗီဒီယို + AI အသံ + စာတန်းထိုး တပြိုင်နက်ဖွင့်ခြင်း
-    playRecapBtn.addEventListener('click', function() {
-      const text = scriptText.value.trim();
-      if (!text) {
-        alert('ကျေးဇူးပြု၍ မြန်မာစာသား အရင်ရိုက်ထည့်ပါခင်ဗျာ။');
-        return;
-      }
+    // စက္ကန့်ကို SRT Time Format သို့ ပြောင်းလဲခြင်း (00:00:00,000)
+    function formatSrtTime(seconds) {
+      const date = new Date(null);
+      date.setSeconds(seconds);
+      const ms = Math.floor((seconds % 1) * 1000).toString().padStart(3, '0');
+      const timeStr = date.toISOString().substr(11, 8);
+      return `${timeStr},${ms}`;
+    }
 
-      subtitleOverlay.innerText = text;
-      syncStatus.innerText = 'မြန်မာ AI အသံ ပြင်ဆင်နေပါသည်...';
+    // SRT Export လုပ်ခြင်း
+    exportSrtBtn.addEventListener('click', function() {
+      const boxes = document.querySelectorAll('.dialogue-box');
+      let srtContent = '';
+      let index = 1;
 
-      // အသံအရင်းအမြစ် ဆွဲယူခြင်း
-      const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=my&client=tw-ob`;
-      audioEngine.src = ttsUrl;
+      boxes.forEach(box => {
+        const text = box.querySelector('.dialogue-text').value.trim();
+        const start = parseFloat(box.querySelector('.time-start').value) || 0;
+        const end = parseFloat(box.querySelector('.time-end').value) || (start + 2.5);
 
-      // ဗီဒီယိုအစသို့ ပြန်ပို့ပြီး မူရင်းအသံကို အနည်းငယ် လျှော့ကာ AI အသံနှင့် တပြိုင်နက်ဖွင့်ခြင်း
-      videoPreview.currentTime = 0;
-      videoPreview.volume = 0.25; // နောက်ခံသံအဖြစ် မူရင်းအသံကို 25% သာဖွင့်ပါမည်
-
-      audioEngine.play().then(() => {
-        videoPreview.play();
-        syncStatus.innerText = '▶️ ဗီဒီယိုနှင့် မြန်မာအသံ တပြိုင်နက် ဖတ်ပြနေပါသည်...';
-      }).catch(() => {
-        // Fallback: Browser Web Speech စနစ်ဖြင့် အသံဖွင့်ခြင်း
-        if ('speechSynthesis' in window) {
-          window.speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'my-MM';
-          utterance.rate = 0.9;
-          
-          utterance.onstart = () => {
-            videoPreview.play();
-            syncStatus.innerText = '▶️ ဗီဒီယိုနှင့် စာတန်း စတင်ဖွင့်နေပါသည်...';
-          };
-          window.speechSynthesis.speak(utterance);
-        } else {
-          videoPreview.play();
-          syncStatus.innerText = 'ဗီဒီယို ဖွင့်နေပါသည် (အသံပိတ်ထားပါသည်)။';
+        if (text) {
+          srtContent += `${index}\n`;
+          srtContent += `${formatSrtTime(start)} --> ${formatSrtTime(end)}\n`;
+          srtContent += `${text}\n\n`;
+          index++;
         }
       });
 
-      audioEngine.onended = function() {
-        syncStatus.innerText = '✅ ဖတ်ပြီးပါပြီ။';
+      if (!srtContent) {
+        alert('စာတန်းထိုး စာသားမရှိသေးပါခင်ဗျာ။');
+        return;
+      }
+
+      const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'recap_myanmar_subtitles.srt';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // SRT File တင်သွင်းခြင်း (Import)
+    srtFileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const content = evt.target.result;
+        const srtBlocks = content.split(/\r?\n\r?\n/);
+        dialogueList.innerHTML = ''; // အဟောင်းရှင်းခြင်း
+
+        srtBlocks.forEach(block => {
+          const lines = block.split(/\r?\n/);
+          if (lines.length >= 3) {
+            const timeMatch = lines[1].match(/(\d{2}:\d{2}:\d{2}[,\.]\d{3}) --> (\d{2}:\d{2}:\d{2}[,\.]\d{3})/);
+            const text = lines.slice(2).join(' ');
+
+            let startSec = 0, endSec = 3;
+            if (timeMatch) {
+              const parseSec = (tStr) => {
+                const parts = tStr.replace(',', '.').split(':');
+                return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+              };
+              startSec = parseSec(timeMatch[1]);
+              endSec = parseSec(timeMatch[2]);
+            }
+
+            const div = document.createElement('div');
+            div.className = 'dialogue-box';
+            div.innerHTML = `
+              <div class="dialogue-header">
+                <select class="voice-role">
+                  <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
+                  <option value="boy">👦 ကောင်လေးသံ</option>
+                  <option value="girl">👧 မိန်းကလေးသံ</option>
+                  <option value="man">👨 လူကြီးသံ</option>
+                  <option value="woman">👩 မိန်းမကြီးသံ</option>
+                </select>
+                <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
+              </div>
+              <div class="time-inputs">
+                <span>စတင်ချိန်:</span>
+                <input type="number" class="time-start" value="${startSec.toFixed(1)}" step="0.5">
+                <span>ပြီးဆုံးချိန်:</span>
+                <input type="number" class="time-end" value="${endSec.toFixed(1)}" step="0.5">
+              </div>
+              <textarea class="dialogue-text" rows="2">${text}</textarea>
+            `;
+            dialogueList.appendChild(div);
+          }
+        });
+        alert('SRT ဖိုင် အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။');
       };
+      reader.readAsText(file);
+    });
+
+    // Playback စနစ်
+    playRecapBtn.addEventListener('click', function() {
+      const boxes = document.querySelectorAll('.dialogue-box');
+      const lines = [];
+
+      boxes.forEach(box => {
+        const role = box.querySelector('.voice-role').value;
+        const text = box.querySelector('.dialogue-text').value.trim();
+        const start = parseFloat(box.querySelector('.time-start').value) || 0;
+        const end = parseFloat(box.querySelector('.time-end').value) || 3;
+        if (text) lines.push({ role, text, start, end });
+      });
+
+      if (lines.length === 0) {
+        alert('စကားပြောခန်း စာသား မရှိသေးပါခင်ဗျာ။');
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      videoPreview.currentTime = 0;
+      videoPreview.volume = 0.2;
+      videoPreview.play();
+
+      let currentIndex = 0;
+
+      function speakNext() {
+        if (currentIndex >= lines.length) {
+          syncStatus.innerText = '✅ Recap ပြီးဆုံးပါပြီ။';
+          return;
+        }
+
+        const currentLine = lines[currentIndex];
+        subtitleOverlay.innerText = currentLine.text;
+        syncStatus.innerText = `▶️ [${currentLine.role}] ဖတ်ပြနေပါသည်...`;
+
+        const utterance = new SpeechSynthesisUtterance(currentLine.text);
+        utterance.lang = 'my-MM';
+
+        const profile = voiceProfiles[currentLine.role] || voiceProfiles.narrator;
+        utterance.pitch = profile.pitch;
+        utterance.rate = profile.rate;
+
+        utterance.onend = function() {
+          currentIndex++;
+          speakNext();
+        };
+
+        utterance.onerror = function() {
+          currentIndex++;
+          speakNext();
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }
+
+      speakNext();
     });
   </script>
 </body>
