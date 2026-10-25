@@ -4,11 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Video Subtitle Recap Myanmar</title>
+  <!-- Google Noto Sans Myanmar Font တိုက်ရိုက်ချိတ်ဆက်ခြင်း -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
+    * {
+      font-family: 'Noto Sans Myanmar', sans-serif;
+      box-sizing: border-box;
+    }
     body {
       background-color: #0f172a;
       color: #f8fafc;
-      font-family: sans-serif;
       margin: 0;
       padding: 16px;
       display: flex;
@@ -41,7 +49,6 @@
     }
     input[type="file"], select, textarea, input[type="range"], input[type="number"] {
       width: 100%;
-      box-sizing: border-box;
       background-color: #0f172a;
       color: #fff;
       border: 1px solid #475569;
@@ -63,7 +70,6 @@
       background-color: #0369a1;
     }
     
-    /* Video Box & Layers */
     .video-wrapper {
       width: 100%;
       display: flex;
@@ -78,7 +84,7 @@
       width: 100%;
       background: #000;
       overflow: hidden;
-      display: block; /* အမြဲပေါ်နေစေရန် */
+      display: block;
       min-height: 200px;
     }
     video {
@@ -86,7 +92,6 @@
       height: 100%;
       object-fit: contain;
       display: block;
-      background: #000;
     }
     .blur-overlay {
       position: absolute;
@@ -102,6 +107,7 @@
       pointer-events: none;
       z-index: 5;
     }
+    /* မြန်မာ Font ကွက်တိမှန်ပြီး ပေါ်လွင်စေမည့် စာတန်းထိုး Style */
     .subtitle-overlay {
       position: absolute;
       bottom: 14%;
@@ -110,8 +116,8 @@
       text-align: center;
       color: #ffffff;
       font-size: 1.15rem;
-      font-weight: bold;
-      line-height: 1.4;
+      font-weight: 700;
+      line-height: 1.5;
       text-shadow: 2px 2px 4px #000, -2px -2px 4px #000, 2px -2px 4px #000, -2px 2px 4px #000;
       pointer-events: none;
       z-index: 10;
@@ -184,10 +190,10 @@
 
   <div>
     <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">Multi-Voice AI အသံ၊ စာတန်းထိုးနှင့် Video Export စနစ်</p>
+    <p class="sub">စစ်မှန်သော မြန်မာအသံနှင့် Noto Sans Unicode စာတန်းထိုးစနစ်</p>
   </div>
 
-  <!-- အဆင့် ၁ - ဗီဒီယို -->
+  <!-- အဆင့် ၁ -->
   <div class="card">
     <h2>၁။ Video ဖိုင် ရွေးချယ်ပါ</h2>
     <input type="file" id="videoInput" accept="video/*">
@@ -199,9 +205,11 @@
       </div>
     </div>
     <canvas id="renderCanvas"></canvas>
+    <!-- မြန်မာအသံစစ်စစ် ဖွင့်ရန် Audio Player -->
+    <audio id="ttsAudio" style="display:none;"></audio>
   </div>
 
-  <!-- အဆင့် ၂ - Video Size နှင့် အရည်အသွေး -->
+  <!-- အဆင့် ၂ -->
   <div class="card">
     <h2>၂။ Video အချိုးအစားနှင့် အရည်အသွေး</h2>
     <div class="control-row">
@@ -211,7 +219,6 @@
         <option value="9/16" selected>9:16 (TikTok / Reels / Shorts)</option>
         <option value="16/9">16:9 (YouTube Standard)</option>
         <option value="1/1">1:1 (Square)</option>
-        <option value="4/5">4:5 (Facebook / Instagram)</option>
       </select>
     </div>
     <div class="control-row">
@@ -224,7 +231,7 @@
     </div>
   </div>
 
-  <!-- အဆင့် ၃ - Blur Mask -->
+  <!-- အဆင့် ၃ -->
   <div class="card">
     <h2>၃။ မူရင်းစာတန်းဖုံးအုပ်မည့် Blur Box</h2>
     <div class="control-row">
@@ -245,14 +252,14 @@
     </div>
   </div>
 
-  <!-- အဆင့် ၄ - SRT စနစ် -->
+  <!-- အဆင့် ၄ -->
   <div class="card">
     <h2>၄။ SRT စာတန်းထိုး (Import / Export)</h2>
     <input type="file" id="srtFileInput" accept=".srt">
     <button class="btn-export" id="exportSrtBtn">📥 SRT ဖိုင်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
   </div>
 
-  <!-- အဆင့် ၅ - စကားပြောခန်းများ -->
+  <!-- အဆင့် ၅ -->
   <div class="card">
     <h2>၅။ စကားပြောခန်းများ နှင့် Recap ပြုလုပ်ခြင်း</h2>
     <div id="dialogueList" style="display: flex; flex-direction: column; gap: 10px;">
@@ -268,12 +275,12 @@
           </select>
         </div>
         <div class="time-inputs">
-          <span>စတင်ချိန် (စက္ကန့်):</span>
+          <span>စတင်ချိန်:</span>
           <input type="number" class="time-start" value="0" step="0.5">
           <span>ပြီးဆုံးချိန်:</span>
           <input type="number" class="time-end" value="3" step="0.5">
         </div>
-        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ရှင် အခု ဘာလုပ်နေတာလဲ...</textarea>
+        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ရှင် အခု ဘာလုပ်နေတာလဲ</textarea>
       </div>
 
       <div class="dialogue-box">
@@ -287,18 +294,18 @@
           </select>
         </div>
         <div class="time-inputs">
-          <span>စတင်ချိန် (စက္ကန့်):</span>
+          <span>စတင်ချိန်:</span>
           <input type="number" class="time-start" value="3.5" step="0.5">
           <span>ပြီးဆုံးချိန်:</span>
           <input type="number" class="time-end" value="6.5" step="0.5">
         </div>
-        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ငါ မင်းကို ကာကွယ်ပေးမလို့လေ...</textarea>
+        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ငါ မင်းကို ကာကွယ်ပေးမလို့လေ</textarea>
       </div>
 
     </div>
 
     <button type="button" class="btn-add" id="addDialogueBtn">➕ စကားပြောခန်းအသစ် ထပ်ထည့်မည်</button>
-    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ Recap အစမ်းဖွင့်ကြည့်မည်</button>
+    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ မြန်မာအသံစစ်စစ်ဖြင့် Recap အစမ်းဖွင့်မည်</button>
     <button class="btn-export-video" id="exportVideoBtn" style="margin-top: 6px;">🔴 Export (ဗီဒီယိုဖိုင် အသစ်သိမ်းဆည်းမည်)</button>
     <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8;"></span>
   </div>
@@ -310,6 +317,7 @@
     const blurOverlay = document.getElementById('blurOverlay');
     const subtitleOverlay = document.getElementById('subtitleOverlay');
     const aspectRatio = document.getElementById('aspectRatio');
+    const ttsAudio = document.getElementById('ttsAudio');
 
     const posY = document.getElementById('posY');
     const boxWidth = document.getElementById('boxWidth');
@@ -325,22 +333,18 @@
     const srtFileInput = document.getElementById('srtFileInput');
     const renderCanvas = document.getElementById('renderCanvas');
 
-    // Video တင်ခြင်း
     videoInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
-        const fileURL = URL.createObjectURL(file);
-        videoPreview.src = fileURL;
+        videoPreview.src = URL.createObjectURL(file);
         videoPreview.load();
       }
     });
 
-    // Ratio ချိန်ညှိခြင်း
     aspectRatio.addEventListener('change', function(e) {
       videoContainer.style.aspectRatio = e.target.value === 'auto' ? '' : e.target.value;
     });
 
-    // Blur Box အနေအထား
     function updateBlurBox() {
       blurOverlay.style.bottom = `${posY.value}%`;
       blurOverlay.style.width = `${boxWidth.value}%`;
@@ -356,14 +360,6 @@
     boxHeight.addEventListener('input', updateBlurBox);
     blurStrength.addEventListener('input', updateBlurBox);
     updateBlurBox();
-
-    const voiceProfiles = {
-      narrator: { pitch: 1.0, rate: 0.95 },
-      boy: { pitch: 1.25, rate: 1.0 },
-      girl: { pitch: 1.5, rate: 1.05 },
-      man: { pitch: 0.65, rate: 0.85 },
-      woman: { pitch: 1.1, rate: 0.95 }
-    };
 
     addDialogueBtn.addEventListener('click', function() {
       const div = document.createElement('div');
@@ -403,7 +399,36 @@
       return lines;
     }
 
-    // Playback Preview
+    // စစ်မှန်သော မြန်မာစကားသံ (Google Myanmar TTS Audio) ထုတ်ယူပေးသည့် စနစ်
+    function playMyanmarAudio(text, onEnd) {
+      const encodedText = encodeURIComponent(text);
+      // Google Translate မြန်မာအသံစစ်စစ် လင့်ခ်
+      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=my&client=tw-ob`;
+      
+      ttsAudio.src = url;
+      ttsAudio.onended = onEnd;
+      ttsAudio.onerror = function() {
+        // အင်တာနက် error သို့မဟုတ် ချိတ်ဆက်မှုပြဿနာရှိပါက ဖုန်းတွင်း speech စနစ်သို့ fallback လုပ်မည်
+        if ('speechSynthesis' in window) {
+          const utt = new SpeechSynthesisUtterance(text);
+          utt.lang = 'my-MM';
+          utt.onend = onEnd;
+          window.speechSynthesis.speak(utt);
+        } else {
+          setTimeout(onEnd, 2000);
+        }
+      };
+
+      ttsAudio.play().catch(() => {
+        // Autoplay မပွင့်ပါက SpeechSynthesis သို့ ပြောင်းမည်
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.lang = 'my-MM';
+        utt.onend = onEnd;
+        window.speechSynthesis.speak(utt);
+      });
+    }
+
+    // Recap အစမ်းဖွင့်ကြည့်ခြင်း
     playRecapBtn.addEventListener('click', function() {
       const lines = getLines();
       if (lines.length === 0) {
@@ -411,7 +436,6 @@
         return;
       }
 
-      window.speechSynthesis.cancel();
       videoPreview.currentTime = 0;
       videoPreview.volume = 0.2;
       videoPreview.play();
@@ -426,30 +450,18 @@
 
         const currentLine = lines[currentIndex];
         subtitleOverlay.innerText = currentLine.text;
-        syncStatus.innerText = `▶️ [${currentLine.role}] ဖတ်ပြနေပါသည်...`;
+        syncStatus.innerText = `▶️ မြန်မာအသံဖြင့် ဖတ်ပြနေပါသည်: "${currentLine.text}"`;
 
-        const utterance = new SpeechSynthesisUtterance(currentLine.text);
-        utterance.lang = 'my-MM';
-        const profile = voiceProfiles[currentLine.role] || voiceProfiles.narrator;
-        utterance.pitch = profile.pitch;
-        utterance.rate = profile.rate;
-
-        utterance.onend = function() {
+        playMyanmarAudio(currentLine.text, function() {
           currentIndex++;
           speakNext();
-        };
-        utterance.onerror = function() {
-          currentIndex++;
-          speakNext();
-        };
-
-        window.speechSynthesis.speak(utterance);
+        });
       }
 
       speakNext();
     });
 
-    // Video Export Render
+    // Video Export Render (Canvas စာလုံးဖောင့်ကိုပါ Noto Sans Myanmar ထည့်သွင်းထားသည်)
     exportVideoBtn.addEventListener('click', async function() {
       if (!videoPreview.src) {
         alert('ကျေးဇူးပြု၍ Video ဖိုင်အရင် ရွေးချယ်ပါခင်ဗျာ။');
@@ -509,16 +521,17 @@
         const bBottom = (renderCanvas.height * posY.value) / 100;
         const bTop = renderCanvas.height - bBottom - bHeight;
 
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
         ctx.fillRect(bLeft, bTop, bWidth, bHeight);
 
+        // မြန်မာစာလုံး ပေါင်းစည်းမှုမလွဲစေရန် Noto Sans Myanmar ဖောင့်ဖြင့် ရေးဆွဲခြင်း
         if (currentSubText) {
-          ctx.font = `bold ${Math.floor(renderCanvas.width * 0.045)}px sans-serif`;
+          ctx.font = `bold ${Math.floor(renderCanvas.width * 0.045)}px 'Noto Sans Myanmar', sans-serif`;
           ctx.fillStyle = '#ffffff';
           ctx.textAlign = 'center';
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = 4;
-          const textY = bTop + (bHeight / 2) + 8;
+          const textY = bTop + (bHeight / 2) + 10;
           ctx.strokeText(currentSubText, renderCanvas.width / 2, textY);
           ctx.fillText(currentSubText, renderCanvas.width / 2, textY);
         }
@@ -540,22 +553,10 @@
         const l = lines[lineIndex];
         currentSubText = l.text;
 
-        const utterance = new SpeechSynthesisUtterance(l.text);
-        utterance.lang = 'my-MM';
-        const profile = voiceProfiles[l.role] || voiceProfiles.narrator;
-        utterance.pitch = profile.pitch;
-        utterance.rate = profile.rate;
-
-        utterance.onend = function() {
+        playMyanmarAudio(l.text, function() {
           lineIndex++;
           speakForRender();
-        };
-        utterance.onerror = function() {
-          lineIndex++;
-          speakForRender();
-        };
-
-        window.speechSynthesis.speak(utterance);
+        });
       }
 
       speakForRender();
