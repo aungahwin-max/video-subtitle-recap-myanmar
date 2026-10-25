@@ -152,7 +152,11 @@
       const cleaned = input.replace(/\d{2}:\d{2}:\d{2}[,\.]\d{3}\s*-->\s*\d{2}:\d{2}:\d{2}[,\.]\d{3}/g, '').trim();
       resultBox.style.display = 'block';
       resultBox.textContent = cleaned || 'သန့်စင်ပြီး စာသားမရှိပါ';
-    }
+    }   if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+
+
   </script>
 
 </body>
