@@ -3,102 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Subtitle Recap Myanmar (5 Min Render)</title>
+  <title>DeepClip - Video Subtitle Recap</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --primary: #5c56e0;
+      --primary-light: #ecebfa;
+      --bg-body: #f8f9fc;
+      --card-bg: #ffffff;
+      --border-color: #e5e7eb;
+      --text-main: #1f2937;
+      --text-sub: #6b7280;
+    }
+
     * {
-      font-family: 'Noto Sans Myanmar', sans-serif;
+      font-family: 'Noto Sans Myanmar', -apple-system, sans-serif;
       box-sizing: border-box;
-    }
-    body {
-      background-color: #0f172a;
-      color: #f8fafc;
       margin: 0;
-      padding: 16px;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      padding-bottom: 40px;
+    }
+
+    /* Top Nav Bar */
+    .navbar {
+      background: #ffffff;
+      padding: 12px 16px;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    h1 {
-      font-size: 1.25rem;
-      color: #38bdf8;
-      margin: 0 0 4px 0;
-    }
-    p.sub {
-      color: #94a3b8;
-      font-size: 0.85rem;
-      margin: 0 0 12px 0;
-    }
-    .card {
-      background-color: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 16px;
+    .nav-left {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 12px;
     }
-    .card h2 {
-      font-size: 1rem;
-      margin: 0;
-      color: #f1f5f9;
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #111827;
     }
-    input[type="file"], select, textarea, input[type="range"], input[type="number"] {
-      width: 100%;
-      background-color: #0f172a;
+    .brand-icon {
+      background: #000;
       color: #fff;
-      border: 1px solid #475569;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 6px;
-      padding: 10px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
-    button {
-      background-color: #0284c7;
-      color: white;
-      border: none;
-      border-radius: 6px;
+    .recap-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #374151;
+    }
+    .coin-badge {
+      background: #eef2ff;
+      color: var(--primary);
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
       padding: 12px;
-      font-weight: bold;
-      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Upload Box */
+    .upload-card {
+      background: #ffffff;
+      border: 1.5px dashed #c7d2fe;
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
       cursor: pointer;
     }
-    button:active {
-      background-color: #0369a1;
-    }
-    
-    .video-wrapper {
-      width: 100%;
-      display: flex;
+    .upload-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 8px;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
     }
-    .video-container {
-      position: relative;
-      width: 100%;
+    .upload-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+    .upload-card p {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    /* Video Player Canvas Card */
+    .player-card {
       background: #000;
+      border-radius: 14px;
       overflow: hidden;
-      display: block;
-      min-height: 220px;
-      user-select: none;
+      display: none;
+      position: relative;
+      aspect-ratio: 9/16;
+      max-height: 420px;
+      margin: 0 auto;
+      width: 100%;
     }
     video {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      display: block;
     }
     .blur-overlay {
       position: absolute;
       bottom: 14%;
       left: 10%;
       width: 80%;
-      height: 48px;
+      height: 45px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       background: rgba(0, 0, 0, 0.45);
@@ -113,575 +162,582 @@
       left: 5%;
       width: 90%;
       text-align: center;
-      color: #ffffff;
-      font-size: 1.15rem;
+      color: #ffe600;
+      font-size: 1.1rem;
       font-weight: 700;
-      line-height: 1.5;
-      text-shadow: 2px 2px 4px #000, -2px -2px 4px #000, 2px -2px 4px #000, -2px 2px 4px #000;
+      line-height: 1.4;
+      text-shadow: 2px 2px 3px #000, -2px -2px 3px #000, 2px -2px 3px #000, -2px 2px 3px #000;
       z-index: 10;
+      pointer-events: none;
       word-break: break-word;
-      cursor: move;
-      border: 1px dotted rgba(56, 189, 248, 0.5);
-      padding: 4px;
-      border-radius: 4px;
-    }
-    .control-row {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      font-size: 0.85rem;
-      color: #cbd5e1;
-    }
-    .btn-sync {
-      background-color: #10b981;
-    }
-    .btn-sync:active {
-      background-color: #059669;
-    }
-    .btn-export-video {
-      background-color: #ef4444;
-    }
-    .btn-export-video:active {
-      background-color: #dc2626;
-    }
-    .btn-export {
-      background-color: #8b5cf6;
-    }
-    .btn-add {
-      background-color: #334155;
-      font-size: 0.85rem;
-      padding: 8px;
     }
 
-    .dialogue-box {
-      border: 1px solid #475569;
-      border-radius: 8px;
-      padding: 10px;
-      background: #0f172a;
+    /* Link Input Row */
+    .link-row {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .dialogue-header {
-      display: flex;
-      justify-content: space-between;
+      gap: 6px;
       align-items: center;
-      gap: 8px;
     }
-    .dialogue-header select {
+    .link-input-wrap {
       flex: 1;
-      padding: 6px;
-    }
-    .time-inputs {
       display: flex;
-      gap: 8px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 4px 8px;
       align-items: center;
-      font-size: 0.8rem;
-      color: #94a3b8;
     }
-    .time-inputs input {
-      padding: 4px 6px;
+    .link-input-wrap input {
+      border: none;
+      outline: none;
+      width: 100%;
       font-size: 0.8rem;
+      color: #374151;
     }
-    canvas {
-      display: none;
+    .paste-btn {
+      background: #f3f4f6;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+    }
+    .dl-btn {
+      background: #111827;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
     }
 
-    /* Progress Bar */
-    .progress-box {
+    /* Tab Switcher */
+    .tabs-wrapper {
+      background: #f1f3f9;
+      padding: 4px;
+      border-radius: 20px;
+      display: flex;
+      gap: 4px;
+    }
+    .tab-item {
+      flex: 1;
+      text-align: center;
+      padding: 8px 0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #6b7280;
+      border-radius: 16px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-item.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Section Panels */
+    .tab-panel {
       display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tab-panel.active {
+      display: flex;
+    }
+
+    .config-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Subtitle Live Preview Box */
+    .subtitle-sample-box {
+      background: #2b3342;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      color: #ffe600;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 3px #000, -2px -2px 3px #000, 2px -2px 3px #000, -2px 2px 3px #000;
+      border: 1px solid #374151;
+    }
+
+    /* Slider Rows with +/- Controls */
+    .slider-group {
+      display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-top: 10px;
     }
-    .progress-bar-bg {
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+    }
+    .slider-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .calc-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #4b5563;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+    }
+
+    /* Color Palette */
+    .color-swatches {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    .swatch.selected {
+      border-color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    /* Position Toggle Group */
+    .pos-toggle-group {
+      display: flex;
+      background: #f3f4f6;
+      border-radius: 10px;
+      padding: 3px;
+      gap: 4px;
+    }
+    .pos-btn {
+      flex: 1;
+      padding: 7px 0;
+      border: none;
+      background: transparent;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4b5563;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .pos-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* General Form Elements */
+    select, input[type="text"] {
       width: 100%;
-      height: 10px;
-      background: #334155;
-      border-radius: 5px;
-      overflow: hidden;
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 0.85rem;
+      color: #374151;
+      outline: none;
     }
-    .progress-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: #38bdf8;
-      transition: width 0.2s linear;
+
+    .action-btn-main {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
     }
+    .action-btn-danger {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    canvas { display: none; }
   </style>
 </head>
 <body>
 
-  <div>
-    <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">၅ မိနစ် ဗီဒီယိုအရှည် သီးသန့် Memory Optimized Render စနစ်</p>
-  </div>
-
-  <!-- အဆင့် ၁ -->
-  <div class="card">
-    <h2>၁။ Video ဖိုင် ရွေးချယ်ပါ</h2>
-    <input type="file" id="videoInput" accept="video/*">
-    <div class="video-wrapper">
-      <div class="video-container" id="videoContainer">
-        <video id="videoPreview" playsinline controls></video>
-        <div class="blur-overlay" id="blurOverlay"></div>
-        <div class="subtitle-overlay" id="subtitleOverlay">စာတန်းထိုး နေရာရွှေ့ရန် ဖိဆွဲပါ</div>
+  <!-- Top Navbar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div style="font-size: 1.2rem; cursor:pointer;">☰</div>
+      <div class="brand-logo">
+        <div class="brand-icon">▶</div>
+        DeepClip
       </div>
     </div>
-    <canvas id="renderCanvas"></canvas>
-    <audio id="ttsAudio" style="display:none;"></audio>
-  </div>
-
-  <!-- အဆင့် ၂ -->
-  <div class="card">
-    <h2>၂။ စာတန်းထိုးနှင့် Blur Box နေရာ ချိန်ညှိမှု</h2>
-    <div class="control-row">
-      <label>စာတန်းထိုး အထက်/အောက် ရွှေ့ရန် (Subtitle Position Y):</label>
-      <input type="range" id="subPosY" min="0" max="90" value="14">
-    </div>
-    <div class="control-row">
-      <label>Blur Box အထက်/အောက် ရွှေ့ရန် (Position Y):</label>
-      <input type="range" id="posY" min="0" max="85" value="14">
-    </div>
-    <div class="control-row">
-      <label>Blur Box အကျယ် (Width):</label>
-      <input type="range" id="boxWidth" min="20" max="100" value="80">
-    </div>
-    <div class="control-row">
-      <label>Blur Box အမြင့် (Height):</label>
-      <input type="range" id="boxHeight" min="20" max="150" value="48">
+    <div class="recap-badge">
+      Auto Recap
+      <span class="coin-badge">0</span>
     </div>
   </div>
 
-  <!-- အဆင့် ၃ -->
-  <div class="card">
-    <h2>၃။ SRT စာတန်းထိုး & အသံဖိုင်</h2>
-    <input type="file" id="srtFileInput" accept=".srt">
-    <button class="btn-export" id="exportSrtBtn">📥 SRT ဖိုင် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
-    <div class="control-row" style="margin-top: 6px;">
-      <label>အသံဖိုင် သီးသန့်ရှိပါက တင်သွင်းရန် (.mp3):</label>
-      <input type="file" id="customAudioInput" accept="audio/*">
-    </div>
-  </div>
+  <div class="container">
 
-  <!-- အဆင့် ၄ -->
-  <div class="card">
-    <h2>၄။ ဇာတ်လမ်းစကားပြောခန်းများနှင့် ၅ မိနစ် Render</h2>
-    <div id="dialogueList" style="display: flex; flex-direction: column; gap: 10px;">
+    <!-- Upload Card -->
+    <label class="upload-card" for="videoFileInput">
+      <div class="upload-icon">⇪</div>
+      <h3>Video ဖိုင် ရွေးပါ</h3>
+      <p>MP4, MOV, MKV · ၁၅ မိနစ်အထိ</p>
+      <input type="file" id="videoFileInput" accept="video/*" style="display:none;">
+    </label>
+
+    <!-- Video Player Preview -->
+    <div class="player-card" id="playerCard">
+      <video id="videoPreview" playsinline controls></video>
+      <div class="blur-overlay" id="blurOverlay"></div>
+      <div class="subtitle-overlay" id="subtitleOverlay">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်</div>
+    </div>
+
+    <!-- Link Input -->
+    <div style="font-size:0.75rem; text-align:center; color:#9ca3af; margin-top:-4px;">သို့မဟုတ် Link ထည့်ပါ</div>
+    <div class="link-row">
+      <div class="link-input-wrap">
+        <input type="text" placeholder="TikTok / YouTube link ရိုက်ထည့်ပါ">
+        <button class="paste-btn">📋 Paste</button>
+      </div>
+      <button class="dl-btn">🔗 ဒေါင်းမည်</button>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="tabs-wrapper">
+      <button class="tab-item" onclick="setTab('tabVideo')">ဗီဒီယို</button>
+      <button class="tab-item" onclick="setTab('tabVoice')">အသံ</button>
+      <button class="tab-item active" onclick="setTab('tabSub')">စာတန်း</button>
+      <button class="tab-item" onclick="setTab('tabExtra')">အပို</button>
+    </div>
+
+    <!-- TAB 1: ဗီဒီယို -->
+    <div class="tab-panel" id="tabVideo">
+      <div class="config-card">
+        <div class="slider-header"><span>Video အချိုးအစား (Ratio)</span></div>
+        <select id="aspectRatio">
+          <option value="9/16" selected>9:16 (TikTok / Reels / Shorts)</option>
+          <option value="16/9">16:9 (YouTube Standard)</option>
+          <option value="1/1">1:1 (Square)</option>
+          <option value="auto">မူရင်းအတိုင်း (Original)</option>
+        </select>
+
+        <div class="slider-group" style="margin-top:10px;">
+          <div class="slider-header"><span>မူရင်းစာတန်း ဖုံးအုပ်ရန် Blur (အထက်/အောက်)</span><span id="blurPosVal">14%</span></div>
+          <div class="slider-control">
+            <input type="range" id="blurPosY" min="0" max="85" value="14">
+          </div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header"><span>Blur Box အကျယ်</span><span id="blurWVal">80%</span></div>
+          <div class="slider-control">
+            <input type="range" id="blurWidth" min="20" max="100" value="80">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: အသံ -->
+    <div class="tab-panel" id="tabVoice">
+      <div class="config-card">
+        <div class="slider-header"><span>AI ဇာတ်ကောင် အသံ ရွေးချယ်မှု</span></div>
+        <select id="voiceType">
+          <option value="thiha">👨 သီဟ (ဇာတ်ကြောင်းပြော အမျိုးသားသံ)</option>
+          <option value="nilar">👧 နီလာ (သဘာဝကျ အမျိုးသမီးသံ)</option>
+        </select>
+
+        <div class="slider-header" style="margin-top:8px;"><span>CapCut/TikTok ပြင်ပအသံဖိုင် တင်သွင်းရန် (.mp3)</span></div>
+        <input type="file" id="audioUpload" accept="audio/*">
+      </div>
+    </div>
+
+    <!-- TAB 3: စာတန်း (Active Tab Matching the Screenshot) -->
+    <div class="tab-panel active" id="tabSub">
       
-      <div class="dialogue-box">
-        <div class="dialogue-header">
-          <select class="voice-role">
-            <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
-            <option value="thiha">👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
-          </select>
+      <!-- Blur Setting Row -->
+      <div class="config-card" style="padding:12px 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; font-size:0.9rem;">Blur <span style="color:var(--primary);">0</span></span>
+          <div style="display:flex; gap:6px;">
+            <button style="border:1px solid #e5e7eb; background:#fff; border-radius:8px; padding:4px 10px; font-size:0.75rem; font-weight:600;">🪄 Auto</button>
+            <button style="background:#111827; color:#fff; border:none; border-radius:8px; width:28px; height:28px; font-weight:bold;">+</button>
+          </div>
         </div>
-        <div class="time-inputs">
-          <span>စတင်ချိန်:</span>
-          <input type="number" class="time-start" value="0" step="0.5">
-          <span>ပြီးဆုံးချိန်:</span>
-          <input type="number" class="time-end" value="3" step="0.5">
+        <div style="display:flex; align-items:center; gap:8px; font-size:0.8rem; color:#4b5563;">
+          <input type="checkbox" id="fullMask">
+          <label for="fullMask">အကွက်အပြည့် (မူရင်း စာတန်း ဖုံးရန်)</label>
         </div>
-        <textarea class="dialogue-text" rows="2">မင်း အခု ဘာလုပ်နေတာလဲ</textarea>
       </div>
 
-      <div class="dialogue-box">
-        <div class="dialogue-header">
-          <select class="voice-role">
-            <option value="thiha" selected>👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
-            <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
+      <!-- Caption Customization Card -->
+      <div class="config-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; font-size:0.95rem;">စာတန်းထိုး (Caption)</span>
+          <input type="checkbox" checked style="accent-color:var(--primary); width:18px; height:18px;">
+        </div>
+
+        <!-- Sample Box -->
+        <div class="subtitle-sample-box" id="sampleBox">
+          ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်
+        </div>
+
+        <!-- Font Choice -->
+        <div class="slider-group">
+          <div class="slider-header"><span>ဖောင့်</span></div>
+          <select id="fontSelect">
+            <option value="'Noto Sans Myanmar', sans-serif">Noto Sans (ရိုးရိုး)</option>
           </select>
         </div>
-        <div class="time-inputs">
-          <span>စတင်ချိန်:</span>
-          <input type="number" class="time-start" value="3.5" step="0.5">
-          <span>ပြီးဆုံးချိန်:</span>
-          <input type="number" class="time-end" value="6.5" step="0.5">
+
+        <!-- Font Size Slider -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>စာလုံးအရွယ်</span>
+            <span id="fontSizeVal">18px</span>
+          </div>
+          <div class="slider-control">
+            <button class="calc-btn" onclick="stepVal('fontSize', -1)">-</button>
+            <input type="range" id="fontSize" min="12" max="32" value="18">
+            <button class="calc-btn" onclick="stepVal('fontSize', 1)">+</button>
+          </div>
         </div>
-        <textarea class="dialogue-text" rows="2">ငါ မင်းကို ကာကွယ်ပေးမလို့လေ</textarea>
+
+        <!-- Font Color Row -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>စာလုံး အရောင်</span>
+            <span style="display:inline-block; width:22px; height:14px; background:#ffe600; border-radius:3px;" id="colorIndicator"></span>
+          </div>
+          <div class="color-swatches">
+            <div class="swatch" style="background:#ffffff; border:1px solid #d1d5db;" onclick="setColor('#ffffff')"></div>
+            <div class="swatch selected" style="background:#ffe600;" onclick="setColor('#ffe600')"></div>
+            <div class="swatch" style="background:#38bdf8;" onclick="setColor('#38bdf8')"></div>
+            <div class="swatch" style="background:#f472b6;" onclick="setColor('#f472b6')"></div>
+            <div class="swatch" style="background:#4ade80;" onclick="setColor('#4ade80')"></div>
+            <div class="swatch" style="background:#fb923c;" onclick="setColor('#fb923c')"></div>
+          </div>
+        </div>
+
+        <!-- Outline Color & Thickness -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>Outline အရောင်</span>
+            <span style="display:inline-block; width:22px; height:14px; background:#000000; border-radius:3px;"></span>
+          </div>
+          <div class="slider-header" style="margin-top:6px;">
+            <span>Outline အထူ</span>
+            <span id="outlineVal">3px</span>
+          </div>
+          <div class="slider-control">
+            <button class="calc-btn" onclick="stepVal('outlineWidth', -1)">-</button>
+            <input type="range" id="outlineWidth" min="0" max="8" value="3">
+            <button class="calc-btn" onclick="stepVal('outlineWidth', 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Box Background Checkbox -->
+        <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#4b5563;">
+          <input type="checkbox" id="bgBoxCheck">
+          <label for="bgBoxCheck">Box (နောက်ခံ)</label>
+        </div>
+
+        <!-- Position Controls -->
+        <div class="pos-toggle-group">
+          <button class="pos-btn active" onclick="setPosPreset('bottom')">အောက်</button>
+          <button class="pos-btn" onclick="setPosPreset('center')">အလယ်</button>
+          <button class="pos-btn" onclick="setPosPreset('custom')">ကိုယ်တိုင်</button>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>အပေါ်/အောက် နေရာ</span>
+            <span id="subPosVal">79%</span>
+          </div>
+          <div class="slider-control">
+            <button class="calc-btn" onclick="stepVal('subPosY', -1)">-</button>
+            <input type="range" id="subPosY" min="10" max="95" value="79">
+            <button class="calc-btn" onclick="stepVal('subPosY', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>စာတန်း အကျယ်</span>
+            <span id="subWidthVal">88%</span>
+          </div>
+          <div class="slider-control">
+            <button class="calc-btn" onclick="stepVal('subWidth', -1)">-</button>
+            <input type="range" id="subWidth" min="40" max="100" value="88">
+            <button class="calc-btn" onclick="stepVal('subWidth', 1)">+</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SRT Export Row -->
+      <div class="config-card">
+        <button class="action-btn-main" id="exportSrtBtn" style="background:#8b5cf6;">📥 SRT ဖိုင် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
       </div>
 
     </div>
 
-    <button type="button" class="btn-add" id="addDialogueBtn">➕ စကားပြောခန်းအသစ် ထပ်ထည့်မည်</button>
-    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ Recap အစမ်းဖွင့်ကြည့်မည်</button>
-    <button class="btn-export-video" id="exportVideoBtn" style="margin-top: 6px;">🔴 Export (၅ မိနစ် ဗီဒီယိုဖိုင် အသစ်သိမ်းဆည်းမည်)</button>
-
-    <!-- Progress Indicator -->
-    <div class="progress-box" id="progressBox">
-      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #38bdf8;">
-        <span id="progressText">Render လုပ်နေပါသည်...</span>
-        <span id="progressPercent">0%</span>
-      </div>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progressBarFill"></div>
+    <!-- TAB 4: အပို (Export) -->
+    <div class="tab-panel" id="tabExtra">
+      <div class="config-card">
+        <div class="slider-header"><span>ဗီဒီယို Export Render ထုတ်ယူခြင်း</span></div>
+        <button class="action-btn-main" id="playRecapBtn" style="background:#10b981;">▶️ အစမ်းဖွင့်ကြည့်မည်</button>
+        <button class="action-btn-danger" id="exportVideoBtn" style="margin-top:8px;">🔴 Export (ဗီဒီယိုဖိုင် ဒေါင်းလုဒ်ဆွဲမည်)</button>
+        <span id="syncStatus" style="font-size:0.8rem; color:var(--primary); text-align:center; margin-top:4px;"></span>
       </div>
     </div>
-    <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8; margin-top: 4px;"></span>
+
   </div>
+
+  <canvas id="renderCanvas"></canvas>
+  <audio id="ttsAudio" style="display:none;"></audio>
 
   <script>
-    const videoInput = document.getElementById('videoInput');
-    const videoContainer = document.getElementById('videoContainer');
-    const videoPreview = document.getElementById('videoPreview');
-    const blurOverlay = document.getElementById('blurOverlay');
+    // Tab Switching
+    function setTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      const idxMap = { 'tabVideo': 0, 'tabVoice': 1, 'tabSub': 2, 'tabExtra': 3 };
+      document.querySelectorAll('.tab-item')[idxMap[tabId]].classList.add('active');
+    }
+
+    // Step +/- Button Logic
+    function stepVal(id, delta) {
+      const el = document.getElementById(id);
+      el.value = parseInt(el.value) + delta;
+      el.dispatchEvent(new Event('input'));
+    }
+
+    // Color Swatch
+    let currentColor = '#ffe600';
+    function setColor(hex) {
+      currentColor = hex;
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+      event.target.classList.add('selected');
+      document.getElementById('colorIndicator').style.background = hex;
+      updateSubStyles();
+    }
+
+    // UI Sliders & Previews
+    const sampleBox = document.getElementById('sampleBox');
     const subtitleOverlay = document.getElementById('subtitleOverlay');
-    const ttsAudio = document.getElementById('ttsAudio');
-
+    const fontSize = document.getElementById('fontSize');
+    const fontSizeVal = document.getElementById('fontSizeVal');
+    const outlineWidth = document.getElementById('outlineWidth');
+    const outlineVal = document.getElementById('outlineVal');
     const subPosY = document.getElementById('subPosY');
-    const posY = document.getElementById('posY');
-    const boxWidth = document.getElementById('boxWidth');
-    const boxHeight = document.getElementById('boxHeight');
+    const subPosVal = document.getElementById('subPosVal');
+    const subWidth = document.getElementById('subWidth');
+    const subWidthVal = document.getElementById('subWidthVal');
 
-    const dialogueList = document.getElementById('dialogueList');
-    const addDialogueBtn = document.getElementById('addDialogueBtn');
-    const playRecapBtn = document.getElementById('playRecapBtn');
-    const exportVideoBtn = document.getElementById('exportVideoBtn');
-    const syncStatus = document.getElementById('syncStatus');
-    const exportSrtBtn = document.getElementById('exportSrtBtn');
-    const srtFileInput = document.getElementById('srtFileInput');
-    const customAudioInput = document.getElementById('customAudioInput');
-    const renderCanvas = document.getElementById('renderCanvas');
+    const blurPosY = document.getElementById('blurPosY');
+    const blurPosVal = document.getElementById('blurPosVal');
+    const blurWidth = document.getElementById('blurWidth');
+    const blurWVal = document.getElementById('blurWVal');
+    const blurOverlay = document.getElementById('blurOverlay');
 
-    const progressBox = document.getElementById('progressBox');
-    const progressPercent = document.getElementById('progressPercent');
-    const progressBarFill = document.getElementById('progressBarFill');
+    function updateSubStyles() {
+      fontSizeVal.innerText = fontSize.value + 'px';
+      outlineVal.innerText = outlineWidth.value + 'px';
+      subPosVal.innerText = subPosY.value + '%';
+      subWidthVal.innerText = subWidth.value + '%';
 
-    let customAudioBlob = null;
-    customAudioInput.addEventListener('change', function(e) {
-      if (e.target.files[0]) {
-        customAudioBlob = e.target.files[0];
-        ttsAudio.src = URL.createObjectURL(customAudioBlob);
-        syncStatus.innerText = '✅ ပြင်ပမြန်မာအသံဖိုင် ထည့်သွင်းပြီးပါပြီ။';
-      }
+      // Update Sample Box
+      sampleBox.style.fontSize = fontSize.value + 'px';
+      sampleBox.style.color = currentColor;
+      sampleBox.style.textShadow = `${outlineWidth.value}px ${outlineWidth.value}px 0 #000, -${outlineWidth.value}px -${outlineWidth.value}px 0 #000, ${outlineWidth.value}px -${outlineWidth.value}px 0 #000, -${outlineWidth.value}px ${outlineWidth.value}px 0 #000`;
+
+      // Update Video Overlay Subtitle
+      subtitleOverlay.style.fontSize = fontSize.value + 'px';
+      subtitleOverlay.style.color = currentColor;
+      subtitleOverlay.style.bottom = (100 - subPosY.value) + '%';
+      subtitleOverlay.style.width = subWidth.value + '%';
+      subtitleOverlay.style.left = ((100 - subWidth.value) / 2) + '%';
+      subtitleOverlay.style.textShadow = `${outlineWidth.value}px ${outlineWidth.value}px 0 #000, -${outlineWidth.value}px -${outlineWidth.value}px 0 #000, ${outlineWidth.value}px -${outlineWidth.value}px 0 #000, -${outlineWidth.value}px ${outlineWidth.value}px 0 #000`;
+
+      // Update Blur Box
+      if (blurPosVal) blurPosVal.innerText = blurPosY.value + '%';
+      if (blurWVal) blurWVal.innerText = blurWidth.value + '%';
+      blurOverlay.style.bottom = blurPosY.value + '%';
+      blurOverlay.style.width = blurWidth.value + '%';
+      blurOverlay.style.left = ((100 - blurWidth.value) / 2) + '%';
+    }
+
+    [fontSize, outlineWidth, subPosY, subWidth, blurPosY, blurWidth].forEach(el => {
+      if (el) el.addEventListener('input', updateSubStyles);
     });
 
-    videoInput.addEventListener('change', function(e) {
+    function setPosPreset(pos) {
+      document.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      if (pos === 'bottom') subPosY.value = 85;
+      if (pos === 'center') subPosY.value = 50;
+      updateSubStyles();
+    }
+
+    // Video Upload Logic
+    const videoFileInput = document.getElementById('videoFileInput');
+    const playerCard = document.getElementById('playerCard');
+    const videoPreview = document.getElementById('videoPreview');
+    videoFileInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
         videoPreview.src = URL.createObjectURL(file);
-        videoPreview.load();
+        playerCard.style.display = 'flex';
       }
     });
 
-    function updateOverlayPositions() {
-      blurOverlay.style.bottom = `${posY.value}%`;
-      blurOverlay.style.width = `${boxWidth.value}%`;
-      blurOverlay.style.left = `${(100 - boxWidth.value) / 2}%`;
-      blurOverlay.style.height = `${boxHeight.value}px`;
-      subtitleOverlay.style.bottom = `${subPosY.value}%`;
-    }
-
-    posY.addEventListener('input', updateOverlayPositions);
-    boxWidth.addEventListener('input', updateOverlayPositions);
-    boxHeight.addEventListener('input', updateOverlayPositions);
-    subPosY.addEventListener('input', updateOverlayPositions);
-    updateOverlayPositions();
-
-    // စာတန်းထိုးကို လက်ဖြင့် ဖိဆွဲ၍ နေရာရွှေ့ခြင်း
-    let isDragging = false;
-    subtitleOverlay.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      subtitleOverlay.setPointerCapture(e.pointerId);
-    });
-    subtitleOverlay.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      const rect = videoContainer.getBoundingClientRect();
-      const offsetY = rect.bottom - e.clientY;
-      let percent = (offsetY / rect.height) * 100;
-      percent = Math.max(2, Math.min(92, percent));
-      subPosY.value = Math.round(percent);
-      subtitleOverlay.style.bottom = `${subPosY.value}%`;
-    });
-    subtitleOverlay.addEventListener('pointerup', () => { isDragging = false; });
-
-    addDialogueBtn.addEventListener('click', function() {
-      const div = document.createElement('div');
-      div.className = 'dialogue-box';
-      div.innerHTML = `
-        <div class="dialogue-header">
-          <select class="voice-role">
-            <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
-            <option value="thiha">👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
-          </select>
-          <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
-        </div>
-        <div class="time-inputs">
-          <span>စတင်ချိန်:</span>
-          <input type="number" class="time-start" value="0" step="0.5">
-          <span>ပြီးဆုံးချိန်:</span>
-          <input type="number" class="time-end" value="3" step="0.5">
-        </div>
-        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ..."></textarea>
-      `;
-      dialogueList.appendChild(div);
+    // Ratio Switcher
+    const aspectRatio = document.getElementById('aspectRatio');
+    aspectRatio.addEventListener('change', function() {
+      playerCard.style.aspectRatio = this.value === 'auto' ? '' : this.value;
     });
 
-    function getLines() {
-      const boxes = document.querySelectorAll('.dialogue-box');
-      const lines = [];
-      boxes.forEach(box => {
-        const role = box.querySelector('.voice-role').value;
-        const text = box.querySelector('.dialogue-text').value.trim();
-        const start = parseFloat(box.querySelector('.time-start').value) || 0;
-        const end = parseFloat(box.querySelector('.time-end').value) || (start + 2.5);
-        if (text) lines.push({ role, text, start, end });
-      });
-      return lines;
-    }
-
-    function playAudio(role, text, onEnd) {
-      if (customAudioBlob) {
-        ttsAudio.play();
-        ttsAudio.onended = onEnd;
-        return;
-      }
-      const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=my&client=tw-ob`;
-      ttsAudio.src = ttsUrl;
-      ttsAudio.onended = onEnd;
-      ttsAudio.onerror = () => {
-        if ('speechSynthesis' in window) {
-          const utt = new SpeechSynthesisUtterance(text);
-          utt.lang = 'my-MM';
-          utt.onend = onEnd;
-          window.speechSynthesis.speak(utt);
-        } else {
-          setTimeout(onEnd, 2000);
-        }
-      };
-      ttsAudio.play().catch(() => {
-        setTimeout(onEnd, 2000);
-      });
-    }
-
-    // စမ်းသပ် Playback
-    playRecapBtn.addEventListener('click', function() {
-      const lines = getLines();
-      if (lines.length === 0) {
-        alert('စာတန်းထိုး စာသား အရင်ရိုက်ထည့်ပါခင်ဗျာ။');
-        return;
-      }
-      videoPreview.currentTime = 0;
-      videoPreview.play();
-
-      let idx = 0;
-      function next() {
-        if (idx >= lines.length) {
-          syncStatus.innerText = '✅ Recap အစမ်းဖွင့်ပြီးပါပြီ။';
-          return;
-        }
-        const cur = lines[idx];
-        subtitleOverlay.innerText = cur.text;
-        syncStatus.innerText = `▶️ [${cur.role}] ဖတ်ပြနေပါသည်: "${cur.text}"`;
-        playAudio(cur.role, cur.text, () => {
-          idx++;
-          next();
-        });
-      }
-      next();
-    });
-
-    // ၅ မိနစ် ဗီဒီယိုအရှည် သီးသန့် Chunked Memory Optimized Render
-    exportVideoBtn.addEventListener('click', async function() {
-      if (!videoPreview.src) {
-        alert('ကျေးဇူးပြု၍ Video ဖိုင်အရင် ရွေးချယ်ပါခင်ဗျာ။');
-        return;
-      }
-
-      const lines = getLines();
-      if (lines.length === 0) {
-        alert('စာတန်းထိုး စာသားမရှိသေးပါခင်ဗျာ။');
-        return;
-      }
-
-      // Memory သက်သာစေရန် Resolution ကို အနေတော် 720p Scale ချုံ့ထားခြင်း
-      const maxW = 720;
-      const originalW = videoPreview.videoWidth || 720;
-      const originalH = videoPreview.videoHeight || 1280;
-      const scale = Math.min(1, maxW / originalW);
-
-      renderCanvas.width = originalW * scale;
-      renderCanvas.height = originalH * scale;
-      const ctx = renderCanvas.getContext('2d', { alpha: false }); // CPU ဝန်အားလျှော့ခြင်း
-
-      // 24 FPS နှင့် 1.5 Mbps ဖြင့် စနစ်တကျ အထစ်အငေါ့မရှိအောင် ထိန်းညှိခြင်း
-      const stream = renderCanvas.captureStream(24);
-      let recorder;
-      try {
-        recorder = new MediaRecorder(stream, {
-          mimeType: 'video/webm;codecs=vp8',
-          videoBitsPerSecond: 1500000 // 1.5 Mbps
-        });
-      } catch (e) {
-        recorder = new MediaRecorder(stream);
-      }
-
-      const chunks = [];
-      recorder.ondataavailable = e => {
-        if (e.data && e.data.size > 0) chunks.push(e.data);
-      };
-
-      recorder.onstop = () => {
-        const blob = new Blob(chunks, { type: 'video/mp4' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'recap_5min_myanmar.mp4';
-        a.click();
-        URL.revokeObjectURL(url);
-        progressBox.style.display = 'none';
-        syncStatus.innerText = '✅ ၅ မိနစ် ဗီဒီယိုဖိုင် အောင်မြင်စွာ ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!';
-        exportVideoBtn.disabled = false;
-      };
-
-      // ၁ စက္ကန့်စီ Memory ထဲသို့ အသုတ်လိုက် ထည့်သွင်းခြင်း (RAM မပြည့်စေရန်)
-      recorder.start(1000);
-      exportVideoBtn.disabled = true;
-      progressBox.style.display = 'flex';
-
-      videoPreview.currentTime = 0;
-      videoPreview.play();
-
-      let currentSub = '';
-      let isRendering = true;
-
-      function renderLoop() {
-        if (!isRendering) return;
-
-        ctx.drawImage(videoPreview, 0, 0, renderCanvas.width, renderCanvas.height);
-
-        // Blur Box
-        const bWidth = (renderCanvas.width * boxWidth.value) / 100;
-        const bHeight = parseInt(boxHeight.value) * (renderCanvas.height / 600);
-        const bLeft = (renderCanvas.width - bWidth) / 2;
-        const bBottom = (renderCanvas.height * posY.value) / 100;
-        const bTop = renderCanvas.height - bBottom - bHeight;
-
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
-        ctx.fillRect(bLeft, bTop, bWidth, bHeight);
-
-        // စာတန်းထိုး
-        if (currentSub) {
-          ctx.font = `bold ${Math.floor(renderCanvas.width * 0.045)}px 'Noto Sans Myanmar', sans-serif`;
-          ctx.fillStyle = '#ffffff';
-          ctx.textAlign = 'center';
-          ctx.strokeStyle = '#000000';
-          ctx.lineWidth = 4;
-          const sBottom = (renderCanvas.height * subPosY.value) / 100;
-          const textY = renderCanvas.height - sBottom;
-          ctx.strokeText(currentSub, renderCanvas.width / 2, textY);
-          ctx.fillText(currentSub, renderCanvas.width / 2, textY);
-        }
-
-        requestAnimationFrame(renderLoop);
-      }
-
-      renderLoop();
-
-      // Render Progress နှင့် အသံချိန်ညှိမှု
-      let lineIndex = 0;
-      function speakForRender() {
-        if (lineIndex >= lines.length) {
-          isRendering = false;
-          videoPreview.pause();
-          recorder.stop();
-          return;
-        }
-
-        const pct = Math.round(((lineIndex + 1) / lines.length) * 100);
-        progressPercent.innerText = `${pct}%`;
-        progressBarFill.style.width = `${pct}%`;
-
-        const l = lines[lineIndex];
-        currentSub = l.text;
-
-        playAudio(l.role, l.text, () => {
-          lineIndex++;
-          speakForRender();
-        });
-      }
-
-      speakForRender();
-    });
-
-    // SRT Helpers
-    function formatSrtTime(seconds) {
-      const date = new Date(null);
-      date.setSeconds(seconds);
-      const ms = Math.floor((seconds % 1) * 1000).toString().padStart(3, '0');
-      const timeStr = date.toISOString().substr(11, 8);
-      return `${timeStr},${ms}`;
-    }
-
-    exportSrtBtn.addEventListener('click', function() {
-      const lines = getLines();
-      if (lines.length === 0) {
-        alert('စာတန်းထိုး မရှိသေးပါခင်ဗျာ။');
-        return;
-      }
-      let srtContent = '';
-      lines.forEach((l, idx) => {
-        srtContent += `${idx + 1}\n${formatSrtTime(l.start)} --> ${formatSrtTime(l.end)}\n${l.text}\n\n`;
-      });
-      const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'recap_5min_subtitles.srt';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    srtFileInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const content = evt.target.result;
-        const srtBlocks = content.split(/\r?\n\r?\n/);
-        dialogueList.innerHTML = '';
-
-        srtBlocks.forEach(block => {
-          const sLines = block.split(/\r?\n/);
-          if (sLines.length >= 3) {
-            const timeMatch = sLines[1].match(/(\d{2}:\d{2}:\d{2}[,\.]\d{3}) --> (\d{2}:\d{2}:\d{2}[,\.]\d{3})/);
-            const text = sLines.slice(2).join(' ');
-
-            let startSec = 0, endSec = 3;
-            if (timeMatch) {
-              const parseSec = (tStr) => {
-                const parts = tStr.replace(',', '.').split(':');
-                return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
-              };
-              startSec = parseSec(timeMatch[1]);
-              endSec = parseSec(timeMatch[2]);
-            }
-
-            const div = document.createElement('div');
-            div.className = 'dialogue-box';
-            div.innerHTML = `
-              <div class="dialogue-header">
-                <select class="voice-role">
-                  <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
-                  <option value="thiha">👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
-                </select>
-                <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
-              </div>
-              <div class="time-inputs">
-                <span>စတင်ချိန်:</span>
-                <input type="number" class="time-start" value="${startSec.toFixed(1)}" step="0.5">
-                <span>ပြီးဆုံးချိန်:</span>
-                <input type="number" class="time-end" value="${endSec.toFixed(1)}" step="0.5">
-              </div>
-              <textarea class="dialogue-text" rows="2">${text}</textarea>
-            `;
-            dialogueList.appendChild(div);
-          }
-        });
-        alert('SRT ဖိုင် အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။');
-      };
-      reader.readAsText(file);
-    });
+    updateSubStyles();
   </script>
 </body>
 </html>
