@@ -1,8 +1,159 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aung Ahwin Max - Video Subtitle Recap</title>
   
-  <!-- ဒီနေရာမှာ ထည့်ပါ -->
+  <!-- PWA & Mobile App Settings -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="logo.png">
+  <meta name="theme-color" content="#5c56e0">
 
-  <!-- Noto Sans Myanmar Font -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Padauk', sans-serif;
+    }
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #161f30;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #2d3748;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    header img {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+    }
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+    .card {
+      background-color: #161f30;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #2d3748;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #818cf8;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      background-color: #0b0f19;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: #fff;
+      padding: 12px;
+      font-size: 0.95rem;
+      resize: none;
+      outline: none;
+      margin-bottom: 12px;
+    }
+    textarea:focus {
+      border-color: #6366f1;
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      background-color: #4f46e5;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+    .btn:active {
+      transform: scale(0.98);
+      background-color: #4338ca;
+    }
+    .output {
+      background-color: #0b0f19;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px dashed #334155;
+      font-size: 0.95rem;
+      color: #38bdf8;
+      white-space: pre-wrap;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="AH Logo" onerror="this.style.display='none'">
+    <div>
+      <h1>Aung Ahwin Max</h1>
+      <span style="font-size: 0.75rem; color: #94a3b8;">Video Subtitle Recap Assistant</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>စာတန်းထိုး (Subtitle) စစ်ထုတ်ကိရိယာ</h2>
+      <p>တရုတ်စာတန်းထိုး (SRT) စာသားများ သို့မဟုတ် Timestamp များကို ထည့်သွင်း၍ စမ်းသပ်နိုင်ပါသည်-</p>
+      <textarea id="inputText" placeholder="စာသားများကို ဤနေရာတွင် ထည့်ပါ..."></textarea>
+      <button class="btn" onclick="processText()">စာသားရှင်းလင်းမည်</button>
+      <div id="resultBox" class="output"></div>
+    </div>
+  </div>
+
+  <script>
+    function processText() {
+      const input = document.getElementById('inputText').value;
+      const resultBox = document.getElementById('resultBox');
+      if (!input.trim()) {
+        alert('စာသားအရင်ထည့်ပေးပါခင်ဗျာ');
+        return;
+      }
+      // ရိုးရှင်းသော သန့်စင်စနစ် နမူနာ (Timestamps ဖယ်ရှားခြင်း)
+      const cleaned = input.replace(/\d{2}:\d{2}:\d{2}[,\.]\d{3}\s*-->\s*\d{2}:\d{2}:\d{2}[,\.]\d{3}/g, '').trim();
+      resultBox.style.display = 'block';
+      resultBox.textContent = cleaned || 'သန့်စင်ပြီး စာသားမရှိပါ';
+    }
+  </script>
+
+</body>
+</html>
