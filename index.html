@@ -39,7 +39,7 @@
       margin: 0;
       color: #f1f5f9;
     }
-    input[type="file"], select, textarea, input[type="range"] {
+    input[type="file"], textarea, input[type="range"] {
       width: 100%;
       box-sizing: border-box;
       background-color: #0f172a;
@@ -65,11 +65,9 @@
       background-color: #0369a1;
     }
     
-    /* Video Box & Blur Area */
     .video-container {
       position: relative;
       width: 100%;
-      max-width: 100%;
       background: #000;
       border-radius: 8px;
       overflow: hidden;
@@ -92,10 +90,6 @@
       border-radius: 4px;
       pointer-events: none;
     }
-    audio {
-      width: 100%;
-      margin-top: 8px;
-    }
     .control-row {
       display: flex;
       flex-direction: column;
@@ -112,7 +106,6 @@
     <p class="sub">မြန်မာစာတန်းထိုးနှင့် Video Recap ပြုလုပ်ရန်</p>
   </div>
 
-  <!-- အဆင့် ၁ -->
   <div class="card">
     <h2>၁။ Video ရွေးချယ်ပါ</h2>
     <input type="file" id="videoInput" accept="video/*">
@@ -122,43 +115,35 @@
     </div>
   </div>
 
-  <!-- အဆင့် ၂ -->
   <div class="card">
     <h2>၂။ စာသားဖုံးအုပ်မည့် Blur Box အပြင်အဆင်</h2>
-    
     <div class="control-row">
       <label>အထက်/အောက် ရွှေ့ရန် (Position Y):</label>
       <input type="range" id="posY" min="0" max="90" value="15">
     </div>
-
     <div class="control-row">
       <label>Box အကျယ် (Width):</label>
       <input type="range" id="boxWidth" min="20" max="100" value="80">
     </div>
-
     <div class="control-row">
       <label>Box အမြင့် (Height):</label>
       <input type="range" id="boxHeight" min="20" max="150" value="45">
     </div>
-
     <div class="control-row">
       <label>Blur ဝါးသည့်နှုန်း (Blur Strength):</label>
       <input type="range" id="blurStrength" min="0" max="30" value="12">
     </div>
   </div>
 
-  <!-- အဆင့် ၃ -->
   <div class="card">
     <h2>၃။ မြန်မာစာတန်းထိုးနှင့် ဇာတ်ညွှန်း</h2>
     <textarea id="scriptText" placeholder="ဖတ်ပြစေလိုသော မြန်မာစာသားကို ဒီမှာရိုက်ထည့်ပါ..."></textarea>
   </div>
 
-  <!-- အဆင့် ၄ -->
   <div class="card">
     <h2>၄။ မြန်မာ AI အသံ စမ်းသပ်ရန်</h2>
     <button id="playVoiceBtn">🔊 မြန်မာ AI အသံ နားထောင်မည်</button>
-    <audio id="audioPlayer" controls style="display:none;"></audio>
-    <span id="voiceStatus" style="font-size: 0.8rem; color: #94a3b8;"></span>
+    <span id="voiceStatus" style="font-size: 0.85rem; color: #38bdf8; margin-top: 4px;"></span>
   </div>
 
   <script>
@@ -180,7 +165,6 @@
       }
     });
 
-    // Blur Box အနေအထားနှင့် အရွယ်အစားချိန်ညှိခြင်း
     function updateBlurBox() {
       blurOverlay.style.bottom = `${posY.value}%`;
       blurOverlay.style.width = `${boxWidth.value}%`;
@@ -195,10 +179,8 @@
     boxHeight.addEventListener('input', updateBlurBox);
     blurStrength.addEventListener('input', updateBlurBox);
 
-    // မြန်မာ TTS အသံထုတ်ယူခြင်း
     const playVoiceBtn = document.getElementById('playVoiceBtn');
     const scriptText = document.getElementById('scriptText');
-    const audioPlayer = document.getElementById('audioPlayer');
     const voiceStatus = document.getElementById('voiceStatus');
 
     playVoiceBtn.addEventListener('click', function() {
@@ -208,19 +190,31 @@
         return;
       }
 
-      voiceStatus.innerText = 'အသံထုတ်ယူနေပါသည်...';
-      const encodedText = encodeURIComponent(text);
-      const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=my&client=tw-ob`;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
 
-      audioPlayer.src = audioUrl;
-      audioPlayer.style.display = 'block';
-      
-      audioPlayer.play().then(() => {
-        voiceStatus.innerText = 'အသံဖွင့်နေပါသည်...';
-      }).catch(err => {
-        window.open(audioUrl, '_blank');
-        voiceStatus.innerText = 'Browser ကနေ အသံဖွင့်ပေးထားပါသည်';
-      });
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'my-MM';
+        utterance.rate = 0.9;
+
+        utterance.onstart = function() {
+          voiceStatus.innerText = '🔊 အသံဖတ်နေပါသည်...';
+        };
+
+        utterance.onend = function() {
+          voiceStatus.innerText = '✅ ဖတ်ပြီးပါပြီ။';
+        };
+
+        utterance.onerror = function() {
+          const fallbackUrl = `https://translate.google.com/?sl=auto&tl=my&text=${encodeURIComponent(text)}&op=translate`;
+          window.open(fallbackUrl, '_blank');
+          voiceStatus.innerText = 'Google Translate တွင် အသံဖွင့်ရန် ပြောင်းပေးထားပါသည်။';
+        };
+
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('သင့်ဖုန်း Browser တွင် Speech Synthesis စနစ် မပံ့ပိုးသေးပါခင်ဗျာ။');
+      }
     });
   </script>
 </body>
