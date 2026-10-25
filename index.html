@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DeepClip - Video Subtitle Recap</title>
+  <title>Aung Ahwin Max - Video Subtitle Recap</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
     /* Top Nav Bar */
     .navbar {
       background: #ffffff;
-      padding: 12px 16px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -47,27 +47,44 @@
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .brand-logo {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: #111827;
+      letter-spacing: 0.5px;
     }
-    .brand-icon {
-      background: #000;
-      color: #fff;
-      width: 28px;
-      height: 28px;
+    
+    /* AH Logo Icon Design */
+    .brand-logo-img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+      display: block;
+    }
+    .brand-icon-fallback {
+      background: radial-gradient(circle, #b91c1c 0%, #450a0a 100%);
+      color: #ffffff;
+      width: 34px;
+      height: 34px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 6px;
-      font-size: 0.8rem;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      border: 1.5px solid #ef4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+      text-shadow: 1px 1px 2px #000;
     }
+
     .recap-badge {
       display: flex;
       align-items: center;
@@ -82,6 +99,7 @@
       border-radius: 12px;
       padding: 2px 8px;
       font-size: 0.75rem;
+      font-weight: bold;
     }
 
     .container {
@@ -279,7 +297,7 @@
       border: 1px solid #374151;
     }
 
-    /* Slider Rows with +/- Controls */
+    /* Sliders with +/- Controls */
     .slider-group {
       display: flex;
       flex-direction: column;
@@ -358,7 +376,6 @@
       color: #ffffff;
     }
 
-    /* General Form Elements */
     select, input[type="text"] {
       width: 100%;
       padding: 9px 12px;
@@ -403,13 +420,15 @@
     <div class="nav-left">
       <div style="font-size: 1.2rem; cursor:pointer;">☰</div>
       <div class="brand-logo">
-        <div class="brand-icon">▶</div>
-        DeepClip
+        <!-- Logo Image with Fallback -->
+        <img src="logo.png" alt="AH Video" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+        <div class="brand-icon-fallback" id="logoFallback" style="display:none;">AH</div>
+        Aung Ahwin Max
       </div>
     </div>
     <div class="recap-badge">
       Auto Recap
-      <span class="coin-badge">0</span>
+      <span class="coin-badge">PRO</span>
     </div>
   </div>
 
@@ -419,7 +438,7 @@
     <label class="upload-card" for="videoFileInput">
       <div class="upload-icon">⇪</div>
       <h3>Video ဖိုင် ရွေးပါ</h3>
-      <p>MP4, MOV, MKV · ၁၅ မိနစ်အထိ</p>
+      <p>MP4, MOV, MKV · ၅ မိနစ်အထိ</p>
       <input type="file" id="videoFileInput" accept="video/*" style="display:none;">
     </label>
 
@@ -489,7 +508,7 @@
       </div>
     </div>
 
-    <!-- TAB 3: စာတန်း (Active Tab Matching the Screenshot) -->
+    <!-- TAB 3: စာတန်း -->
     <div class="tab-panel active" id="tabSub">
       
       <!-- Blur Setting Row -->
@@ -514,12 +533,10 @@
           <input type="checkbox" checked style="accent-color:var(--primary); width:18px; height:18px;">
         </div>
 
-        <!-- Sample Box -->
         <div class="subtitle-sample-box" id="sampleBox">
           ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်
         </div>
 
-        <!-- Font Choice -->
         <div class="slider-group">
           <div class="slider-header"><span>ဖောင့်</span></div>
           <select id="fontSelect">
@@ -527,7 +544,6 @@
           </select>
         </div>
 
-        <!-- Font Size Slider -->
         <div class="slider-group">
           <div class="slider-header">
             <span>စာလုံးအရွယ်</span>
@@ -540,7 +556,6 @@
           </div>
         </div>
 
-        <!-- Font Color Row -->
         <div class="slider-group">
           <div class="slider-header">
             <span>စာလုံး အရောင်</span>
@@ -556,7 +571,6 @@
           </div>
         </div>
 
-        <!-- Outline Color & Thickness -->
         <div class="slider-group">
           <div class="slider-header">
             <span>Outline အရောင်</span>
@@ -573,13 +587,11 @@
           </div>
         </div>
 
-        <!-- Box Background Checkbox -->
         <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#4b5563;">
           <input type="checkbox" id="bgBoxCheck">
           <label for="bgBoxCheck">Box (နောက်ခံ)</label>
         </div>
 
-        <!-- Position Controls -->
         <div class="pos-toggle-group">
           <button class="pos-btn active" onclick="setPosPreset('bottom')">အောက်</button>
           <button class="pos-btn" onclick="setPosPreset('center')">အလယ်</button>
@@ -612,7 +624,6 @@
 
       </div>
 
-      <!-- SRT Export Row -->
       <div class="config-card">
         <button class="action-btn-main" id="exportSrtBtn" style="background:#8b5cf6;">📥 SRT ဖိုင် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
       </div>
@@ -635,7 +646,6 @@
   <audio id="ttsAudio" style="display:none;"></audio>
 
   <script>
-    // Tab Switching
     function setTab(tabId) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
@@ -645,14 +655,12 @@
       document.querySelectorAll('.tab-item')[idxMap[tabId]].classList.add('active');
     }
 
-    // Step +/- Button Logic
     function stepVal(id, delta) {
       const el = document.getElementById(id);
       el.value = parseInt(el.value) + delta;
       el.dispatchEvent(new Event('input'));
     }
 
-    // Color Swatch
     let currentColor = '#ffe600';
     function setColor(hex) {
       currentColor = hex;
@@ -662,7 +670,6 @@
       updateSubStyles();
     }
 
-    // UI Sliders & Previews
     const sampleBox = document.getElementById('sampleBox');
     const subtitleOverlay = document.getElementById('subtitleOverlay');
     const fontSize = document.getElementById('fontSize');
@@ -686,12 +693,10 @@
       subPosVal.innerText = subPosY.value + '%';
       subWidthVal.innerText = subWidth.value + '%';
 
-      // Update Sample Box
       sampleBox.style.fontSize = fontSize.value + 'px';
       sampleBox.style.color = currentColor;
       sampleBox.style.textShadow = `${outlineWidth.value}px ${outlineWidth.value}px 0 #000, -${outlineWidth.value}px -${outlineWidth.value}px 0 #000, ${outlineWidth.value}px -${outlineWidth.value}px 0 #000, -${outlineWidth.value}px ${outlineWidth.value}px 0 #000`;
 
-      // Update Video Overlay Subtitle
       subtitleOverlay.style.fontSize = fontSize.value + 'px';
       subtitleOverlay.style.color = currentColor;
       subtitleOverlay.style.bottom = (100 - subPosY.value) + '%';
@@ -699,7 +704,6 @@
       subtitleOverlay.style.left = ((100 - subWidth.value) / 2) + '%';
       subtitleOverlay.style.textShadow = `${outlineWidth.value}px ${outlineWidth.value}px 0 #000, -${outlineWidth.value}px -${outlineWidth.value}px 0 #000, ${outlineWidth.value}px -${outlineWidth.value}px 0 #000, -${outlineWidth.value}px ${outlineWidth.value}px 0 #000`;
 
-      // Update Blur Box
       if (blurPosVal) blurPosVal.innerText = blurPosY.value + '%';
       if (blurWVal) blurWVal.innerText = blurWidth.value + '%';
       blurOverlay.style.bottom = blurPosY.value + '%';
@@ -719,7 +723,6 @@
       updateSubStyles();
     }
 
-    // Video Upload Logic
     const videoFileInput = document.getElementById('videoFileInput');
     const playerCard = document.getElementById('playerCard');
     const videoPreview = document.getElementById('videoPreview');
@@ -731,7 +734,6 @@
       }
     });
 
-    // Ratio Switcher
     const aspectRatio = document.getElementById('aspectRatio');
     aspectRatio.addEventListener('change', function() {
       playerCard.style.aspectRatio = this.value === 'auto' ? '' : this.value;
