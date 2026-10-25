@@ -30,6 +30,7 @@
       background-color: var(--bg-body);
       color: var(--text-main);
       padding-bottom: 40px;
+      overflow-x: hidden;
     }
 
     /* Top Nav Bar */
@@ -47,7 +48,13 @@
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+    }
+    .menu-toggle-btn {
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #374151;
+      padding: 4px;
     }
     .brand-logo {
       display: flex;
@@ -58,11 +65,9 @@
       color: #111827;
       letter-spacing: 0.5px;
     }
-    
-    /* AH Logo Icon Design */
     .brand-logo-img {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
       box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
@@ -71,20 +76,17 @@
     .brand-icon-fallback {
       background: radial-gradient(circle, #b91c1c 0%, #450a0a 100%);
       color: #ffffff;
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 900;
-      letter-spacing: 0.5px;
       border: 1.5px solid #ef4444;
-      box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
-      text-shadow: 1px 1px 2px #000;
+      box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
     }
-
     .recap-badge {
       display: flex;
       align-items: center;
@@ -102,6 +104,179 @@
       font-weight: bold;
     }
 
+    /* Sidebar Drawer Styles */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 999;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .sidebar-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+    .sidebar-drawer {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 300px;
+      height: 100vh;
+      background: #ffffff;
+      z-index: 1000;
+      box-shadow: 4px 0 16px rgba(0, 0, 0, 0.12);
+      transition: left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 16px;
+      overflow-y: auto;
+    }
+    .sidebar-drawer.active {
+      left: 0;
+    }
+
+    /* Sidebar Header */
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .sidebar-close-btn {
+      font-size: 1.25rem;
+      color: #6b7280;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    /* Sidebar Nav List */
+    .sidebar-section-title {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin: 16px 0 8px 0;
+      font-weight: 600;
+    }
+    .sidebar-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .menu-item {
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: background 0.15s ease;
+    }
+    .menu-item:hover {
+      background: #f3f4f6;
+    }
+    .menu-item.active {
+      background: #f4f3ff;
+      border: 1px solid #e0e7ff;
+    }
+    .menu-item .title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+    .menu-item.active .title {
+      color: var(--primary);
+    }
+    .menu-item .desc {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    .menu-item.active .desc {
+      color: #6366f1;
+    }
+
+    /* Sidebar Footer Cards */
+    .credit-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .credit-title {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    .credit-value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #111827;
+    }
+    .credit-sub {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    .btn-upgrade {
+      background: #ffffff;
+      color: var(--primary);
+      border: 1px solid #e0e7ff;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(92, 86, 224, 0.08);
+    }
+
+    /* User Profile Bar */
+    .user-profile-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      margin-top: 10px;
+      border-top: 1px solid var(--border-color);
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .user-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+    .user-text .name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #111827;
+    }
+    .user-text .email {
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+
+    /* Main Container Styles */
     .container {
       max-width: 480px;
       margin: 0 auto;
@@ -110,8 +285,6 @@
       flex-direction: column;
       gap: 14px;
     }
-
-    /* Upload Box */
     .upload-card {
       background: #ffffff;
       border: 1.5px dashed #c7d2fe;
@@ -415,12 +588,80 @@
 </head>
 <body>
 
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar Drawer matching screenshot -->
+  <div class="sidebar-drawer" id="sidebarDrawer">
+    <div>
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <img src="logo.png" alt="AH Video" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('logoFallbackSidebar').style.display='flex';">
+          <div class="brand-icon-fallback" id="logoFallbackSidebar" style="display:none;">AH</div>
+          <div>
+            <div style="font-weight:700; font-size:1rem; color:#111827;">Aung Ahwin Max</div>
+            <div style="font-size:0.7rem; color:#6b7280; font-weight:normal;">by Aung Ahwin AI</div>
+          </div>
+        </div>
+        <div class="sidebar-close-btn" onclick="toggleSidebar()">✕</div>
+      </div>
+
+      <div class="sidebar-section-title">မီနူး</div>
+      <div class="sidebar-menu-list">
+        <div class="menu-item" onclick="setTab('tabSub'); toggleSidebar();">
+          <span class="title">Manual တည်းဖြတ်ခြင်း</span>
+          <span class="desc">အခမဲ့ · Gemini နဲ့ ဘာသာပြန်</span>
+        </div>
+
+        <div class="menu-item active">
+          <span class="title">Auto Recap</span>
+          <span class="desc">တစ်ချက်နှိပ်ရုံ Premium Auto Mode</span>
+        </div>
+
+        <div class="menu-item">
+          <span class="title">လုပ်ငန်းမှတ်တမ်း</span>
+          <span class="desc">သိမ်းထားသော ဗီဒီယိုများ</span>
+        </div>
+
+        <div class="menu-item">
+          <span class="title">အသုံးပြုမှု</span>
+          <span class="desc">Video၊ မိနစ်၊ Credit</span>
+        </div>
+
+        <div class="menu-item">
+          <span class="title">ဆက်တင်</span>
+          <span class="desc">မူလတန်ဖိုး · Brand · API Key</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Bottom Credit Card & Profile -->
+    <div>
+      <div class="credit-card">
+        <span class="credit-title">လက်ကျန် Credits</span>
+        <span class="credit-value">0</span>
+        <span class="credit-sub">≈ Auto video 0 မိနစ်</span>
+        <button class="btn-upgrade">⚡ Upgrade လုပ်မယ်</button>
+      </div>
+
+      <div class="user-profile-bar">
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <div class="user-text">
+            <div class="name">Aung Ahwin</div>
+            <div class="email">aungahwin@gmail.com</div>
+          </div>
+        </div>
+        <div style="color:#6b7280; font-size:1.1rem; cursor:pointer;">↪</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Navbar -->
   <div class="navbar">
     <div class="nav-left">
-      <div style="font-size: 1.2rem; cursor:pointer;">☰</div>
+      <div class="menu-toggle-btn" onclick="toggleSidebar()">☰</div>
       <div class="brand-logo">
-        <!-- Logo Image with Fallback -->
         <img src="logo.png" alt="AH Video" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
         <div class="brand-icon-fallback" id="logoFallback" style="display:none;">AH</div>
         Aung Ahwin Max
@@ -428,7 +669,7 @@
     </div>
     <div class="recap-badge">
       Auto Recap
-      <span class="coin-badge">PRO</span>
+      <span class="coin-badge">0</span>
     </div>
   </div>
 
@@ -530,216 +771,4 @@
       <div class="config-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-weight:700; font-size:0.95rem;">စာတန်းထိုး (Caption)</span>
-          <input type="checkbox" checked style="accent-color:var(--primary); width:18px; height:18px;">
-        </div>
-
-        <div class="subtitle-sample-box" id="sampleBox">
-          ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်
-        </div>
-
-        <div class="slider-group">
-          <div class="slider-header"><span>ဖောင့်</span></div>
-          <select id="fontSelect">
-            <option value="'Noto Sans Myanmar', sans-serif">Noto Sans (ရိုးရိုး)</option>
-          </select>
-        </div>
-
-        <div class="slider-group">
-          <div class="slider-header">
-            <span>စာလုံးအရွယ်</span>
-            <span id="fontSizeVal">18px</span>
-          </div>
-          <div class="slider-control">
-            <button class="calc-btn" onclick="stepVal('fontSize', -1)">-</button>
-            <input type="range" id="fontSize" min="12" max="32" value="18">
-            <button class="calc-btn" onclick="stepVal('fontSize', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="slider-group">
-          <div class="slider-header">
-            <span>စာလုံး အရောင်</span>
-            <span style="display:inline-block; width:22px; height:14px; background:#ffe600; border-radius:3px;" id="colorIndicator"></span>
-          </div>
-          <div class="color-swatches">
-            <div class="swatch" style="background:#ffffff; border:1px solid #d1d5db;" onclick="setColor('#ffffff')"></div>
-            <div class="swatch selected" style="background:#ffe600;" onclick="setColor('#ffe600')"></div>
-            <div class="swatch" style="background:#38bdf8;" onclick="setColor('#38bdf8')"></div>
-            <div class="swatch" style="background:#f472b6;" onclick="setColor('#f472b6')"></div>
-            <div class="swatch" style="background:#4ade80;" onclick="setColor('#4ade80')"></div>
-            <div class="swatch" style="background:#fb923c;" onclick="setColor('#fb923c')"></div>
-          </div>
-        </div>
-
-        <div class="slider-group">
-          <div class="slider-header">
-            <span>Outline အရောင်</span>
-            <span style="display:inline-block; width:22px; height:14px; background:#000000; border-radius:3px;"></span>
-          </div>
-          <div class="slider-header" style="margin-top:6px;">
-            <span>Outline အထူ</span>
-            <span id="outlineVal">3px</span>
-          </div>
-          <div class="slider-control">
-            <button class="calc-btn" onclick="stepVal('outlineWidth', -1)">-</button>
-            <input type="range" id="outlineWidth" min="0" max="8" value="3">
-            <button class="calc-btn" onclick="stepVal('outlineWidth', 1)">+</button>
-          </div>
-        </div>
-
-        <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#4b5563;">
-          <input type="checkbox" id="bgBoxCheck">
-          <label for="bgBoxCheck">Box (နောက်ခံ)</label>
-        </div>
-
-        <div class="pos-toggle-group">
-          <button class="pos-btn active" onclick="setPosPreset('bottom')">အောက်</button>
-          <button class="pos-btn" onclick="setPosPreset('center')">အလယ်</button>
-          <button class="pos-btn" onclick="setPosPreset('custom')">ကိုယ်တိုင်</button>
-        </div>
-
-        <div class="slider-group">
-          <div class="slider-header">
-            <span>အပေါ်/အောက် နေရာ</span>
-            <span id="subPosVal">79%</span>
-          </div>
-          <div class="slider-control">
-            <button class="calc-btn" onclick="stepVal('subPosY', -1)">-</button>
-            <input type="range" id="subPosY" min="10" max="95" value="79">
-            <button class="calc-btn" onclick="stepVal('subPosY', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="slider-group">
-          <div class="slider-header">
-            <span>စာတန်း အကျယ်</span>
-            <span id="subWidthVal">88%</span>
-          </div>
-          <div class="slider-control">
-            <button class="calc-btn" onclick="stepVal('subWidth', -1)">-</button>
-            <input type="range" id="subWidth" min="40" max="100" value="88">
-            <button class="calc-btn" onclick="stepVal('subWidth', 1)">+</button>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="config-card">
-        <button class="action-btn-main" id="exportSrtBtn" style="background:#8b5cf6;">📥 SRT ဖိုင် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
-      </div>
-
-    </div>
-
-    <!-- TAB 4: အပို (Export) -->
-    <div class="tab-panel" id="tabExtra">
-      <div class="config-card">
-        <div class="slider-header"><span>ဗီဒီယို Export Render ထုတ်ယူခြင်း</span></div>
-        <button class="action-btn-main" id="playRecapBtn" style="background:#10b981;">▶️ အစမ်းဖွင့်ကြည့်မည်</button>
-        <button class="action-btn-danger" id="exportVideoBtn" style="margin-top:8px;">🔴 Export (ဗီဒီယိုဖိုင် ဒေါင်းလုဒ်ဆွဲမည်)</button>
-        <span id="syncStatus" style="font-size:0.8rem; color:var(--primary); text-align:center; margin-top:4px;"></span>
-      </div>
-    </div>
-
-  </div>
-
-  <canvas id="renderCanvas"></canvas>
-  <audio id="ttsAudio" style="display:none;"></audio>
-
-  <script>
-    function setTab(tabId) {
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
-
-      document.getElementById(tabId).classList.add('active');
-      const idxMap = { 'tabVideo': 0, 'tabVoice': 1, 'tabSub': 2, 'tabExtra': 3 };
-      document.querySelectorAll('.tab-item')[idxMap[tabId]].classList.add('active');
-    }
-
-    function stepVal(id, delta) {
-      const el = document.getElementById(id);
-      el.value = parseInt(el.value) + delta;
-      el.dispatchEvent(new Event('input'));
-    }
-
-    let currentColor = '#ffe600';
-    function setColor(hex) {
-      currentColor = hex;
-      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
-      event.target.classList.add('selected');
-      document.getElementById('colorIndicator').style.background = hex;
-      updateSubStyles();
-    }
-
-    const sampleBox = document.getElementById('sampleBox');
-    const subtitleOverlay = document.getElementById('subtitleOverlay');
-    const fontSize = document.getElementById('fontSize');
-    const fontSizeVal = document.getElementById('fontSizeVal');
-    const outlineWidth = document.getElementById('outlineWidth');
-    const outlineVal = document.getElementById('outlineVal');
-    const subPosY = document.getElementById('subPosY');
-    const subPosVal = document.getElementById('subPosVal');
-    const subWidth = document.getElementById('subWidth');
-    const subWidthVal = document.getElementById('subWidthVal');
-
-    const blurPosY = document.getElementById('blurPosY');
-    const blurPosVal = document.getElementById('blurPosVal');
-    const blurWidth = document.getElementById('blurWidth');
-    const blurWVal = document.getElementById('blurWVal');
-    const blurOverlay = document.getElementById('blurOverlay');
-
-    function updateSubStyles() {
-      fontSizeVal.innerText = fontSize.value + 'px';
-      outlineVal.innerText = outlineWidth.value + 'px';
-      subPosVal.innerText = subPosY.value + '%';
-      subWidthVal.innerText = subWidth.value + '%';
-
-      sampleBox.style.fontSize = fontSize.value + 'px';
-      sampleBox.style.color = currentColor;
-      sampleBox.style.textShadow = `${outlineWidth.value}px ${outlineWidth.value}px 0 #000, -${outlineWidth.value}px -${outlineWidth.value}px 0 #000, ${outlineWidth.value}px -${outlineWidth.value}px 0 #000, -${outlineWidth.value}px ${outlineWidth.value}px 0 #000`;
-
-      subtitleOverlay.style.fontSize = fontSize.value + 'px';
-      subtitleOverlay.style.color = currentColor;
-      subtitleOverlay.style.bottom = (100 - subPosY.value) + '%';
-      subtitleOverlay.style.width = subWidth.value + '%';
-      subtitleOverlay.style.left = ((100 - subWidth.value) / 2) + '%';
-      subtitleOverlay.style.textShadow = `${outlineWidth.value}px ${outlineWidth.value}px 0 #000, -${outlineWidth.value}px -${outlineWidth.value}px 0 #000, ${outlineWidth.value}px -${outlineWidth.value}px 0 #000, -${outlineWidth.value}px ${outlineWidth.value}px 0 #000`;
-
-      if (blurPosVal) blurPosVal.innerText = blurPosY.value + '%';
-      if (blurWVal) blurWVal.innerText = blurWidth.value + '%';
-      blurOverlay.style.bottom = blurPosY.value + '%';
-      blurOverlay.style.width = blurWidth.value + '%';
-      blurOverlay.style.left = ((100 - blurWidth.value) / 2) + '%';
-    }
-
-    [fontSize, outlineWidth, subPosY, subWidth, blurPosY, blurWidth].forEach(el => {
-      if (el) el.addEventListener('input', updateSubStyles);
-    });
-
-    function setPosPreset(pos) {
-      document.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
-      if (pos === 'bottom') subPosY.value = 85;
-      if (pos === 'center') subPosY.value = 50;
-      updateSubStyles();
-    }
-
-    const videoFileInput = document.getElementById('videoFileInput');
-    const playerCard = document.getElementById('playerCard');
-    const videoPreview = document.getElementById('videoPreview');
-    videoFileInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        videoPreview.src = URL.createObjectURL(file);
-        playerCard.style.display = 'flex';
-      }
-    });
-
-    const aspectRatio = document.getElementById('aspectRatio');
-    aspectRatio.addEventListener('change', function() {
-      playerCard.style.aspectRatio = this.value === 'auto' ? '' : this.value;
-    });
-
-    updateSubStyles();
-  </script>
-</body>
-</html>
+          <input type="checkbox" checked style="accent-color:var(--primary); width:18px; height:1
