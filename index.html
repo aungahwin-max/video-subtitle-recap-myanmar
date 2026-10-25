@@ -3,73 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Subtitle Recap Myanmar</title>
+  <title>Video Subtitle Recap Myanmar Pro</title>
   <style>
+    :root {
+      --primary: #6366f1;
+      --bg-dark: #090d16;
+      --card-bg: #131b2e;
+      --border: #232f48;
+      --text: #f8fafc;
+      --text-sub: #94a3b8;
+    }
     body {
-      background-color: #0f172a;
-      color: #f8fafc;
-      font-family: sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
-      padding: 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
     }
     h1 {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       color: #38bdf8;
-      margin: 0 0 4px 0;
-    }
-    p.sub {
-      color: #94a3b8;
-      font-size: 0.85rem;
-      margin: 0 0 12px 0;
-    }
-    .card {
-      background-color: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .card h2 {
-      font-size: 1rem;
       margin: 0;
-      color: #f1f5f9;
     }
-    input[type="file"], select, textarea, input[type="range"], input[type="text"], input[type="number"] {
-      width: 100%;
-      box-sizing: border-box;
-      background-color: #0f172a;
-      color: #fff;
-      border: 1px solid #475569;
-      border-radius: 6px;
-      padding: 10px;
-      font-size: 0.9rem;
-    }
-    button {
-      background-color: #0284c7;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 12px;
+    .badge {
+      background: #1e1b4b;
+      color: #818cf8;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
       font-weight: bold;
-      font-size: 0.95rem;
-      cursor: pointer;
     }
-    button:active {
-      background-color: #0369a1;
-    }
-    
+
+    /* Video Player Box */
     .video-wrapper {
       width: 100%;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
       display: flex;
       justify-content: center;
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
+      border: 1px solid var(--border);
     }
     .video-container {
       position: relative;
@@ -83,6 +66,7 @@
       height: 100%;
       object-fit: contain;
       display: block;
+      transition: transform 0.2s ease;
     }
     .blur-overlay {
       position: absolute;
@@ -113,87 +97,159 @@
       z-index: 10;
       word-break: break-word;
     }
+
+    /* Tab Menu Navigation */
+    .tabs-nav {
+      display: flex;
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 4px;
+      border: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      padding: 8px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Tab Content Cards */
+    .tab-content {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .tab-content.active {
+      display: flex;
+    }
+
+    input[type="file"], select, textarea, input[type="range"], input[type="number"] {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #0b1120;
+      color: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px;
+      font-size: 0.85rem;
+    }
     .control-row {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      font-size: 0.85rem;
-      color: #cbd5e1;
+      font-size: 0.82rem;
+      color: var(--text-sub);
     }
-    .btn-sync {
-      background-color: #10b981;
-    }
-    .btn-sync:active {
-      background-color: #059669;
-    }
-    .btn-export {
-      background-color: #8b5cf6;
-    }
-    .btn-export:active {
-      background-color: #7c3aed;
-    }
-    .btn-add {
-      background-color: #334155;
-      font-size: 0.85rem;
-      padding: 8px;
-    }
-
-    /* Dialogue Timeline Item */
-    .dialogue-box {
-      border: 1px solid #475569;
-      border-radius: 8px;
-      padding: 10px;
-      background: #0f172a;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .dialogue-header {
+    .flex-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
     }
-    .dialogue-header select {
-      flex: 1;
-      padding: 6px;
+
+    button.btn-action {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
     }
-    .time-inputs {
+    button.btn-green {
+      background-color: #10b981;
+    }
+    button.btn-gray {
+      background-color: #334155;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+    }
+
+    /* Dialogue Timeline Item */
+    .dialogue-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      background: #090e1a;
       display: flex;
+      flex-direction: column;
       gap: 8px;
-      align-items: center;
-      font-size: 0.8rem;
-      color: #94a3b8;
-    }
-    .time-inputs input {
-      padding: 4px 6px;
-      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
 
-  <div>
-    <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">Multi-Voice AI အသံနှင့် SRT Subtitle Export/Import စနစ်</p>
-  </div>
+  <header>
+    <h1>🎬 Subtitle Recap Pro</h1>
+    <span class="badge">Myanmar AI v2.0</span>
+  </header>
 
-  <!-- အဆင့် ၁ - ဗီဒီယို -->
-  <div class="card">
-    <h2>၁။ Video ဖိုင် ရွေးချယ်ပါ</h2>
-    <input type="file" id="videoInput" accept="video/*">
-    <div class="video-wrapper">
-      <div class="video-container" id="videoContainer">
-        <video id="videoPreview" playsinline controls></video>
-        <div class="blur-overlay" id="blurOverlay"></div>
-        <div class="subtitle-overlay" id="subtitleOverlay"></div>
-      </div>
+  <!-- Video Viewport -->
+  <div class="video-wrapper">
+    <div class="video-container" id="videoContainer">
+      <video id="videoPreview" playsinline controls></video>
+      <div class="blur-overlay" id="blurOverlay"></div>
+      <div class="subtitle-overlay" id="subtitleOverlay"></div>
     </div>
   </div>
 
-  <!-- အဆင့် ၂ - Blur Mask -->
-  <div class="card">
-    <h2>၂။ မူရင်းစာတန်းဖုံးအုပ်မည့် Blur Box</h2>
+  <!-- Tab Menu -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('tab-video')">📹 ဗီဒီယို</button>
+    <button class="tab-btn" onclick="switchTab('tab-blur')">🌫️ Blur Box</button>
+    <button class="tab-btn" onclick="switchTab('tab-recap')">🎙️ AI စကားပြော</button>
+    <button class="tab-btn" onclick="switchTab('tab-srt')">📄 SRT ဖိုင်</button>
+  </div>
+
+  <!-- TAB 1: ဗီဒီယို စနစ်များ -->
+  <div class="tab-content active" id="tab-video">
+    <div class="control-row">
+      <label>၁။ ဗီဒီယိုဖိုင် ရွေးချယ်ပါ:</label>
+      <input type="file" id="videoInput" accept="video/*">
+    </div>
+
+    <div class="control-row">
+      <label>ဗီဒီယို အချိုးအစား (Aspect Ratio):</label>
+      <select id="aspectRatio">
+        <option value="auto">မူရင်းအတိုင်း (Original)</option>
+        <option value="9/16">9:16 (TikTok / Reels / Shorts)</option>
+        <option value="16/9">16:9 (YouTube Standard)</option>
+        <option value="1/1">1:1 (Square)</option>
+      </select>
+    </div>
+
+    <div class="flex-row">
+      <label style="font-size:0.85rem;">Mirror (ဘယ်/ညာ လှန်မည်):</label>
+      <input type="checkbox" id="mirrorToggle" style="width:20px; height:20px;">
+    </div>
+
+    <div class="control-row">
+      <div class="flex-row">
+        <label>Zoom (ဗီဒီယို ချုံ့/ချဲ့):</label>
+        <span id="zoomVal" style="color:#38bdf8; font-size:0.8rem;">100%</span>
+      </div>
+      <input type="range" id="videoZoom" min="100" max="180" value="100">
+    </div>
+  </div>
+
+  <!-- TAB 2: Blur Box အပြင်အဆင် -->
+  <div class="tab-content" id="tab-blur">
     <div class="control-row">
       <label>အထက်/အောက် ရွှေ့ရန် (Position Y):</label>
       <input type="range" id="posY" min="0" max="85" value="14">
@@ -207,303 +263,11 @@
       <input type="range" id="boxHeight" min="20" max="150" value="48">
     </div>
     <div class="control-row">
-      <label>Blur ဝါးသည့်နှုန်း (Blur Strength):</label>
+      <label>Blur ဝါးသည့်နှုန်း (Strength):</label>
       <input type="range" id="blurStrength" min="0" max="30" value="12">
     </div>
-  </div>
-
-  <!-- အဆင့် ၃ - SRT Import & Export -->
-  <div class="card">
-    <h2>၃။ SRT စာတန်းထိုး (Import / Export)</h2>
-    <label style="font-size: 0.85rem; color: #94a3b8;">ဖုန်းထဲရှိ .srt ဖိုင် ထည့်သွင်းရန်:</label>
-    <input type="file" id="srtFileInput" accept=".srt">
-    <button class="btn-export" id="exportSrtBtn">📥 SRT ဖိုင်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
-  </div>
-
-  <!-- အဆင့် ၄ - စကားပြောခန်း Timeline -->
-  <div class="card">
-    <h2>၄။ စကားပြောခန်းများ နှင့် အသံခွဲခြားခြင်း</h2>
-    <div id="dialogueList" style="display: flex; flex-direction: column; gap: 10px;">
-      
-      <!-- လိုင်း ၁ -->
-      <div class="dialogue-box">
-        <div class="dialogue-header">
-          <select class="voice-role">
-            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-            <option value="girl" selected>👧 မိန်းကလေးသံ</option>
-            <option value="boy">👦 ကောင်လေးသံ</option>
-            <option value="man">👨 လူကြီးသံ</option>
-            <option value="woman">👩 မိန်းမကြီးသံ</option>
-          </select>
-        </div>
-        <div class="time-inputs">
-          <span>စတင်ချိန် (စက္ကန့်):</span>
-          <input type="number" class="time-start" value="0" step="0.5">
-          <span>ပြီးဆုံးချိန်:</span>
-          <input type="number" class="time-end" value="3" step="0.5">
-        </div>
-        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ရှင် အခု ဘာလုပ်နေတာလဲ...</textarea>
-      </div>
-
-      <!-- လိုင်း ၂ -->
-      <div class="dialogue-box">
-        <div class="dialogue-header">
-          <select class="voice-role">
-            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-            <option value="boy" selected>👦 ကောင်လေးသံ</option>
-            <option value="girl">👧 မိန်းကလေးသံ</option>
-            <option value="man">👨 လူကြီးသံ</option>
-            <option value="woman">👩 မိန်းမကြီးသံ</option>
-          </select>
-        </div>
-        <div class="time-inputs">
-          <span>စတင်ချိန် (စက္ကန့်):</span>
-          <input type="number" class="time-start" value="3.5" step="0.5">
-          <span>ပြီးဆုံးချိန်:</span>
-          <input type="number" class="time-end" value="6.5" step="0.5">
-        </div>
-        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ...">ငါ မင်းကို ကာကွယ်ပေးမလို့လေ...</textarea>
-      </div>
-
-    </div>
-
-    <button type="button" class="btn-add" id="addDialogueBtn">➕ စကားပြောခန်းအသစ် ထပ်ထည့်မည်</button>
-    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ Video + AI အသံစုံ Recap အစမ်းဖွင့်မည်</button>
-    <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8;"></span>
-  </div>
-
-  <script>
-    const videoInput = document.getElementById('videoInput');
-    const videoContainer = document.getElementById('videoContainer');
-    const videoPreview = document.getElementById('videoPreview');
-    const blurOverlay = document.getElementById('blurOverlay');
-    const subtitleOverlay = document.getElementById('subtitleOverlay');
-
-    const posY = document.getElementById('posY');
-    const boxWidth = document.getElementById('boxWidth');
-    const boxHeight = document.getElementById('boxHeight');
-    const blurStrength = document.getElementById('blurStrength');
-
-    const dialogueList = document.getElementById('dialogueList');
-    const addDialogueBtn = document.getElementById('addDialogueBtn');
-    const playRecapBtn = document.getElementById('playRecapBtn');
-    const syncStatus = document.getElementById('syncStatus');
-    const exportSrtBtn = document.getElementById('exportSrtBtn');
-    const srtFileInput = document.getElementById('srtFileInput');
-
-    videoInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        videoPreview.src = URL.createObjectURL(file);
-        videoContainer.style.display = 'block';
-      }
-    });
-
-    function updateBlurBox() {
-      blurOverlay.style.bottom = `${posY.value}%`;
-      blurOverlay.style.width = `${boxWidth.value}%`;
-      blurOverlay.style.left = `${(100 - boxWidth.value) / 2}%`;
-      blurOverlay.style.height = `${boxHeight.value}px`;
-      blurOverlay.style.backdropFilter = `blur(${blurStrength.value}px)`;
-      blurOverlay.style.webkitBackdropFilter = `blur(${blurStrength.value}px)`;
-      subtitleOverlay.style.bottom = `${posY.value}%`;
-    }
-
-    posY.addEventListener('input', updateBlurBox);
-    boxWidth.addEventListener('input', updateBlurBox);
-    boxHeight.addEventListener('input', updateBlurBox);
-    blurStrength.addEventListener('input', updateBlurBox);
-
-    // အသံစရိုက်လက္ခဏာ သတ်မှတ်ချက်များ
-    const voiceProfiles = {
-      narrator: { pitch: 1.0, rate: 0.95 },
-      boy: { pitch: 1.25, rate: 1.0 },
-      girl: { pitch: 1.5, rate: 1.05 },
-      man: { pitch: 0.65, rate: 0.85 },
-      woman: { pitch: 1.1, rate: 0.95 }
-    };
-
-    // Dialogue အသစ်ထည့်ခြင်း
-    addDialogueBtn.addEventListener('click', function() {
-      const div = document.createElement('div');
-      div.className = 'dialogue-box';
-      div.innerHTML = `
-        <div class="dialogue-header">
-          <select class="voice-role">
-            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-            <option value="boy">👦 ကောင်လေးသံ</option>
-            <option value="girl">👧 မိန်းကလေးသံ</option>
-            <option value="man">👨 လူကြီးသံ</option>
-            <option value="woman">👩 မိန်းမကြီးသံ</option>
-          </select>
-          <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
-        </div>
-        <div class="time-inputs">
-          <span>စတင်ချိန်:</span>
-          <input type="number" class="time-start" value="0" step="0.5">
-          <span>ပြီးဆုံးချိန်:</span>
-          <input type="number" class="time-end" value="3" step="0.5">
-        </div>
-        <textarea class="dialogue-text" rows="2" placeholder="ပြောမည့် စာသားရိုက်ပါ..."></textarea>
-      `;
-      dialogueList.appendChild(div);
-    });
-
-    // စက္ကန့်ကို SRT Time Format သို့ ပြောင်းလဲခြင်း (00:00:00,000)
-    function formatSrtTime(seconds) {
-      const date = new Date(null);
-      date.setSeconds(seconds);
-      const ms = Math.floor((seconds % 1) * 1000).toString().padStart(3, '0');
-      const timeStr = date.toISOString().substr(11, 8);
-      return `${timeStr},${ms}`;
-    }
-
-    // SRT Export လုပ်ခြင်း
-    exportSrtBtn.addEventListener('click', function() {
-      const boxes = document.querySelectorAll('.dialogue-box');
-      let srtContent = '';
-      let index = 1;
-
-      boxes.forEach(box => {
-        const text = box.querySelector('.dialogue-text').value.trim();
-        const start = parseFloat(box.querySelector('.time-start').value) || 0;
-        const end = parseFloat(box.querySelector('.time-end').value) || (start + 2.5);
-
-        if (text) {
-          srtContent += `${index}\n`;
-          srtContent += `${formatSrtTime(start)} --> ${formatSrtTime(end)}\n`;
-          srtContent += `${text}\n\n`;
-          index++;
-        }
-      });
-
-      if (!srtContent) {
-        alert('စာတန်းထိုး စာသားမရှိသေးပါခင်ဗျာ။');
-        return;
-      }
-
-      const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'recap_myanmar_subtitles.srt';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    // SRT File တင်သွင်းခြင်း (Import)
-    srtFileInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const content = evt.target.result;
-        const srtBlocks = content.split(/\r?\n\r?\n/);
-        dialogueList.innerHTML = ''; // အဟောင်းရှင်းခြင်း
-
-        srtBlocks.forEach(block => {
-          const lines = block.split(/\r?\n/);
-          if (lines.length >= 3) {
-            const timeMatch = lines[1].match(/(\d{2}:\d{2}:\d{2}[,\.]\d{3}) --> (\d{2}:\d{2}:\d{2}[,\.]\d{3})/);
-            const text = lines.slice(2).join(' ');
-
-            let startSec = 0, endSec = 3;
-            if (timeMatch) {
-              const parseSec = (tStr) => {
-                const parts = tStr.replace(',', '.').split(':');
-                return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
-              };
-              startSec = parseSec(timeMatch[1]);
-              endSec = parseSec(timeMatch[2]);
-            }
-
-            const div = document.createElement('div');
-            div.className = 'dialogue-box';
-            div.innerHTML = `
-              <div class="dialogue-header">
-                <select class="voice-role">
-                  <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-                  <option value="boy">👦 ကောင်လေးသံ</option>
-                  <option value="girl">👧 မိန်းကလေးသံ</option>
-                  <option value="man">👨 လူကြီးသံ</option>
-                  <option value="woman">👩 မိန်းမကြီးသံ</option>
-                </select>
-                <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
-              </div>
-              <div class="time-inputs">
-                <span>စတင်ချိန်:</span>
-                <input type="number" class="time-start" value="${startSec.toFixed(1)}" step="0.5">
-                <span>ပြီးဆုံးချိန်:</span>
-                <input type="number" class="time-end" value="${endSec.toFixed(1)}" step="0.5">
-              </div>
-              <textarea class="dialogue-text" rows="2">${text}</textarea>
-            `;
-            dialogueList.appendChild(div);
-          }
-        });
-        alert('SRT ဖိုင် အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။');
-      };
-      reader.readAsText(file);
-    });
-
-    // Playback စနစ်
-    playRecapBtn.addEventListener('click', function() {
-      const boxes = document.querySelectorAll('.dialogue-box');
-      const lines = [];
-
-      boxes.forEach(box => {
-        const role = box.querySelector('.voice-role').value;
-        const text = box.querySelector('.dialogue-text').value.trim();
-        const start = parseFloat(box.querySelector('.time-start').value) || 0;
-        const end = parseFloat(box.querySelector('.time-end').value) || 3;
-        if (text) lines.push({ role, text, start, end });
-      });
-
-      if (lines.length === 0) {
-        alert('စကားပြောခန်း စာသား မရှိသေးပါခင်ဗျာ။');
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-      videoPreview.currentTime = 0;
-      videoPreview.volume = 0.2;
-      videoPreview.play();
-
-      let currentIndex = 0;
-
-      function speakNext() {
-        if (currentIndex >= lines.length) {
-          syncStatus.innerText = '✅ Recap ပြီးဆုံးပါပြီ။';
-          return;
-        }
-
-        const currentLine = lines[currentIndex];
-        subtitleOverlay.innerText = currentLine.text;
-        syncStatus.innerText = `▶️ [${currentLine.role}] ဖတ်ပြနေပါသည်...`;
-
-        const utterance = new SpeechSynthesisUtterance(currentLine.text);
-        utterance.lang = 'my-MM';
-
-        const profile = voiceProfiles[currentLine.role] || voiceProfiles.narrator;
-        utterance.pitch = profile.pitch;
-        utterance.rate = profile.rate;
-
-        utterance.onend = function() {
-          currentIndex++;
-          speakNext();
-        };
-
-        utterance.onerror = function() {
-          currentIndex++;
-          speakNext();
-        };
-
-        window.speechSynthesis.speak(utterance);
-      }
-
-      speakNext();
-    });
-  </script>
-</body>
-</html>
+    <div class="control-row">
+      <label>စာတန်းထိုး အရောင်:</label>
+      <select id="subColor">
+        <option value="#ffffff">အဖြူရောင် (White)</option>
+        <option value="#facc15">အဝါရ
