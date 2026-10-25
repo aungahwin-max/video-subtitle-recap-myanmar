@@ -63,6 +63,7 @@
       background-color: #0369a1;
     }
     
+    /* Video Box & Layers */
     .video-wrapper {
       width: 100%;
       display: flex;
@@ -70,19 +71,22 @@
       background: #000;
       border-radius: 8px;
       overflow: hidden;
+      margin-top: 8px;
     }
     .video-container {
       position: relative;
       width: 100%;
       background: #000;
       overflow: hidden;
-      display: none;
+      display: block; /* အမြဲပေါ်နေစေရန် */
+      min-height: 200px;
     }
     video {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
+      background: #000;
     }
     .blur-overlay {
       position: absolute;
@@ -180,10 +184,10 @@
 
   <div>
     <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">Multi-Voice AI အသံနှင့် Video Export စနစ်</p>
+    <p class="sub">Multi-Voice AI အသံ၊ စာတန်းထိုးနှင့် Video Export စနစ်</p>
   </div>
 
-  <!-- အဆင့် ၁ -->
+  <!-- အဆင့် ၁ - ဗီဒီယို -->
   <div class="card">
     <h2>၁။ Video ဖိုင် ရွေးချယ်ပါ</h2>
     <input type="file" id="videoInput" accept="video/*">
@@ -194,13 +198,35 @@
         <div class="subtitle-overlay" id="subtitleOverlay"></div>
       </div>
     </div>
-    <!-- Hidden Canvas for Video Exporting -->
     <canvas id="renderCanvas"></canvas>
   </div>
 
-  <!-- အဆင့် ၂ -->
+  <!-- အဆင့် ၂ - Video Size နှင့် အရည်အသွေး -->
   <div class="card">
-    <h2>၂။ မူရင်းစာတန်းဖုံးအုပ်မည့် Blur Box</h2>
+    <h2>၂။ Video အချိုးအစားနှင့် အရည်အသွေး</h2>
+    <div class="control-row">
+      <label>Video အချိုး (Aspect Ratio):</label>
+      <select id="aspectRatio">
+        <option value="auto">မူရင်းအတိုင်း (Original)</option>
+        <option value="9/16" selected>9:16 (TikTok / Reels / Shorts)</option>
+        <option value="16/9">16:9 (YouTube Standard)</option>
+        <option value="1/1">1:1 (Square)</option>
+        <option value="4/5">4:5 (Facebook / Instagram)</option>
+      </select>
+    </div>
+    <div class="control-row">
+      <label>Render အရည်အသွေး (Output Quality):</label>
+      <select id="videoQuality">
+        <option value="1080p">TikTok HD (1080p)</option>
+        <option value="720p" selected>Standard HD (720p)</option>
+        <option value="480p">Fast Render (480p)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- အဆင့် ၃ - Blur Mask -->
+  <div class="card">
+    <h2>၃။ မူရင်းစာတန်းဖုံးအုပ်မည့် Blur Box</h2>
     <div class="control-row">
       <label>အထက်/အောက် ရွှေ့ရန် (Position Y):</label>
       <input type="range" id="posY" min="0" max="85" value="14">
@@ -219,16 +245,16 @@
     </div>
   </div>
 
-  <!-- အဆင့် ၃ -->
+  <!-- အဆင့် ၄ - SRT စနစ် -->
   <div class="card">
-    <h2>၃။ SRT စာတန်းထိုး (Import / Export)</h2>
+    <h2>၄။ SRT စာတန်းထိုး (Import / Export)</h2>
     <input type="file" id="srtFileInput" accept=".srt">
     <button class="btn-export" id="exportSrtBtn">📥 SRT ဖိုင်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
   </div>
 
-  <!-- အဆင့် ၄ -->
+  <!-- အဆင့် ၅ - စကားပြောခန်းများ -->
   <div class="card">
-    <h2>၄။ စကားပြောခန်းများ နှင့် Recap ပြုလုပ်ခြင်း</h2>
+    <h2>၅။ စကားပြောခန်းများ နှင့် Recap ပြုလုပ်ခြင်း</h2>
     <div id="dialogueList" style="display: flex; flex-direction: column; gap: 10px;">
       
       <div class="dialogue-box">
@@ -283,6 +309,7 @@
     const videoPreview = document.getElementById('videoPreview');
     const blurOverlay = document.getElementById('blurOverlay');
     const subtitleOverlay = document.getElementById('subtitleOverlay');
+    const aspectRatio = document.getElementById('aspectRatio');
 
     const posY = document.getElementById('posY');
     const boxWidth = document.getElementById('boxWidth');
@@ -298,14 +325,22 @@
     const srtFileInput = document.getElementById('srtFileInput');
     const renderCanvas = document.getElementById('renderCanvas');
 
+    // Video တင်ခြင်း
     videoInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
-        videoPreview.src = URL.createObjectURL(file);
-        videoContainer.style.display = 'block';
+        const fileURL = URL.createObjectURL(file);
+        videoPreview.src = fileURL;
+        videoPreview.load();
       }
     });
 
+    // Ratio ချိန်ညှိခြင်း
+    aspectRatio.addEventListener('change', function(e) {
+      videoContainer.style.aspectRatio = e.target.value === 'auto' ? '' : e.target.value;
+    });
+
+    // Blur Box အနေအထား
     function updateBlurBox() {
       blurOverlay.style.bottom = `${posY.value}%`;
       blurOverlay.style.width = `${boxWidth.value}%`;
@@ -320,6 +355,7 @@
     boxWidth.addEventListener('input', updateBlurBox);
     boxHeight.addEventListener('input', updateBlurBox);
     blurStrength.addEventListener('input', updateBlurBox);
+    updateBlurBox();
 
     const voiceProfiles = {
       narrator: { pitch: 1.0, rate: 0.95 },
@@ -367,7 +403,7 @@
       return lines;
     }
 
-    // စမ်းသပ် Playback
+    // Playback Preview
     playRecapBtn.addEventListener('click', function() {
       const lines = getLines();
       if (lines.length === 0) {
@@ -413,7 +449,7 @@
       speakNext();
     });
 
-    // ဗီဒီယို Export Render ပြုလုပ်ခြင်း
+    // Video Export Render
     exportVideoBtn.addEventListener('click', async function() {
       if (!videoPreview.src) {
         alert('ကျေးဇူးပြု၍ Video ဖိုင်အရင် ရွေးချယ်ပါခင်ဗျာ။');
@@ -462,13 +498,11 @@
       let currentSubText = '';
       let isRendering = true;
 
-      // Canvas Frame ရေးဆွဲခြင်း Loop
       function drawFrame() {
         if (!isRendering) return;
 
         ctx.drawImage(videoPreview, 0, 0, renderCanvas.width, renderCanvas.height);
 
-        // Blur Mask ရေးဆွဲခြင်း
         const bWidth = (renderCanvas.width * boxWidth.value) / 100;
         const bHeight = parseInt(boxHeight.value) * (renderCanvas.height / 600);
         const bLeft = (renderCanvas.width - bWidth) / 2;
@@ -478,6 +512,137 @@
         ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
         ctx.fillRect(bLeft, bTop, bWidth, bHeight);
 
-        // မြန်မာစာတန်းထိုး ရေးဆွဲခြင်း
         if (currentSubText) {
-          ctx.font
+          ctx.font = `bold ${Math.floor(renderCanvas.width * 0.045)}px sans-serif`;
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.strokeStyle = '#000000';
+          ctx.lineWidth = 4;
+          const textY = bTop + (bHeight / 2) + 8;
+          ctx.strokeText(currentSubText, renderCanvas.width / 2, textY);
+          ctx.fillText(currentSubText, renderCanvas.width / 2, textY);
+        }
+
+        requestAnimationFrame(drawFrame);
+      }
+
+      drawFrame();
+
+      let lineIndex = 0;
+      function speakForRender() {
+        if (lineIndex >= lines.length) {
+          isRendering = false;
+          videoPreview.pause();
+          recorder.stop();
+          return;
+        }
+
+        const l = lines[lineIndex];
+        currentSubText = l.text;
+
+        const utterance = new SpeechSynthesisUtterance(l.text);
+        utterance.lang = 'my-MM';
+        const profile = voiceProfiles[l.role] || voiceProfiles.narrator;
+        utterance.pitch = profile.pitch;
+        utterance.rate = profile.rate;
+
+        utterance.onend = function() {
+          lineIndex++;
+          speakForRender();
+        };
+        utterance.onerror = function() {
+          lineIndex++;
+          speakForRender();
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }
+
+      speakForRender();
+    });
+
+    // SRT Helpers
+    function formatSrtTime(seconds) {
+      const date = new Date(null);
+      date.setSeconds(seconds);
+      const ms = Math.floor((seconds % 1) * 1000).toString().padStart(3, '0');
+      const timeStr = date.toISOString().substr(11, 8);
+      return `${timeStr},${ms}`;
+    }
+
+    exportSrtBtn.addEventListener('click', function() {
+      const lines = getLines();
+      if (lines.length === 0) {
+        alert('စာတန်းထိုး စာသားမရှိသေးပါခင်ဗျာ။');
+        return;
+      }
+      let srtContent = '';
+      lines.forEach((l, idx) => {
+        srtContent += `${idx + 1}\n${formatSrtTime(l.start)} --> ${formatSrtTime(l.end)}\n${l.text}\n\n`;
+      });
+      const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'recap_myanmar_subtitles.srt';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    srtFileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const content = evt.target.result;
+        const srtBlocks = content.split(/\r?\n\r?\n/);
+        dialogueList.innerHTML = '';
+
+        srtBlocks.forEach(block => {
+          const sLines = block.split(/\r?\n/);
+          if (sLines.length >= 3) {
+            const timeMatch = sLines[1].match(/(\d{2}:\d{2}:\d{2}[,\.]\d{3}) --> (\d{2}:\d{2}:\d{2}[,\.]\d{3})/);
+            const text = sLines.slice(2).join(' ');
+
+            let startSec = 0, endSec = 3;
+            if (timeMatch) {
+              const parseSec = (tStr) => {
+                const parts = tStr.replace(',', '.').split(':');
+                return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+              };
+              startSec = parseSec(timeMatch[1]);
+              endSec = parseSec(timeMatch[2]);
+            }
+
+            const div = document.createElement('div');
+            div.className = 'dialogue-box';
+            div.innerHTML = `
+              <div class="dialogue-header">
+                <select class="voice-role">
+                  <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
+                  <option value="boy">👦 ကောင်လေးသံ</option>
+                  <option value="girl">👧 မိန်းကလေးသံ</option>
+                  <option value="man">👨 လူကြီးသံ</option>
+                  <option value="woman">👩 မိန်းမကြီးသံ</option>
+                </select>
+                <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
+              </div>
+              <div class="time-inputs">
+                <span>စတင်ချိန်:</span>
+                <input type="number" class="time-start" value="${startSec.toFixed(1)}" step="0.5">
+                <span>ပြီးဆုံးချိန်:</span>
+                <input type="number" class="time-end" value="${endSec.toFixed(1)}" step="0.5">
+              </div>
+              <textarea class="dialogue-text" rows="2">${text}</textarea>
+            `;
+            dialogueList.appendChild(div);
+          }
+        });
+        alert('SRT ဖိုင် အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။');
+      };
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>
