@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aung Ahwin Max - Auto Recap PRO</title>
+  <title>Aung Ahwin Max - Auto Recap Studio PRO</title>
   
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="logo.png">
@@ -23,11 +23,11 @@
     body {
       background-color: #f8fafc;
       color: #1e293b;
-      padding-bottom: 40px;
+      padding-bottom: 60px;
     }
     header {
       background-color: #ffffff;
-      padding: 14px 20px;
+      padding: 12px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -35,14 +35,15 @@
       position: sticky;
       top: 0;
       z-index: 50;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
     }
     .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .menu-icon {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       cursor: pointer;
       color: #334155;
     }
@@ -53,24 +54,24 @@
       object-fit: cover;
     }
     header h1 {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: #0f172a;
     }
     .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .recap-badge {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #475569;
     }
     .pro-badge {
       background-color: #e0e7ff;
       color: #4f46e5;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       padding: 2px 8px;
       border-radius: 6px;
@@ -81,11 +82,11 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
     .upload-box {
       background-color: #ffffff;
-      border: 2px dashed #e2e8f0;
+      border: 2px dashed #cbd5e1;
       border-radius: 16px;
       padding: 24px;
       text-align: center;
@@ -96,32 +97,33 @@
       background-color: #f1f5f9;
     }
     .upload-icon-box {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       background-color: #f1f5f9;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 12px;
-      color: #94a3b8;
+      margin: 0 auto 10px;
+      color: #6366f1;
       font-size: 1.25rem;
+      font-weight: bold;
     }
     .upload-title {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: #1e293b;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .upload-sub {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: #64748b;
     }
     .divider-text {
       text-align: center;
       color: #94a3b8;
-      font-size: 0.85rem;
-      margin: -4px 0;
+      font-size: 0.82rem;
+      margin: -2px 0;
     }
     .link-group {
       display: flex;
@@ -131,7 +133,7 @@
       flex: 1;
       display: flex;
       background-color: #ffffff;
-      border: 1px solid #e2e8f0;
+      border: 1px solid #cbd5e1;
       border-radius: 10px;
       padding: 4px 8px;
       align-items: center;
@@ -141,7 +143,7 @@
       outline: none;
       width: 100%;
       padding: 8px 6px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
     .paste-btn {
       background: none;
@@ -159,7 +161,7 @@
       border: none;
       border-radius: 10px;
       padding: 0 16px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -169,18 +171,17 @@
     }
     .tabs-bar {
       display: flex;
-      background-color: #ffffff;
+      background-color: #f1f5f9;
       border-radius: 30px;
       padding: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid #f1f5f9;
+      margin-top: 4px;
     }
     .tab-btn {
       flex: 1;
       text-align: center;
       padding: 8px 0;
       border-radius: 20px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: #64748b;
       cursor: pointer;
@@ -189,9 +190,9 @@
       transition: 0.2s;
     }
     .tab-btn.active {
-      background-color: #4f46e5;
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+      background-color: #ffffff;
+      color: #4f46e5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
     .tab-content {
       display: none;
@@ -199,65 +200,77 @@
     .tab-content.active {
       display: block;
     }
-    .settings-card {
+    .card {
       background-color: #ffffff;
       border-radius: 16px;
-      padding: 16px;
-      border: 1px solid #f1f5f9;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      padding: 18px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
-    .field-title {
-      font-size: 0.95rem;
+    .field-label {
+      font-size: 0.92rem;
       font-weight: 700;
       color: #1e293b;
       margin-bottom: 8px;
+      display: block;
     }
     select, input[type=text], textarea {
       width: 100%;
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-radius: 10px;
-      border: 1px solid #e2e8f0;
+      border: 1px solid #cbd5e1;
       background-color: #ffffff;
       outline: none;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #334155;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .slider-header {
       display: flex;
       justify-content: space-between;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #334155;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     input[type=range] {
       width: 100%;
       accent-color: #4f46e5;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
-    .action-btn {
+    .btn-main {
       width: 100%;
       background-color: #4f46e5;
       color: white;
       border: none;
       padding: 12px;
       border-radius: 10px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
+      transition: 0.2s;
     }
-    .action-btn:active {
+    .btn-main:active {
       transform: scale(0.98);
+      background-color: #4338ca;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #334155;
+      margin-bottom: 12px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Top Navigation Header -->
   <header>
     <div class="header-left">
       <span class="menu-icon">☰</span>
-      <img src="logo.png" alt="AH" onerror="this.style.display='none'">
+      <img src="logo.png" alt="AH Logo" onerror="this.src='https://via.placeholder.com/36/4f46e5/ffffff?text=AH'">
       <h1>Aung Ahwin Max</h1>
     </div>
     <div class="header-right">
@@ -267,6 +280,7 @@
   </header>
 
   <div class="container">
+    <!-- Video File Upload Area -->
     <div class="upload-box" onclick="document.getElementById('fileInput').click()">
       <input type="file" id="fileInput" style="display: none;" accept="video/*">
       <div class="upload-icon-box">⇧</div>
@@ -276,29 +290,31 @@
 
     <div class="divider-text">သို့မဟုတ် Link ထည့်ပါ</div>
 
+    <!-- Link Download Bar -->
     <div class="link-group">
       <div class="input-wrapper">
         <input type="text" id="videoLink" placeholder="TikTok / YouTube link ရိုက်...">
         <button class="paste-btn" onclick="pasteFromClipboard()">Paste</button>
       </div>
-      <button class="download-btn">🔗 ဒေါင်းမည်</button>
+      <button class="download-btn" onclick="alert('Link မှ ဒေါင်းလုဒ်စနစ် ချိတ်ဆက်ထားပါသည်ခင်ဗျာ')">🔗 ဒေါင်းမည်</button>
     </div>
 
+    <!-- 4 Essential Tabs -->
     <div class="tabs-bar">
-      <button class="tab-btn active" onclick="switchTab('video', this)">ဗီဒီယို</button>
-      <button class="tab-btn" onclick="switchTab('audio', this)">အသံ</button>
-      <button class="tab-btn" onclick="switchTab('subtitle', this)">စာတန်း</button>
-      <button class="tab-btn" onclick="switchTab('extra', this)">အပို</button>
+      <button class="tab-btn active" onclick="openTab('tab-video', this)">ဗီဒီယို</button>
+      <button class="tab-btn" onclick="openTab('tab-audio', this)">အသံ</button>
+      <button class="tab-btn" onclick="openTab('tab-sub', this)">စာတန်း</button>
+      <button class="tab-btn" onclick="openTab('tab-extra', this)">အပို</button>
     </div>
 
-    <!-- Video Tab -->
+    <!-- 1. ဗီဒီယို Tab -->
     <div id="tab-video" class="tab-content active">
-      <div class="settings-card">
-        <div class="field-title">Video အချိုးအစား (Ratio)</div>
+      <div class="card">
+        <label class="field-label">Video အချိုးအစား (Ratio)</label>
         <select>
           <option>9:16 (TikTok / Reels / Shorts)</option>
           <option>16:9 (YouTube Standard)</option>
-          <option>1:1 (Square)</option>
+          <option>1:1 (Instagram / Square)</option>
         </select>
 
         <div class="slider-header">
@@ -306,22 +322,29 @@
           <span id="blurVal">14%</span>
         </div>
         <input type="range" min="0" max="100" value="14" oninput="document.getElementById('blurVal').innerText = this.value + '%'">
+
+        <label class="field-label">ဗီဒီယို ကြည်လင်မှု (Resolution)</label>
+        <select>
+          <option>1080p Full HD (အကြံပြုထားသည်)</option>
+          <option>720p HD (ဖိုင်ဆိုက် သေးငယ်သည်)</option>
+          <option>4K Ultra HD</option>
+        </select>
       </div>
     </div>
 
-    <!-- Audio Tab (Voicer Tool ပါဝင်သည့်အပိုင်း) -->
+    <!-- 2. အသံ Tab (Voicer Tool အထူးပြု) -->
     <div id="tab-audio" class="tab-content">
-      <div class="settings-card">
-        <div class="field-title">Voicer AI အသံမော်ဒယ် (သဘာဝစကားပြောအသံ)</div>
-        <select id="voiceModel">
-          <option value="voicer-natural-male">Voicer - သဘာဝအမျိုးသားသံ (စကားပြောပီသ / Recap အထူးပြု)</option>
-          <option value="voicer-natural-female">Voicer - သဘာဝအမျိုးသမီးသံ (ကြည်လင်ပြတ်သား)</option>
-          <option value="voicer-story-teller">Voicer - ဇာတ်လမ်းပြောသူ အသံနေအထား (Drama Narrative)</option>
-          <option value="voicer-energetic">Voicer - တက်ကြွသွက်လက်သော အသံ (Fast Recap)</option>
+      <div class="card">
+        <label class="field-label">Voicer AI စကားပြောသံ (သဘာဝစကားပြောအသံ)</label>
+        <select id="voicerType">
+          <option>Voicer - သဘာဝ အမျိုးသားသံ (Movie Recap အထူးပြု)</option>
+          <option>Voicer - သဘာဝ အမျိုးသမီးသံ (ကြည်လင်ပြတ်သား)</option>
+          <option>Voicer - ဇာတ်လမ်းပြောသူ အသံနေအထား (Drama Narrative)</option>
+          <option>Voicer - ရင်သပ်ရှုမော ဇာတ်ရှိန်မြင့်သံ (Suspense Thriller)</option>
         </select>
 
         <div class="slider-header">
-          <span>စကားပြောအမြန်နှုန်း (Voice Speed)</span>
+          <span>စကားပြောနှုန်း (Voice Speed)</span>
           <span id="speedVal">1.0x</span>
         </div>
         <input type="range" min="0.5" max="2.0" step="0.1" value="1.0" oninput="document.getElementById('speedVal').innerText = this.value + 'x'">
@@ -332,43 +355,60 @@
         </div>
         <input type="range" min="-5" max="5" value="0" oninput="document.getElementById('pitchVal').innerText = this.value == 0 ? 'ပုံမှန်' : this.value">
 
-        <div class="field-title">Voicer စမ်းသပ်ရန် စာသားရိုက်ပါ</div>
-        <textarea id="sampleVoiceText" rows="3" placeholder="နမူနာပြောခိုင်းလိုသည့် မြန်မာစာသား ထည့်ပါ..."></textarea>
-        <button class="action-btn" onclick="testVoicerVoice()">🔊 Voicer အသံဖြင့် စမ်းသပ်နားထောင်မည်</button>
+        <label class="field-label">Voicer အသံ စမ်းသပ်ရန် စာသား</label>
+        <textarea id="sampleSpeechText" rows="3" placeholder="ပြောခိုင်းလိုသည့် မြန်မာစာသားကို ဤနေရာတွင် ထည့်ပါ..."></textarea>
+        <button class="btn-main" onclick="testVoice()">🔊 Voicer အသံဖြင့် စမ်းသပ်နားထောင်မည်</button>
       </div>
     </div>
 
-    <!-- Subtitle Tab -->
-    <div id="tab-subtitle" class="tab-content">
-      <div class="settings-card">
-        <div class="field-title">စာတန်းထိုး (Subtitle) စစ်ထုတ်ခြင်း</div>
-        <textarea id="subInput" rows="4" placeholder="SRT သို့မဟုတ် တရုတ်စာတန်းများ ထည့်ပါ..."></textarea>
-        <button class="action-btn" onclick="cleanSubtitle()">စာတန်းရှင်းလင်းမည်</button>
+    <!-- 3. စာတန်း Tab -->
+    <div id="tab-sub" class="tab-content">
+      <div class="card">
+        <label class="field-label">တရုတ် / SRT စာတန်းထိုးများ စစ်ထုတ်ရန်</label>
+        <textarea id="subTextInput" rows="4" placeholder="Timestamp များနှင့် SRT စာသားများကို Paste ချပါ..."></textarea>
+        
+        <div style="display:flex; gap:8px; margin-bottom:12px;">
+          <button class="btn-main" style="background-color:#0f172a;" onclick="cleanSubtitleTimestamps()">Timestamp ရှင်းမည်</button>
+          <button class="btn-main" onclick="alert('မြန်မာဘာသာပြန်စနစ် ချိတ်ဆက်ထားပါသည်')">မြန်မာပြန်မည်</button>
+        </div>
+
+        <label class="field-label">စာတန်းဖောင့် ဒီဇိုင်း (Subtitle Font)</label>
+        <select>
+          <option>Padauk Bold (စာတန်းဖတ်ရ လွယ်ကူသည်)</option>
+          <option>Pyidaungsu</option>
+          <option>Modern Shadow Style (အရိပ်ပါ စာလုံး)</option>
+        </select>
       </div>
     </div>
 
-    <!-- Extra Tab -->
+    <!-- 4. အပို Tab -->
     <div id="tab-extra" class="tab-content">
-      <div class="settings-card">
-        <div class="field-title">အပိုထပ်ဆောင်း စနစ်များ</div>
-        <label style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-          <input type="checkbox" checked> နောက်ခံတေးဂီတ (BGM) အလိုအလျောက် အနိမ့်အမြင့်ညှိမည်
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" checked> ဇာတ်ကားအစ/အဆုံး Logo Animation ထည့်မည်
-        </label>
+      <div class="card">
+        <label class="field-label">နောက်ခံတေးဂီတ နှင့် အထူးပြုစနစ်များ</label>
+        <div class="checkbox-item">
+          <input type="checkbox" checked id="autoDucking">
+          <label for="autoDucking">Auto Ducking (စကားပြောချိန် နောက်ခံ BGM သံ အလိုအလျောက် တိုးပေးမည်)</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" checked id="autoIntro">
+          <label for="autoIntro">Aung Ahwin Max Logo အဖွင့် Animation ထည့်မည်</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" checked id="removeWatermark">
+          <label for="removeWatermark">မူရင်း ဗီဒီယို Watermark ကို အလိုအလျောက် ဖယ်ရှားမည်</label>
+        </div>
       </div>
     </div>
 
   </div>
 
   <script>
-    function switchTab(tabName, btn) {
+    function openTab(tabId, btn) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       
       btn.classList.add('active');
-      document.getElementById('tab-' + tabName).classList.add('active');
+      document.getElementById(tabId).classList.add('active');
     }
 
     async function pasteFromClipboard() {
@@ -376,14 +416,14 @@
         const text = await navigator.clipboard.readText();
         document.getElementById('videoLink').value = text;
       } catch (err) {
-        alert('Paste လုပ်၍ မရပါ');
+        alert('Paste ပြုလုပ်၍ မရပါခင်ဗျာ');
       }
     }
 
-    function testVoicerVoice() {
-      const text = document.getElementById('sampleVoiceText').value;
+    function testVoice() {
+      const text = document.getElementById('sampleSpeechText').value;
       if (!text.trim()) {
-        alert('စမ်းသပ်ပြောခိုင်းလိုသည့် စာသား အရင်ရိုက်ထည့်ပေးပါခင်ဗျာ');
+        alert('စမ်းသပ်ရန် မြန်မာစာသား အရင်ရိုက်ထည့်ပေးပါခင်ဗျာ');
         return;
       }
       const utterance = new SpeechSynthesisUtterance(text);
@@ -391,15 +431,15 @@
       window.speechSynthesis.speak(utterance);
     }
 
-    function cleanSubtitle() {
-      const input = document.getElementById('subInput').value;
-      if (!input.trim()) {
-        alert('စာသားအရင်ထည့်ပေးပါခင်ဗျာ');
+    function cleanSubtitleTimestamps() {
+      const text = document.getElementById('subTextInput').value;
+      if (!text.trim()) {
+        alert('စာတန်းစာသား အရင်ထည့်ပေးပါခင်ဗျာ');
         return;
       }
-      const cleaned = input.replace(/\d{2}:\d{2}:\d{2}[,\.]\d{3}\s*-->\s*\d{2}:\d{2}:\d{2}[,\.]\d{3}/g, '').trim();
-      document.getElementById('subInput').value = cleaned;
-      alert('စာတန်းများ သန့်စင်ပြီးပါပြီခင်ဗျာ');
+      const cleaned = text.replace(/\d{2}:\d{2}:\d{2}[,\.]\d{3}\s*-->\s*\d{2}:\d{2}:\d{2}[,\.]\d{3}/g, '').trim();
+      document.getElementById('subTextInput').value = cleaned;
+      alert('Timestamp များ အားလုံး ရှင်းလင်းပြီးပါပြီခင်ဗျာ');
     }
 
     if ('serviceWorker' in navigator) {
