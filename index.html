@@ -51,22 +51,23 @@
     }
     textarea {
       resize: vertical;
-      height: 80px;
+      height: 85px;
     }
     button {
       background-color: #0284c7;
       color: white;
       border: none;
       border-radius: 6px;
-      padding: 10px;
+      padding: 12px;
       font-weight: bold;
+      font-size: 0.95rem;
       cursor: pointer;
     }
     button:active {
       background-color: #0369a1;
     }
     
-    /* Video Box & Ratio Wrapper */
+    /* Video Box & Layers */
     .video-wrapper {
       width: 100%;
       display: flex;
@@ -78,11 +79,9 @@
     .video-container {
       position: relative;
       width: 100%;
-      max-width: 100%;
       background: #000;
       overflow: hidden;
       display: none;
-      transition: aspect-ratio 0.2s ease;
     }
     video {
       width: 100%;
@@ -92,16 +91,33 @@
     }
     .blur-overlay {
       position: absolute;
-      bottom: 15%;
+      bottom: 14%;
       left: 10%;
       width: 80%;
-      height: 45px;
+      height: 48px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: rgba(0, 0, 0, 0.4);
-      border: 1.5px dashed #38bdf8;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px dashed #38bdf8;
       border-radius: 4px;
       pointer-events: none;
+      z-index: 5;
+    }
+    /* ဗီဒီယိုပေါ်က မြန်မာစာတန်းထိုး Style */
+    .subtitle-overlay {
+      position: absolute;
+      bottom: 15%;
+      left: 5%;
+      width: 90%;
+      text-align: center;
+      color: #ffffff;
+      font-size: 1.15rem;
+      font-weight: bold;
+      line-height: 1.4;
+      text-shadow: 2px 2px 4px #000, -2px -2px 4px #000, 2px -2px 4px #000, -2px 2px 4px #000;
+      pointer-events: none;
+      z-index: 10;
+      word-break: break-word;
     }
     .control-row {
       display: flex;
@@ -110,13 +126,19 @@
       font-size: 0.85rem;
       color: #cbd5e1;
     }
+    .btn-sync {
+      background-color: #10b981;
+    }
+    .btn-sync:active {
+      background-color: #059669;
+    }
   </style>
 </head>
 <body>
 
   <div>
     <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">မြန်မာစာတန်းထိုးနှင့် Video Recap ပြုလုပ်ရန်</p>
+    <p class="sub">မြန်မာစာတန်းထိုးနှင့် AI အသံ ဗီဒီယိုပေါင်းစပ်စနစ်</p>
   </div>
 
   <!-- အဆင့် ၁ - ဗီဒီယို တင်ရန် -->
@@ -125,43 +147,30 @@
     <input type="file" id="videoInput" accept="video/*">
     <div class="video-wrapper">
       <div class="video-container" id="videoContainer">
-        <video id="videoPreview" controls playsinline></video>
+        <video id="videoPreview" playsinline></video>
         <div class="blur-overlay" id="blurOverlay"></div>
+        <div class="subtitle-overlay" id="subtitleOverlay"></div>
       </div>
     </div>
   </div>
 
-  <!-- အဆင့် ၂ - ဗီဒီယို Size နှင့် အရည်အသွေး -->
+  <!-- အဆင့် ၂ - ဗီဒီယို Size -->
   <div class="card">
-    <h2>၂။ Video အချိုးအစားနှင့် အရည်အသွေး</h2>
-    
-    <div class="control-row">
-      <label>Video အချိုး (Aspect Ratio):</label>
-      <select id="aspectRatio">
-        <option value="auto">မူရင်းအတိုင်း (Original)</option>
-        <option value="9/16">9:16 (TikTok / Reels / Shorts)</option>
-        <option value="16/9">16:9 (YouTube Standard)</option>
-        <option value="1/1">1:1 (Square)</option>
-        <option value="4/5">4:5 (Facebook / Instagram Post)</option>
-      </select>
-    </div>
-
-    <div class="control-row">
-      <label>Render အရည်အသွေး (Output Quality):</label>
-      <select id="videoQuality">
-        <option value="1080p">TikTok HD (1080p) - ပိုကြည်လင်သည်</option>
-        <option value="720p" selected>Standard HD (720p) - သင့်တင့်မြန်ဆန်သည်</option>
-        <option value="480p">Fast Render (480p) - ဖိုင်အရွယ်အစားသေးငယ်သည်</option>
-      </select>
-    </div>
+    <h2>၂။ Video အချိုးအစား (Aspect Ratio)</h2>
+    <select id="aspectRatio">
+      <option value="auto">မူရင်းအတိုင်း (Original)</option>
+      <option value="9/16">9:16 (TikTok / Reels / Shorts)</option>
+      <option value="16/9">16:9 (YouTube Standard)</option>
+      <option value="1/1">1:1 (Square)</option>
+    </select>
   </div>
 
-  <!-- အဆင့် ၃ - စာသားဖုံး Blur Box -->
+  <!-- အဆင့် ၃ - စာသားဖုံး Blur Box အပြင်အဆင် -->
   <div class="card">
-    <h2>၃။ စာသားဖုံးအုပ်မည့် Blur Box အပြင်အဆင်</h2>
+    <h2>၃။ မူရင်းစာတန်းဖုံးအုပ်မည့် Blur Box</h2>
     <div class="control-row">
       <label>အထက်/အောက် ရွှေ့ရန် (Position Y):</label>
-      <input type="range" id="posY" min="0" max="90" value="15">
+      <input type="range" id="posY" min="0" max="85" value="14">
     </div>
     <div class="control-row">
       <label>Box အကျယ် (Width):</label>
@@ -169,7 +178,7 @@
     </div>
     <div class="control-row">
       <label>Box အမြင့် (Height):</label>
-      <input type="range" id="boxHeight" min="20" max="150" value="45">
+      <input type="range" id="boxHeight" min="20" max="150" value="48">
     </div>
     <div class="control-row">
       <label>Blur ဝါးသည့်နှုန်း (Blur Strength):</label>
@@ -177,12 +186,15 @@
     </div>
   </div>
 
-  <!-- အဆင့် ၄ - ဇာတ်ညွှန်းနှင့် AI အသံ -->
+  <!-- အဆင့် ၄ - ဇာတ်ညွှန်းနှင့် အသံ/စာတန်းထိုး တပြိုင်နက်ဖွင့်စနစ် -->
   <div class="card">
-    <h2>၄။ မြန်မာစာတန်းထိုးနှင့် AI အသံ</h2>
-    <textarea id="scriptText" placeholder="ဖတ်ပြစေလိုသော မြန်မာစာသားကို ဒီမှာရိုက်ထည့်ပါ..."></textarea>
-    <button id="playVoiceBtn">🔊 မြန်မာ AI အသံ နားထောင်မည်</button>
-    <span id="voiceStatus" style="font-size: 0.85rem; color: #38bdf8; margin-top: 4px;"></span>
+    <h2>၄။ မြန်မာစာတန်းထိုးနှင့် AI အသံထွက်</h2>
+    <textarea id="scriptText" placeholder="ဒီနေရာတွင် မြန်မာလို ဖတ်ပြစေလိုသော စာသားကို ရိုက်ထည့်ပါ..."></textarea>
+    
+    <button class="btn-sync" id="playRecapBtn">▶️ Recap (ဗီဒီယို + အသံ + စာတန်း) အစမ်းဖွင့်မည်</button>
+    
+    <audio id="audioEngine" style="display:none;"></audio>
+    <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8;"></span>
   </div>
 
   <script>
@@ -190,12 +202,18 @@
     const videoContainer = document.getElementById('videoContainer');
     const videoPreview = document.getElementById('videoPreview');
     const blurOverlay = document.getElementById('blurOverlay');
+    const subtitleOverlay = document.getElementById('subtitleOverlay');
     const aspectRatio = document.getElementById('aspectRatio');
 
     const posY = document.getElementById('posY');
     const boxWidth = document.getElementById('boxWidth');
     const boxHeight = document.getElementById('boxHeight');
     const blurStrength = document.getElementById('blurStrength');
+
+    const scriptText = document.getElementById('scriptText');
+    const playRecapBtn = document.getElementById('playRecapBtn');
+    const audioEngine = document.getElementById('audioEngine');
+    const syncStatus = document.getElementById('syncStatus');
 
     videoInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -205,16 +223,10 @@
       }
     });
 
-    // Ratio ချိန်ညှိခြင်း
     aspectRatio.addEventListener('change', function(e) {
-      if (e.target.value === 'auto') {
-        videoContainer.style.aspectRatio = '';
-      } else {
-        videoContainer.style.aspectRatio = e.target.value;
-      }
+      videoContainer.style.aspectRatio = e.target.value === 'auto' ? '' : e.target.value;
     });
 
-    // Blur Box အနေအထားနှင့် အရွယ်အစားချိန်ညှိခြင်း
     function updateBlurBox() {
       blurOverlay.style.bottom = `${posY.value}%`;
       blurOverlay.style.width = `${boxWidth.value}%`;
@@ -222,6 +234,9 @@
       blurOverlay.style.height = `${boxHeight.value}px`;
       blurOverlay.style.backdropFilter = `blur(${blurStrength.value}px)`;
       blurOverlay.style.webkitBackdropFilter = `blur(${blurStrength.value}px)`;
+      
+      // စာတန်းထိုးနေရာကို Blur Box ပေါ် ကွက်တိ အံဝင်စေရန် ချိတ်ဆက်ထားခြင်း
+      subtitleOverlay.style.bottom = `${posY.value}%`;
     }
 
     posY.addEventListener('input', updateBlurBox);
@@ -229,43 +244,55 @@
     boxHeight.addEventListener('input', updateBlurBox);
     blurStrength.addEventListener('input', updateBlurBox);
 
-    // AI မြန်မာအသံ ထုတ်ယူစနစ်
-    const playVoiceBtn = document.getElementById('playVoiceBtn');
-    const scriptText = document.getElementById('scriptText');
-    const voiceStatus = document.getElementById('voiceStatus');
+    // စာရိုက်လိုက်တာနဲ့ ဗီဒီယိုပေါ်မှာ Subtitle တပြိုင်နက် ပြသခြင်း
+    scriptText.addEventListener('input', function() {
+      subtitleOverlay.innerText = scriptText.value;
+    });
 
-    playVoiceBtn.addEventListener('click', function() {
+    // ဗီဒီယို + AI အသံ + စာတန်းထိုး တပြိုင်နက်ဖွင့်ခြင်း
+    playRecapBtn.addEventListener('click', function() {
       const text = scriptText.value.trim();
       if (!text) {
-        alert('ကျေးဇူးပြု၍ စာသားအရင်ရိုက်ထည့်ပါခင်ဗျာ။');
+        alert('ကျေးဇူးပြု၍ မြန်မာစာသား အရင်ရိုက်ထည့်ပါခင်ဗျာ။');
         return;
       }
 
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
+      subtitleOverlay.innerText = text;
+      syncStatus.innerText = 'မြန်မာ AI အသံ ပြင်ဆင်နေပါသည်...';
 
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'my-MM';
-        utterance.rate = 0.9;
+      // အသံအရင်းအမြစ် ဆွဲယူခြင်း
+      const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=my&client=tw-ob`;
+      audioEngine.src = ttsUrl;
 
-        utterance.onstart = function() {
-          voiceStatus.innerText = '🔊 အသံဖတ်နေပါသည်...';
-        };
+      // ဗီဒီယိုအစသို့ ပြန်ပို့ပြီး မူရင်းအသံကို အနည်းငယ် လျှော့ကာ AI အသံနှင့် တပြိုင်နက်ဖွင့်ခြင်း
+      videoPreview.currentTime = 0;
+      videoPreview.volume = 0.25; // နောက်ခံသံအဖြစ် မူရင်းအသံကို 25% သာဖွင့်ပါမည်
 
-        utterance.onend = function() {
-          voiceStatus.innerText = '✅ ဖတ်ပြီးပါပြီ။';
-        };
+      audioEngine.play().then(() => {
+        videoPreview.play();
+        syncStatus.innerText = '▶️ ဗီဒီယိုနှင့် မြန်မာအသံ တပြိုင်နက် ဖတ်ပြနေပါသည်...';
+      }).catch(() => {
+        // Fallback: Browser Web Speech စနစ်ဖြင့် အသံဖွင့်ခြင်း
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'my-MM';
+          utterance.rate = 0.9;
+          
+          utterance.onstart = () => {
+            videoPreview.play();
+            syncStatus.innerText = '▶️ ဗီဒီယိုနှင့် စာတန်း စတင်ဖွင့်နေပါသည်...';
+          };
+          window.speechSynthesis.speak(utterance);
+        } else {
+          videoPreview.play();
+          syncStatus.innerText = 'ဗီဒီယို ဖွင့်နေပါသည် (အသံပိတ်ထားပါသည်)။';
+        }
+      });
 
-        utterance.onerror = function() {
-          const fallbackUrl = `https://translate.google.com/?sl=auto&tl=my&text=${encodeURIComponent(text)}&op=translate`;
-          window.open(fallbackUrl, '_blank');
-          voiceStatus.innerText = 'Google Translate တွင် အသံဖွင့်ရန် ပြောင်းပေးထားပါသည်။';
-        };
-
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert('သင့်ဖုန်း Browser တွင် Speech Synthesis စနစ် မပံ့ပိုးသေးပါခင်ဗျာ။');
-      }
+      audioEngine.onended = function() {
+        syncStatus.innerText = '✅ ဖတ်ပြီးပါပြီ။';
+      };
     });
   </script>
 </body>
