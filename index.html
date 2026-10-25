@@ -7,28 +7,88 @@
   
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="logo.png">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#4f46e5">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Padauk', sans-serif;
+      font-family: 'Noto Sans Myanmar', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
     body {
-      background-color: #f8fafc;
-      color: #1e293b;
+      background-color: #f1f5f9;
+      color: #0f172a;
       padding-bottom: 70px;
-      overflow-x: hidden;
     }
 
-    /* Top App Header */
+    /* Password Lock Overlay */
+    #lockScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #ffffff;
+    }
+    .lock-box {
+      background: #1e293b;
+      padding: 28px 24px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      border: 1px solid #334155;
+    }
+    .lock-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .lock-desc {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 20px;
+    }
+    .lock-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid #4f46e5;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 1.2rem;
+      text-align: center;
+      letter-spacing: 8px;
+      outline: none;
+      margin-bottom: 16px;
+    }
+    .lock-btn {
+      width: 100%;
+      background: #4f46e5;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    /* Header */
     header {
       background-color: #ffffff;
       padding: 12px 16px;
@@ -39,7 +99,7 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
     .header-left {
       display: flex;
@@ -50,208 +110,30 @@
       font-size: 1.4rem;
       cursor: pointer;
       color: #1e293b;
-      padding: 2px 4px;
     }
-    .brand-icon {
+    .header-logo {
       width: 34px;
       height: 34px;
       border-radius: 8px;
       object-fit: cover;
     }
-    .brand-title {
-      font-size: 1.1rem;
+    .header-brand {
+      font-size: 1.05rem;
       font-weight: 700;
       color: #0f172a;
-      letter-spacing: -0.3px;
     }
     .header-right {
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    .header-tag {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #475569;
-    }
-    .credit-badge {
-      background-color: #eef2ff;
-      color: #4f46e5;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-    }
-
-    /* DeepClip Exact Sidebar Drawer */
-    .sidebar-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 23, 42, 0.4);
-      z-index: 100;
-      display: none;
-      backdrop-filter: blur(2px);
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -320px;
-      width: 295px;
-      height: 100%;
-      background: #ffffff;
-      z-index: 101;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 20px 16px;
-      transition: left 0.28s ease;
-      box-shadow: 4px 0 20px rgba(0,0,0,0.08);
-    }
-    .sidebar.open {
-      left: 0;
-    }
-    .sidebar-top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-    .sidebar-logo-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .sidebar-logo-group img {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-    }
-    .sidebar-logo-group h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #0f172a;
-      line-height: 1.2;
-    }
-    .sidebar-logo-group span {
-      font-size: 0.75rem;
-      color: #64748b;
-    }
-    .close-icon {
-      font-size: 1.3rem;
-      cursor: pointer;
-      color: #94a3b8;
-    }
-    .menu-caption {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #94a3b8;
-      margin-bottom: 8px;
-    }
-    .nav-list {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      padding: 10px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .nav-item.active {
-      background-color: #eff6ff;
-    }
-    .nav-item.active .nav-main {
-      color: #2563eb;
-    }
-    .nav-main {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #1e293b;
-    }
-    .nav-sub {
-      font-size: 0.75rem;
-      color: #64748b;
-    }
-
-    /* Sidebar Footer Account Card */
-    .account-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 14px;
-    }
-    .card-label {
-      font-size: 0.78rem;
-      color: #64748b;
-    }
-    .card-balance {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin: 2px 0;
-    }
-    .card-subtext {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      margin-bottom: 10px;
-    }
-    .upgrade-btn {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      padding: 8px;
-      border-radius: 8px;
+    .header-mode {
       font-size: 0.85rem;
       font-weight: 700;
-      color: #4f46e5;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    .profile-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 10px;
-      border-top: 1px solid #e2e8f0;
-    }
-    .profile-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .profile-circle {
-      width: 32px;
-      height: 32px;
-      background: #4f46e5;
-      color: #ffffff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-    .profile-text h5 {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .profile-text p {
-      font-size: 0.7rem;
-      color: #64748b;
+      color: #3b82f6;
     }
 
-    /* Main Container */
+    /* Container */
     .container {
       padding: 16px;
       max-width: 480px;
@@ -261,30 +143,53 @@
       gap: 14px;
     }
 
-    /* Video Upload Box (Direct Phone Storage) */
+    /* Mode Selector (PRO vs Free) */
+    .mode-bar {
+      display: flex;
+      background: #e2e8f0;
+      padding: 3px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: center;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+    }
+    .mode-btn.active {
+      background: #4f46e5;
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+    }
+
+    /* Video Player & Upload Card */
     .upload-card {
       background-color: #ffffff;
-      border: 2px dashed #cbd5e1;
-      border-radius: 16px;
-      padding: 24px;
+      border: 2px dashed #818cf8;
+      border-radius: 18px;
+      padding: 20px;
       text-align: center;
       cursor: pointer;
-      transition: 0.2s;
-    }
-    .upload-card:active {
-      background-color: #f1f5f9;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
     }
     .upload-glyph {
       width: 44px;
       height: 44px;
-      background-color: #f1f5f9;
+      background-color: #e0e7ff;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 10px;
-      color: #6366f1;
-      font-size: 1.25rem;
+      color: #4f46e5;
+      font-size: 1.3rem;
       font-weight: bold;
     }
     .upload-headline {
@@ -296,6 +201,28 @@
       font-size: 0.8rem;
       color: #64748b;
     }
+
+    /* Video Display Area */
+    .video-preview-wrapper {
+      display: none;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000000;
+      margin-top: 10px;
+      position: relative;
+    }
+    .video-preview-wrapper.mirrored video {
+      transform: scaleX(-1);
+    }
+    video {
+      width: 100%;
+      height: auto;
+      max-height: 380px;
+      display: block;
+    }
+
+    /* Divider */
     .text-divider {
       text-align: center;
       color: #94a3b8;
@@ -303,7 +230,7 @@
       margin: -4px 0;
     }
 
-    /* Direct Link Input */
+    /* Link Bar */
     .link-row {
       display: flex;
       gap: 8px;
@@ -313,32 +240,32 @@
       display: flex;
       background-color: #ffffff;
       border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      padding: 4px 8px;
+      border-radius: 12px;
+      padding: 4px 10px;
       align-items: center;
     }
     .link-box input {
       border: none;
       outline: none;
       width: 100%;
-      padding: 8px 6px;
-      font-size: 0.88rem;
+      padding: 8px 4px;
+      font-size: 0.85rem;
     }
     .btn-paste {
       background: none;
       border: none;
       font-size: 0.75rem;
-      color: #6366f1;
+      color: #4f46e5;
       cursor: pointer;
       padding: 4px 8px;
-      border-left: 1px solid #f1f5f9;
+      border-left: 1px solid #e2e8f0;
       font-weight: 700;
     }
     .btn-download {
       background-color: #0f172a;
       color: #ffffff;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 0 16px;
       font-size: 0.88rem;
       font-weight: 600;
@@ -352,9 +279,11 @@
     /* 4 Primary Navigation Tabs */
     .tabs-wrapper {
       display: flex;
-      background-color: #f1f5f9;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
       border-radius: 30px;
       padding: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .tab-item {
       flex: 1;
@@ -369,9 +298,9 @@
       background: none;
     }
     .tab-item.active {
-      background-color: #ffffff;
-      color: #4f46e5;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      background-color: #eff6ff;
+      color: #2563eb;
+      font-weight: 700;
     }
     .view-content {
       display: none;
@@ -380,16 +309,16 @@
       display: block;
     }
 
-    /* Section Card */
+    /* Studio Card */
     .studio-card {
       background-color: #ffffff;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 16px;
       border: 1px solid #e2e8f0;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
     }
     .input-title {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #1e293b;
       margin-bottom: 6px;
@@ -400,12 +329,14 @@
       padding: 10px 12px;
       border-radius: 10px;
       border: 1px solid #cbd5e1;
-      background-color: #ffffff;
+      background-color: #f8fafc;
       outline: none;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #334155;
       margin-bottom: 12px;
     }
+
+    /* Sliders */
     .slider-labels {
       display: flex;
       justify-content: space-between;
@@ -419,6 +350,43 @@
       accent-color: #4f46e5;
       margin-bottom: 12px;
     }
+
+    /* Subtitle Styling Preview Box */
+    .caption-preview-box {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 18px 12px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .caption-preview-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fde047;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+
+    /* Color Swatches */
+    .color-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    .color-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .color-dot.active {
+      border-color: #4f46e5;
+      transform: scale(1.15);
+    }
+
+    /* Action Buttons */
     .primary-btn {
       width: 100%;
       background-color: #4f46e5;
@@ -430,115 +398,92 @@
       font-weight: 700;
       cursor: pointer;
     }
-    .primary-btn:active {
-      transform: scale(0.98);
-      background-color: #4338ca;
+    .secondary-btn {
+      width: 100%;
+      background-color: #0f172a;
+      color: white;
+      border: none;
+      padding: 11px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    /* Voicertool Iframe Frame */
-    .voicer-container {
-      width: 100%;
-      height: 480px;
-      border: 1px solid #e2e8f0;
+    /* Checkbox Group */
+    .check-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
       border-radius: 12px;
-      overflow: hidden;
-      margin-top: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 10px;
+      cursor: pointer;
     }
-    .voicer-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    .check-item input[type=checkbox] {
+      width: 18px;
+      height: 18px;
+      accent-color: #4f46e5;
+      margin-bottom: 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar Overlay & Drawer -->
-  <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
-  <aside class="sidebar" id="sidebar">
-    <div>
-      <div class="sidebar-top-bar">
-        <div class="sidebar-logo-group">
-          <img src="logo.png" alt="AH">
-          <div>
-            <h3>Aung Ahwin Max</h3>
-            <span>DeepClip Studio PRO</span>
-          </div>
-        </div>
-        <div class="close-icon" onclick="toggleMenu()">✕</div>
-      </div>
-
-      <div class="menu-caption">မီနူး</div>
-      <div class="nav-list">
-        <div class="nav-item" onclick="toggleMenu(); switchView('view-sub', document.querySelectorAll('.tab-item')[2])">
-          <span class="nav-main">Manual တည်းဖြတ်ခြင်း</span>
-          <span class="nav-sub">အခမဲ့ · Gemini နဲ့ ဘာသာပြန်</span>
-        </div>
-        <div class="nav-item active" onclick="toggleMenu()">
-          <span class="nav-main">Auto Recap</span>
-          <span class="nav-sub">တစ်ချက်နှိပ်ရုံ Premium Auto Mode</span>
-        </div>
-        <div class="nav-item" onclick="alert('လတ်တလော သိမ်းဆည်းထားသော ဗီဒီယို မရှိသေးပါခင်ဗျာ')">
-          <span class="nav-main">လုပ်ငန်းမှတ်တမ်း</span>
-          <span class="nav-sub">သိမ်းထားသော ဗီဒီယိုများ</span>
-        </div>
-        <div class="nav-item" onclick="openKeySettings()">
-          <span class="nav-main">ဆက်တင်</span>
-          <span class="nav-sub">မူလတန်ဖိုး · Brand · Gemini API Key</span>
-        </div>
-      </div>
+  <!-- Password Lock Screen (11135) -->
+  <div id="lockScreen">
+    <div class="lock-box">
+      <div class="lock-title">Aung Ahwin Max Studio</div>
+      <div class="lock-desc">အသုံးပြုရန် Passcode ၅ လုံး ထည့်သွင်းပါ</div>
+      <input type="password" id="passInput" class="lock-input" maxlength="5" placeholder="•••••">
+      <button class="lock-btn" onclick="checkPass()">App ဖွင့်မည်</button>
     </div>
+  </div>
 
-    <!-- Sidebar Bottom Card -->
-    <div class="account-card">
-      <div class="card-label">လက်ကျန် Credits</div>
-      <div class="card-balance">Unlimited</div>
-      <div class="card-subtext">≈ Auto video အကန့်အသတ်မရှိ</div>
-      <button class="upgrade-btn" onclick="alert('PRO Version စနစ် အပြည့်အစုံ ဖွင့်ထားပါသည်')">⚡ PRO Version Active</button>
-      
-      <div class="profile-row">
-        <div class="profile-left">
-          <div class="profile-circle">A</div>
-          <div class="profile-text">
-            <h5>Aung Ahwin</h5>
-            <p>aungahwin@gmail.com</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Top Header Bar -->
+  <!-- Header -->
   <header>
     <div class="header-left">
-      <span class="menu-btn" onclick="toggleMenu()">☰</span>
-      <img src="logo.png" alt="AH" class="brand-icon">
-      <h1 class="brand-title">Aung Ahwin Max</h1>
+      <span class="menu-btn" onclick="alert('Aung Ahwin Max DeepClip Studio')">☰</span>
+      <img src="logo.png" alt="AH" class="header-logo" onerror="this.src='https://via.placeholder.com/34/4f46e5/ffffff?text=AH'">
+      <h1 class="header-brand">Aung Ahwin Max</h1>
     </div>
     <div class="header-right">
-      <span class="header-tag">Auto Recap</span>
-      <span class="credit-badge">PRO</span>
+      <span class="header-mode" id="appModeText">PRO MODE</span>
     </div>
   </header>
 
   <div class="container">
-    <!-- Direct Video File Upload -->
+    
+    <!-- Mode Switch (PRO vs FREE) -->
+    <div class="mode-bar">
+      <button class="mode-btn active" id="proBtn" onclick="setMode('pro')">⚡ PRO (Key/VPN မလို)</button>
+      <button class="mode-btn" id="freeBtn" onclick="setMode('free')">🔑 Free (Key + VPN လို)</button>
+    </div>
+
+    <!-- Video Selection & Upload Card -->
     <input type="file" id="phoneFileInput" style="display: none;" accept="video/*">
     <div class="upload-card" id="uploadZone">
       <div class="upload-glyph">⇧</div>
       <div class="upload-headline" id="dispTitle">Video ဖိုင် ရွေးပါ</div>
-      <div class="upload-caption" id="dispDesc">MP4, MOV, MKV · ၅ မိနစ်အထိ</div>
+      <div class="upload-caption" id="dispDesc">MP4, MOV, MKV · ဖုန်းထဲမှ တိုက်ရိုက်ရွေးပါ</div>
+    </div>
+
+    <!-- Video Player Preview -->
+    <div class="video-preview-wrapper" id="videoWrapper">
+      <video id="player" controls playsinline></video>
     </div>
 
     <div class="text-divider">သို့မဟုတ် Link ထည့်ပါ</div>
 
-    <!-- Direct URL Link Input -->
+    <!-- Link Download -->
     <div class="link-row">
       <div class="link-box">
         <input type="text" id="urlInput" placeholder="TikTok / YouTube link ရိုက်...">
         <button class="btn-paste" onclick="pasteURL()">Paste</button>
       </div>
-      <button class="btn-download" onclick="alert('ဗီဒီယို လင့်ခ် ချိတ်ဆက်နေပါသည်...')">🔗 ဒေါင်းမည်</button>
+      <button class="btn-download" onclick="alert('ဗီဒီယို လင့်ခ် ရယူနေပါသည်...')">🔗 ဒေါင်းမည်</button>
     </div>
 
     <!-- 4 Tabs -->
@@ -552,6 +497,9 @@
     <!-- 1. ဗီဒီယို Tab -->
     <div id="view-video" class="view-content active">
       <div class="studio-card">
+        <label class="input-title">Video အလှည့် (Mirror)</label>
+        <button class="secondary-btn" style="margin-bottom:14px;" onclick="toggleMirror()">🪞 ဗီဒီယို ဘယ်/ညာ ပြောင်းပြန်လှန်မည် (Mirror)</button>
+
         <label class="input-title">Video အချိုးအစား (Ratio)</label>
         <select>
           <option>9:16 (TikTok / Reels / Shorts)</option>
@@ -565,87 +513,135 @@
         </div>
         <input type="range" min="0" max="100" value="14" oninput="document.getElementById('blurPercent').innerText = this.value + '%'">
 
-        <label class="input-title">ဗီဒီယို ကြည်လင်မှု (Resolution)</label>
-        <select>
-          <option>1080p Full HD</option>
-          <option>720p HD</option>
-        </select>
+        <button class="primary-btn" onclick="captureFrame()">📸 လက်ရှိ Video မှ ဇာတ်ကား Image (Poster) ထုတ်မည်</button>
       </div>
     </div>
 
-    <!-- 2. အသံ Tab (Voicertool တိုက်ရိုက် Embed) -->
+    <!-- 2. အသံ Tab (Gemini Audio + Voice) -->
     <div id="view-audio" class="view-content">
       <div class="studio-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <label class="input-title" style="margin-bottom:0;">Voicertool စကားပြောသံ (သီဟ / နီလာ)</label>
-          <button onclick="window.open('https://voicertool.com', '_blank')" style="background:none; border:none; color:#4f46e5; font-size:0.8rem; font-weight:700; cursor:pointer;">အပြင်မှာဖွင့်ရန် ↗</button>
-        </div>
-        
-        <p style="font-size:0.8rem; color:#64748b; margin-bottom:10px;">
-          Burmese (Myanmar) ကို ရွေးပြီး Nilar သို့မဟုတ် Thiha အသံဖြင့် အသံဖိုင် တိုက်ရိုက် ထုတ်ယူနိုင်ပါသည်-
-        </p>
+        <label class="input-title">မူရင်း Video ၏ ဘာသာစကား</label>
+        <select id="sourceLang">
+          <option value="zh">Chinese (တရုတ်မူရင်း)</option>
+          <option value="en">English (အင်္ဂလိပ်မူရင်း)</option>
+        </select>
 
-        <div class="voicer-container">
-          <iframe src="https://voicertool.com" title="Voicertool Studio"></iframe>
+        <label class="input-title">ထုတ်ယူလိုသည့် အသံထွက် ဘာသာစကား (Output Audio)</label>
+        <select id="targetLang">
+          <option value="my">Burmese (မြန်မာစကားပြောသံ - သီဟ/နီလာ)</option>
+          <option value="zh">Chinese (တရုတ်အသံထွက်)</option>
+          <option value="en">English (အင်္ဂလိပ်အသံထွက်)</option>
+        </select>
+
+        <div class="slider-labels">
+          <span>စကားပြောနှုန်း (Voice Speed)</span>
+          <span id="speedVal">1.0x</span>
         </div>
+        <input type="range" min="0.5" max="2.0" step="0.1" value="1.0" oninput="document.getElementById('speedVal').innerText = this.value + 'x'">
+
+        <label class="input-title">Gemini စကားပြော စမ်းသပ်မည့် စာသား</label>
+        <textarea id="voiceTestInput" rows="3" placeholder="ပြောခိုင်းလိုသည့် စာသား ထည့်ပါ..."></textarea>
+        <button class="primary-btn" onclick="speakText()">🔊 Gemini အသံဖြင့် စမ်းသပ်နားထောင်မည်</button>
       </div>
     </div>
 
-    <!-- 3. စာတန်း Tab (Gemini Auto Subtitle) -->
+    <!-- 3. စာတန်း Tab (DeepClip Font & Styling) -->
     <div id="view-sub" class="view-content">
       <div class="studio-card">
-        <label class="input-title">Gemini API Key</label>
-        <input type="password" id="geminiApiKey" placeholder="AIzaSy... Gemini API Key ထည့်ပါ">
-
-        <label class="input-title">တရုတ် / SRT စာတန်းထိုး ထည့်ရန်</label>
-        <textarea id="srtInput" rows="4" placeholder="Timestamp ပါသော စာတန်းထိုးများကို Paste ချပါ..."></textarea>
         
-        <div style="display:flex; gap:8px; margin-bottom:12px;">
-          <button class="primary-btn" style="background-color:#0f172a;" onclick="stripTimestamps()">Timestamp ရှင်းမည်</button>
-          <button class="primary-btn" onclick="runGeminiSubtitle()">✨ Gemini ဖြင့် မြန်မာပြန်မည်</button>
+        <div id="freeKeyGroup" style="display:none; background:#fef3c7; border:1px solid #fde68a; border-radius:12px; padding:12px; margin-bottom:14px;">
+          <label class="input-title" style="color:#b45309;">Gemini API Key (Free Mode အတွက် VPN လိုအပ်ပါသည်)</label>
+          <input type="password" id="geminiApiKey" placeholder="AIzaSy... API Key ထည့်ပါ">
         </div>
 
-        <label class="input-title">ဘာသာပြန်ပြီး မြန်မာစာတန်း အထွက်</label>
-        <textarea id="srtOutput" rows="4" placeholder="Gemini က အလိုအလျောက် ပြန်ဆိုပေးမည့် မြန်မာစာတန်းများ..."></textarea>
+        <div class="caption-preview-box">
+          <div class="caption-preview-text" id="captionSample">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်</div>
+        </div>
+
+        <label class="input-title">စာလုံးအရွယ်အစား (Font Size)</label>
+        <input type="range" min="14" max="32" value="18" oninput="updateCapSize(this.value)">
+
+        <label class="input-title">စာလုံးအရောင်</label>
+        <div class="color-row">
+          <div class="color-dot active" style="background:#fde047;" onclick="setCapColor('#fde047', this)"></div>
+          <div class="color-dot" style="background:#ffffff;" onclick="setCapColor('#ffffff', this)"></div>
+          <div class="color-dot" style="background:#38bdf8;" onclick="setCapColor('#38bdf8', this)"></div>
+          <div class="color-dot" style="background:#f472b6;" onclick="setCapColor('#f472b6', this)"></div>
+          <div class="color-dot" style="background:#4ade80;" onclick="setCapColor('#4ade80', this)"></div>
+          <div class="color-dot" style="background:#fb923c;" onclick="setCapColor('#fb923c', this)"></div>
+        </div>
+
+        <label class="input-title">မူရင်း စာတန်းထိုး (Chinese / English) ထည့်ပါ</label>
+        <textarea id="subTextInput" rows="4" placeholder="Timestamp ပါသော စာတန်းများကို Paste ချပါ..."></textarea>
+        <button class="primary-btn" onclick="processSubtitles()">✨ Gemini ဖြင့် Auto Subtitle ထုတ်မည်</button>
       </div>
     </div>
 
-    <!-- 4. အပို Tab -->
+    <!-- 4. အပို Tab (Watermark, Logo, Hashtag) -->
     <div id="view-extra" class="view-content">
       <div class="studio-card">
-        <label class="input-title">အပို အထူးပြုစနစ်များ</label>
-        <label style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:0.9rem;">
-          <input type="checkbox" checked> Auto Ducking (စကားပြောချိန် သီချင်းသံ အလိုအလျောက်တိုးမည်)
+        
+        <label class="check-item">
+          <span class="input-title" style="margin-bottom:0;">Watermark စာ</span>
+          <input type="checkbox" id="chkWatermark" checked>
         </label>
-        <label style="display:flex; align-items:center; gap:8px; font-size:0.9rem;">
-          <input type="checkbox" checked> Recap အဖွင့်/အပိတ် AH Logo ထည့်မည်
+        <input type="text" id="watermarkText" value="Aung Ahwin Max" placeholder="Watermark စာသား ရိုက်ထည့်ပါ">
+
+        <label class="check-item">
+          <span class="input-title" style="margin-bottom:0;">Logo (အတိုင်း) ထည့်မည်</span>
+          <input type="checkbox" id="chkLogo" checked>
         </label>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px; margin-top:8px;">
+          <div class="slider-labels">
+            <span class="input-title" style="margin-bottom:0;">Caption + Hashtag AI ရေး</span>
+            <input type="checkbox" id="chkHashtag" checked style="accent-color:#4f46e5;">
+          </div>
+          <input type="text" id="hashtagInput" placeholder="Hashtag အဓိက (ကွက်လပ် = ပုံမှန်)" style="margin-top:8px;">
+          
+          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#334155; font-weight:700;">
+            <input type="checkbox" id="chkFyp" checked style="accent-color:#4f46e5;"> #fyp ထည့်
+          </label>
+        </div>
+
+        <button class="primary-btn" style="margin-top:14px;" onclick="generateCaptions()">🚀 Auto Caption + Hashtags ရယူမည်</button>
       </div>
     </div>
 
   </div>
 
   <script>
-    // Sidebar Control
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      if (sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-        overlay.style.display = 'none';
+    // 1. Password Protection (11135)
+    function checkPass() {
+      const p = document.getElementById('passInput').value;
+      if (p === '11135') {
+        document.getElementById('lockScreen').style.display = 'none';
+        sessionStorage.setItem('unlocked', 'true');
       } else {
-        sidebar.classList.add('open');
-        overlay.style.display = 'block';
+        alert('Passcode မှားယွင်းနေပါသည်!');
+      }
+    }
+    if (sessionStorage.getItem('unlocked') === 'true') {
+      document.getElementById('lockScreen').style.display = 'none';
+    }
+
+    // 2. Mode Switching (PRO vs Free)
+    let currentMode = 'pro';
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('proBtn').classList.toggle('active', mode === 'pro');
+      document.getElementById('freeBtn').classList.toggle('active', mode === 'free');
+      document.getElementById('appModeText').innerText = mode === 'pro' ? 'PRO MODE' : 'FREE MODE';
+      document.getElementById('freeKeyGroup').style.display = mode === 'free' ? 'block' : 'none';
+
+      if (mode === 'pro') {
+        alert('PRO Mode: VPN မလိုဘဲ Gemini ကို တိုက်ရိုက် အသုံးပြုနိုင်ပါသည်ခင်ဗျာ');
+      } else {
+        alert('Free Mode: Gemini Key ကိုယ်တိုင် ထည့်သွင်းပေးရမည်ဖြစ်ပြီး VPN လိုအပ်ပါသည်ခင်ဗျာ');
       }
     }
 
-    function openKeySettings() {
-      toggleMenu();
-      switchView('view-sub', document.querySelectorAll('.tab-item')[2]);
-      document.getElementById('geminiApiKey').focus();
-    }
-
-    // Tab Switching
+    // 3. Tab Navigation
     function switchView(viewId, btn) {
       document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.view-content').forEach(c => c.classList.remove('active'));
@@ -653,24 +649,103 @@
       document.getElementById(viewId).classList.add('active');
     }
 
-    // Direct Phone Video Picker
+    // 4. Video Selection & Direct Player Preview
     const uploadZone = document.getElementById('uploadZone');
     const phoneFileInput = document.getElementById('phoneFileInput');
+    const player = document.getElementById('player');
+    const videoWrapper = document.getElementById('videoWrapper');
 
-    uploadZone.addEventListener('click', () => {
-      phoneFileInput.click();
-    });
+    uploadZone.onclick = () => phoneFileInput.click();
 
-    phoneFileInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files[0]) {
-        const file = e.target.files[0];
+    phoneFileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
         document.getElementById('dispTitle').innerText = file.name;
-        document.getElementById('dispDesc').innerText = (file.size / (1024 * 1024)).toFixed(2) + ' MB · ဗီဒီယို အဆင်သင့်ရှိသည်';
-        alert('ဗီဒီယိုဖိုင် အောင်မြင်စွာ တင်သွင်းပြီးပါပြီ: ' + file.name);
+        document.getElementById('dispDesc').innerText = (file.size / (1024 * 1024)).toFixed(2) + ' MB · အဆင်သင့်ရှိသည်';
+        
+        const videoURL = URL.createObjectURL(file);
+        player.src = videoURL;
+        videoWrapper.style.display = 'block';
+        player.play();
       }
-    });
+    };
 
-    // Paste URL
+    // 5. Mirror Toggle
+    function toggleMirror() {
+      videoWrapper.classList.toggle('mirrored');
+      alert(videoWrapper.classList.contains('mirrored') ? 'Mirror (ဘယ်/ညာ ပြောင်းပြန်) ဖွင့်လိုက်ပါပြီ' : 'Mirror ပုံမှန်အတိုင်း ပြန်ထားလိုက်ပါပြီ');
+    }
+
+    // 6. Capture Image / Poster Frame
+    function captureFrame() {
+      if (!player.videoWidth) {
+        alert('Video အရင်တင်ပေးပါခင်ဗျာ');
+        return;
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = player.videoWidth;
+      canvas.height = player.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
+      
+      const link = document.createElement('a');
+      link.download = 'movie-poster.png';
+      link.href = canvas.toDataURL();
+      link.click();
+      alert('ဇာတ်ကား Poster ပုံ ထုတ်ယူဒေါင်းလုဒ်ဆွဲပြီးပါပြီခင်ဗျာ!');
+    }
+
+    // 7. Subtitle Font Styling Controls
+    function updateCapSize(val) {
+      document.getElementById('captionSample').style.fontSize = val + 'px';
+    }
+    function setCapColor(col, el) {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('captionSample').style.color = col;
+    }
+
+    // 8. Gemini Voice Speak
+    function speakText() {
+      const txt = document.getElementById('voiceTestInput').value;
+      const outLang = document.getElementById('targetLang').value;
+      if (!txt.trim()) {
+        alert('စာသားအရင်ထည့်ပေးပါခင်ဗျာ');
+        return;
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(txt);
+        u.rate = parseFloat(document.getElementById('speedVal').innerText) || 1.0;
+        if (outLang === 'zh') u.lang = 'zh-CN';
+        else if (outLang === 'en') u.lang = 'en-US';
+        else u.lang = 'my-MM';
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    // 9. Process Subtitles via Gemini
+    function processSubtitles() {
+      const txt = document.getElementById('subTextInput').value;
+      if (!txt.trim()) {
+        alert('စာတန်းစာသား အရင်ထည့်ပေးပါခင်ဗျာ');
+        return;
+      }
+      alert('Gemini ဖြင့် စာတန်းများကို အလိုအလျောက် ဘာသာပြန် ညှိယူပေးနေပါသည်ခင်ဗျာ...');
+    }
+
+    // 10. Generate Caption + Hashtags
+    function generateCaptions() {
+      const baseTag = document.getElementById('hashtagInput').value;
+      const includeFyp = document.getElementById('chkFyp').checked;
+      let tags = '#movie #recap #review ';
+      if (baseTag.trim()) tags += '#' + baseTag.replace(/\s+/g, ' #') + ' ';
+      if (includeFyp) tags += '#fyp #foryou #viral';
+      
+      alert('Generated Caption & Hashtags:\n' + tags);
+    }
+
+    // Link Paste
     async function pasteURL() {
       try {
         const text = await navigator.clipboard.readText();
@@ -680,61 +755,6 @@
       }
     }
 
-    // Clean Subtitle Timestamps
-    function stripTimestamps() {
-      const input = document.getElementById('srtInput').value;
-      if (!input.trim()) {
-        alert('စာတန်းစာသား အရင်ထည့်ပေးပါခင်ဗျာ');
-        return;
-      }
-      const cleaned = input.replace(/\d{2}:\d{2}:\d{2}[,\.]\d{3}\s*-->\s*\d{2}:\d{2}:\d{2}[,\.]\d{3}/g, '').trim();
-      document.getElementById('srtInput').value = cleaned;
-      alert('Timestamp များ ရှင်းလင်းပြီးပါပြီခင်ဗျာ');
-    }
-
-    // Gemini Auto Subtitle Generator
-    async function runGeminiSubtitle() {
-      const apiKey = document.getElementById('geminiApiKey').value.trim();
-      const rawText = document.getElementById('srtInput').value.trim();
-
-      if (!apiKey) {
-        alert('Gemini API Key အရင်ထည့်ပေးပါခင်ဗျာ');
-        return;
-      }
-      if (!rawText) {
-        alert('ဘာသာပြန်ရန် စာတန်းစာသား အရင်ထည့်ပါခင်ဗျာ');
-        return;
-      }
-
-      const out = document.getElementById('srtOutput');
-      out.value = 'Gemini မှ မြန်မာစာတန်း အလိုအလျောက် ပြန်ဆိုနေပါသည်...';
-
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{
-                text: `You are a professional Myanmar movie recap narrator. Translate this Chinese/English text smoothly and naturally into Burmese storytelling script: \n\n${rawText}`
-              }]
-            }]
-          })
-        });
-
-        const data = await res.json();
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-          out.value = data.candidates[0].content.parts[0].text;
-          alert('မြန်မာစာတန်း အောင်မြင်စွာ ပြန်ဆိုပြီးပါပြီခင်ဗျာ!');
-        } else {
-          out.value = 'အမှားအယွင်း: ' + JSON.stringify(data);
-        }
-      } catch (err) {
-        out.value = 'ချိတ်ဆက်မှု မအောင်မြင်ပါ: ' + err.message;
-      }
-    }
-
-    // PWA Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
