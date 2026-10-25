@@ -39,14 +39,15 @@
       margin: 0;
       color: #f1f5f9;
     }
-    input[type="file"], textarea, input[type="range"] {
+    input[type="file"], select, textarea, input[type="range"] {
       width: 100%;
       box-sizing: border-box;
       background-color: #0f172a;
       color: #fff;
       border: 1px solid #475569;
       border-radius: 6px;
-      padding: 8px;
+      padding: 10px;
+      font-size: 0.9rem;
     }
     textarea {
       resize: vertical;
@@ -65,16 +66,28 @@
       background-color: #0369a1;
     }
     
-    .video-container {
-      position: relative;
+    /* Video Box & Ratio Wrapper */
+    .video-wrapper {
       width: 100%;
+      display: flex;
+      justify-content: center;
       background: #000;
       border-radius: 8px;
       overflow: hidden;
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      background: #000;
+      overflow: hidden;
       display: none;
+      transition: aspect-ratio 0.2s ease;
     }
     video {
       width: 100%;
+      height: 100%;
+      object-fit: contain;
       display: block;
     }
     .blur-overlay {
@@ -106,17 +119,46 @@
     <p class="sub">မြန်မာစာတန်းထိုးနှင့် Video Recap ပြုလုပ်ရန်</p>
   </div>
 
+  <!-- အဆင့် ၁ - ဗီဒီယို တင်ရန် -->
   <div class="card">
-    <h2>၁။ Video ရွေးချယ်ပါ</h2>
+    <h2>၁။ Video ဖိုင် ရွေးချယ်ပါ</h2>
     <input type="file" id="videoInput" accept="video/*">
-    <div class="video-container" id="videoContainer">
-      <video id="videoPreview" controls playsinline></video>
-      <div class="blur-overlay" id="blurOverlay"></div>
+    <div class="video-wrapper">
+      <div class="video-container" id="videoContainer">
+        <video id="videoPreview" controls playsinline></video>
+        <div class="blur-overlay" id="blurOverlay"></div>
+      </div>
     </div>
   </div>
 
+  <!-- အဆင့် ၂ - ဗီဒီယို Size နှင့် အရည်အသွေး -->
   <div class="card">
-    <h2>၂။ စာသားဖုံးအုပ်မည့် Blur Box အပြင်အဆင်</h2>
+    <h2>၂။ Video အချိုးအစားနှင့် အရည်အသွေး</h2>
+    
+    <div class="control-row">
+      <label>Video အချိုး (Aspect Ratio):</label>
+      <select id="aspectRatio">
+        <option value="auto">မူရင်းအတိုင်း (Original)</option>
+        <option value="9/16">9:16 (TikTok / Reels / Shorts)</option>
+        <option value="16/9">16:9 (YouTube Standard)</option>
+        <option value="1/1">1:1 (Square)</option>
+        <option value="4/5">4:5 (Facebook / Instagram Post)</option>
+      </select>
+    </div>
+
+    <div class="control-row">
+      <label>Render အရည်အသွေး (Output Quality):</label>
+      <select id="videoQuality">
+        <option value="1080p">TikTok HD (1080p) - ပိုကြည်လင်သည်</option>
+        <option value="720p" selected>Standard HD (720p) - သင့်တင့်မြန်ဆန်သည်</option>
+        <option value="480p">Fast Render (480p) - ဖိုင်အရွယ်အစားသေးငယ်သည်</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- အဆင့် ၃ - စာသားဖုံး Blur Box -->
+  <div class="card">
+    <h2>၃။ စာသားဖုံးအုပ်မည့် Blur Box အပြင်အဆင်</h2>
     <div class="control-row">
       <label>အထက်/အောက် ရွှေ့ရန် (Position Y):</label>
       <input type="range" id="posY" min="0" max="90" value="15">
@@ -135,13 +177,10 @@
     </div>
   </div>
 
+  <!-- အဆင့် ၄ - ဇာတ်ညွှန်းနှင့် AI အသံ -->
   <div class="card">
-    <h2>၃။ မြန်မာစာတန်းထိုးနှင့် ဇာတ်ညွှန်း</h2>
+    <h2>၄။ မြန်မာစာတန်းထိုးနှင့် AI အသံ</h2>
     <textarea id="scriptText" placeholder="ဖတ်ပြစေလိုသော မြန်မာစာသားကို ဒီမှာရိုက်ထည့်ပါ..."></textarea>
-  </div>
-
-  <div class="card">
-    <h2>၄။ မြန်မာ AI အသံ စမ်းသပ်ရန်</h2>
     <button id="playVoiceBtn">🔊 မြန်မာ AI အသံ နားထောင်မည်</button>
     <span id="voiceStatus" style="font-size: 0.85rem; color: #38bdf8; margin-top: 4px;"></span>
   </div>
@@ -151,6 +190,7 @@
     const videoContainer = document.getElementById('videoContainer');
     const videoPreview = document.getElementById('videoPreview');
     const blurOverlay = document.getElementById('blurOverlay');
+    const aspectRatio = document.getElementById('aspectRatio');
 
     const posY = document.getElementById('posY');
     const boxWidth = document.getElementById('boxWidth');
@@ -165,6 +205,16 @@
       }
     });
 
+    // Ratio ချိန်ညှိခြင်း
+    aspectRatio.addEventListener('change', function(e) {
+      if (e.target.value === 'auto') {
+        videoContainer.style.aspectRatio = '';
+      } else {
+        videoContainer.style.aspectRatio = e.target.value;
+      }
+    });
+
+    // Blur Box အနေအထားနှင့် အရွယ်အစားချိန်ညှိခြင်း
     function updateBlurBox() {
       blurOverlay.style.bottom = `${posY.value}%`;
       blurOverlay.style.width = `${boxWidth.value}%`;
@@ -179,6 +229,7 @@
     boxHeight.addEventListener('input', updateBlurBox);
     blurStrength.addEventListener('input', updateBlurBox);
 
+    // AI မြန်မာအသံ ထုတ်ယူစနစ်
     const playVoiceBtn = document.getElementById('playVoiceBtn');
     const scriptText = document.getElementById('scriptText');
     const voiceStatus = document.getElementById('voiceStatus');
