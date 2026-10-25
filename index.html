@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Subtitle Recap Myanmar</title>
+  <title>Video Subtitle Recap Myanmar (5 Min Render)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&display=swap" rel="stylesheet">
@@ -107,7 +107,6 @@
       pointer-events: none;
       z-index: 5;
     }
-    /* စာတန်းထိုးကို လက်ဖြင့် ဖိဆွဲရွှေ့နိုင်သော အရှင် Style */
     .subtitle-overlay {
       position: absolute;
       bottom: 14%;
@@ -141,6 +140,9 @@
     }
     .btn-export-video {
       background-color: #ef4444;
+    }
+    .btn-export-video:active {
+      background-color: #dc2626;
     }
     .btn-export {
       background-color: #8b5cf6;
@@ -184,13 +186,34 @@
     canvas {
       display: none;
     }
+
+    /* Progress Bar */
+    .progress-box {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: #334155;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #38bdf8;
+      transition: width 0.2s linear;
+    }
   </style>
 </head>
 <body>
 
   <div>
     <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">စာတန်းထိုးနေရာ အရှင်ရွှေ့ပြောင်းမှုနှင့် မြန်မာသံစစ်စစ် စနစ်</p>
+    <p class="sub">၅ မိနစ် ဗီဒီယိုအရှည် သီးသန့် Memory Optimized Render စနစ်</p>
   </div>
 
   <!-- အဆင့် ၁ -->
@@ -210,7 +233,7 @@
 
   <!-- အဆင့် ၂ -->
   <div class="card">
-    <h2>၂။ စာတန်းထိုးနှင့် Blur Box နေရာ အရှင်ချိန်ညှိမှု</h2>
+    <h2>၂။ စာတန်းထိုးနှင့် Blur Box နေရာ ချိန်ညှိမှု</h2>
     <div class="control-row">
       <label>စာတန်းထိုး အထက်/အောက် ရွှေ့ရန် (Subtitle Position Y):</label>
       <input type="range" id="subPosY" min="0" max="90" value="14">
@@ -231,28 +254,25 @@
 
   <!-- အဆင့် ၃ -->
   <div class="card">
-    <h2>၃။ SRT စာတန်းထိုး & ပြင်ပမြန်မာအသံဖိုင် (ရွေးချယ်နိုင်သည်)</h2>
-    <div class="control-row">
-      <label>SRT စာတန်းထိုး ထည့်ရန်:</label>
-      <input type="file" id="srtFileInput" accept=".srt">
-      <button class="btn-export" id="exportSrtBtn" style="margin-top: 4px;">📥 SRT ဖိုင် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
-    </div>
+    <h2>၃။ SRT စာတန်းထိုး & အသံဖိုင်</h2>
+    <input type="file" id="srtFileInput" accept=".srt">
+    <button class="btn-export" id="exportSrtBtn">📥 SRT ဖိုင် ဒေါင်းလုဒ်ဆွဲမည် (.srt)</button>
     <div class="control-row" style="margin-top: 6px;">
-      <label>CapCut/TikTok မြန်မာအသံဖိုင် ရှိပါက တင်ရန် (.mp3):</label>
+      <label>အသံဖိုင် သီးသန့်ရှိပါက တင်သွင်းရန် (.mp3):</label>
       <input type="file" id="customAudioInput" accept="audio/*">
     </div>
   </div>
 
   <!-- အဆင့် ၄ -->
   <div class="card">
-    <h2>၄။ သီဟ / နီလာ မြန်မာစကားပြောခန်းများ</h2>
+    <h2>၄။ ဇာတ်လမ်းစကားပြောခန်းများနှင့် ၅ မိနစ် Render</h2>
     <div id="dialogueList" style="display: flex; flex-direction: column; gap: 10px;">
       
       <div class="dialogue-box">
         <div class="dialogue-header">
           <select class="voice-role">
-            <option value="my-MM-NilarNeural">👧 နီလာ (အမျိုးသမီးသံ စစ်စစ်)</option>
-            <option value="my-MM-ThihaNeural">👨 သီဟ (ဇာတ်ကြောင်းပြောသံ စစ်စစ်)</option>
+            <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
+            <option value="thiha">👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
           </select>
         </div>
         <div class="time-inputs">
@@ -267,8 +287,8 @@
       <div class="dialogue-box">
         <div class="dialogue-header">
           <select class="voice-role">
-            <option value="my-MM-ThihaNeural" selected>👨 သီဟ (ဇာတ်ကြောင်းပြောသံ စစ်စစ်)</option>
-            <option value="my-MM-NilarNeural">👧 နီလာ (အမျိုးသမီးသံ စစ်စစ်)</option>
+            <option value="thiha" selected>👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
+            <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
           </select>
         </div>
         <div class="time-inputs">
@@ -283,9 +303,20 @@
     </div>
 
     <button type="button" class="btn-add" id="addDialogueBtn">➕ စကားပြောခန်းအသစ် ထပ်ထည့်မည်</button>
-    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ သီဟ/နီလာ မြန်မာသံဖြင့် အစမ်းဖွင့်မည်</button>
-    <button class="btn-export-video" id="exportVideoBtn" style="margin-top: 6px;">🔴 Export (ဗီဒီယိုဖိုင် အသစ်သိမ်းဆည်းမည်)</button>
-    <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8;"></span>
+    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ Recap အစမ်းဖွင့်ကြည့်မည်</button>
+    <button class="btn-export-video" id="exportVideoBtn" style="margin-top: 6px;">🔴 Export (၅ မိနစ် ဗီဒီယိုဖိုင် အသစ်သိမ်းဆည်းမည်)</button>
+
+    <!-- Progress Indicator -->
+    <div class="progress-box" id="progressBox">
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #38bdf8;">
+        <span id="progressText">Render လုပ်နေပါသည်...</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+    </div>
+    <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8; margin-top: 4px;"></span>
   </div>
 
   <script>
@@ -311,6 +342,10 @@
     const customAudioInput = document.getElementById('customAudioInput');
     const renderCanvas = document.getElementById('renderCanvas');
 
+    const progressBox = document.getElementById('progressBox');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressBarFill = document.getElementById('progressBarFill');
+
     let customAudioBlob = null;
     customAudioInput.addEventListener('change', function(e) {
       if (e.target.files[0]) {
@@ -328,13 +363,11 @@
       }
     });
 
-    // စာတန်းထိုးနှင့် Blur Box နေရာ ချိန်ညှိမှု
     function updateOverlayPositions() {
       blurOverlay.style.bottom = `${posY.value}%`;
       blurOverlay.style.width = `${boxWidth.value}%`;
       blurOverlay.style.left = `${(100 - boxWidth.value) / 2}%`;
       blurOverlay.style.height = `${boxHeight.value}px`;
-
       subtitleOverlay.style.bottom = `${subPosY.value}%`;
     }
 
@@ -344,7 +377,7 @@
     subPosY.addEventListener('input', updateOverlayPositions);
     updateOverlayPositions();
 
-    // စာတန်းထိုးကို လက်ဖြင့် ဖိဆွဲ၍ နေရာရွှေ့နိုင်သော စနစ် (Touch / Mouse Drag)
+    // စာတန်းထိုးကို လက်ဖြင့် ဖိဆွဲ၍ နေရာရွှေ့ခြင်း
     let isDragging = false;
     subtitleOverlay.addEventListener('pointerdown', (e) => {
       isDragging = true;
@@ -367,8 +400,8 @@
       div.innerHTML = `
         <div class="dialogue-header">
           <select class="voice-role">
-            <option value="my-MM-NilarNeural">👧 နီလာ (အမျိုးသမီးသံ စစ်စစ်)</option>
-            <option value="my-MM-ThihaNeural">👨 သီဟ (ဇာတ်ကြောင်းပြောသံ စစ်စစ်)</option>
+            <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
+            <option value="thiha">👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
           </select>
           <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
         </div>
@@ -396,80 +429,58 @@
       return lines;
     }
 
-    // သီဟ နှင့် နီလာ စစ်မှန်သော မြန်မာစကားသံ (Azure Edge Speech Engine)
-    function playMyanmarNeural(role, text, onEnd) {
+    function playAudio(role, text, onEnd) {
       if (customAudioBlob) {
         ttsAudio.play();
         ttsAudio.onended = onEnd;
         return;
       }
-
-      syncStatus.innerText = '🔊 မြန်မာစကားသံ ပြင်ဆင်နေပါသည်...';
-      const cleanText = text.replace(/[\n\r]/g, ' ');
-      // Microsoft Myanmar TTS Audio Source
-      const voice = role === 'my-MM-ThihaNeural' ? 'my-MM-ThihaNeural' : 'my-MM-NilarNeural';
-      const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(cleanText)}&tl=my&client=tw-ob`;
-
+      const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=my&client=tw-ob`;
       ttsAudio.src = ttsUrl;
       ttsAudio.onended = onEnd;
       ttsAudio.onerror = () => {
         if ('speechSynthesis' in window) {
-          const utt = new SpeechSynthesisUtterance(cleanText);
+          const utt = new SpeechSynthesisUtterance(text);
           utt.lang = 'my-MM';
           utt.onend = onEnd;
           window.speechSynthesis.speak(utt);
         } else {
-          setTimeout(onEnd, 2500);
+          setTimeout(onEnd, 2000);
         }
       };
-
       ttsAudio.play().catch(() => {
-        if ('speechSynthesis' in window) {
-          const utt = new SpeechSynthesisUtterance(cleanText);
-          utt.lang = 'my-MM';
-          utt.onend = onEnd;
-          window.speechSynthesis.speak(utt);
-        } else {
-          setTimeout(onEnd, 2500);
-        }
+        setTimeout(onEnd, 2000);
       });
     }
 
-    // Recap အစမ်းဖွင့်ကြည့်ခြင်း
+    // စမ်းသပ် Playback
     playRecapBtn.addEventListener('click', function() {
       const lines = getLines();
       if (lines.length === 0) {
-        alert('စကားပြောခန်း စာသား အရင်ရိုက်ထည့်ပါခင်ဗျာ။');
+        alert('စာတန်းထိုး စာသား အရင်ရိုက်ထည့်ပါခင်ဗျာ။');
         return;
       }
-
       videoPreview.currentTime = 0;
-      videoPreview.volume = 0.2;
       videoPreview.play();
 
-      let currentIndex = 0;
-
-      function speakNext() {
-        if (currentIndex >= lines.length) {
+      let idx = 0;
+      function next() {
+        if (idx >= lines.length) {
           syncStatus.innerText = '✅ Recap အစမ်းဖွင့်ပြီးပါပြီ။';
           return;
         }
-
-        const currentLine = lines[currentIndex];
-        subtitleOverlay.innerText = currentLine.text;
-        const speaker = currentLine.role.includes('Thiha') ? 'သီဟ' : 'နီလာ';
-        syncStatus.innerText = `▶️ [${speaker}] ဖတ်ပြနေပါသည်: "${currentLine.text}"`;
-
-        playMyanmarNeural(currentLine.role, currentLine.text, function() {
-          currentIndex++;
-          speakNext();
+        const cur = lines[idx];
+        subtitleOverlay.innerText = cur.text;
+        syncStatus.innerText = `▶️ [${cur.role}] ဖတ်ပြနေပါသည်: "${cur.text}"`;
+        playAudio(cur.role, cur.text, () => {
+          idx++;
+          next();
         });
       }
-
-      speakNext();
+      next();
     });
 
-    // Video Export Render (ချိန်ညှိထားသော စာတန်းထိုးနေရာအတိုင်း MP4 ထုတ်ပေးခြင်း)
+    // ၅ မိနစ် ဗီဒီယိုအရှည် သီးသန့် Chunked Memory Optimized Render
     exportVideoBtn.addEventListener('click', async function() {
       if (!videoPreview.src) {
         alert('ကျေးဇူးပြု၍ Video ဖိုင်အရင် ရွေးချယ်ပါခင်ဗျာ။');
@@ -482,48 +493,63 @@
         return;
       }
 
-      syncStatus.innerText = '⏳ ဗီဒီယို Export Render ပြုလုပ်နေပါသည်...';
-      exportVideoBtn.disabled = true;
+      // Memory သက်သာစေရန် Resolution ကို အနေတော် 720p Scale ချုံ့ထားခြင်း
+      const maxW = 720;
+      const originalW = videoPreview.videoWidth || 720;
+      const originalH = videoPreview.videoHeight || 1280;
+      const scale = Math.min(1, maxW / originalW);
 
-      renderCanvas.width = videoPreview.videoWidth || 720;
-      renderCanvas.height = videoPreview.videoHeight || 1280;
-      const ctx = renderCanvas.getContext('2d');
+      renderCanvas.width = originalW * scale;
+      renderCanvas.height = originalH * scale;
+      const ctx = renderCanvas.getContext('2d', { alpha: false }); // CPU ဝန်အားလျှော့ခြင်း
 
-      const stream = renderCanvas.captureStream(30);
+      // 24 FPS နှင့် 1.5 Mbps ဖြင့် စနစ်တကျ အထစ်အငေါ့မရှိအောင် ထိန်းညှိခြင်း
+      const stream = renderCanvas.captureStream(24);
       let recorder;
       try {
-        recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+        recorder = new MediaRecorder(stream, {
+          mimeType: 'video/webm;codecs=vp8',
+          videoBitsPerSecond: 1500000 // 1.5 Mbps
+        });
       } catch (e) {
         recorder = new MediaRecorder(stream);
       }
 
       const chunks = [];
-      recorder.ondataavailable = e => chunks.push(e.data);
+      recorder.ondataavailable = e => {
+        if (e.data && e.data.size > 0) chunks.push(e.data);
+      };
+
       recorder.onstop = () => {
         const blob = new Blob(chunks, { type: 'video/mp4' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'recap_video_myanmar.mp4';
+        a.download = 'recap_5min_myanmar.mp4';
         a.click();
         URL.revokeObjectURL(url);
-        syncStatus.innerText = '✅ ဗီဒီယိုဖိုင် အောင်မြင်စွာ ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!';
+        progressBox.style.display = 'none';
+        syncStatus.innerText = '✅ ၅ မိနစ် ဗီဒီယိုဖိုင် အောင်မြင်စွာ ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!';
         exportVideoBtn.disabled = false;
       };
 
-      recorder.start();
+      // ၁ စက္ကန့်စီ Memory ထဲသို့ အသုတ်လိုက် ထည့်သွင်းခြင်း (RAM မပြည့်စေရန်)
+      recorder.start(1000);
+      exportVideoBtn.disabled = true;
+      progressBox.style.display = 'flex';
+
       videoPreview.currentTime = 0;
       videoPreview.play();
 
-      let currentSubText = '';
+      let currentSub = '';
       let isRendering = true;
 
-      function drawFrame() {
+      function renderLoop() {
         if (!isRendering) return;
 
         ctx.drawImage(videoPreview, 0, 0, renderCanvas.width, renderCanvas.height);
 
-        // Blur Mask
+        // Blur Box
         const bWidth = (renderCanvas.width * boxWidth.value) / 100;
         const bHeight = parseInt(boxHeight.value) * (renderCanvas.height / 600);
         const bLeft = (renderCanvas.width - bWidth) / 2;
@@ -533,26 +559,25 @@
         ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
         ctx.fillRect(bLeft, bTop, bWidth, bHeight);
 
-        // စိတ်ကြိုက်ချိန်ထားသော စာတန်းထိုးနေရာ (subPosY)
-        if (currentSubText) {
+        // စာတန်းထိုး
+        if (currentSub) {
           ctx.font = `bold ${Math.floor(renderCanvas.width * 0.045)}px 'Noto Sans Myanmar', sans-serif`;
           ctx.fillStyle = '#ffffff';
           ctx.textAlign = 'center';
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = 4;
-          
           const sBottom = (renderCanvas.height * subPosY.value) / 100;
           const textY = renderCanvas.height - sBottom;
-          
-          ctx.strokeText(currentSubText, renderCanvas.width / 2, textY);
-          ctx.fillText(currentSubText, renderCanvas.width / 2, textY);
+          ctx.strokeText(currentSub, renderCanvas.width / 2, textY);
+          ctx.fillText(currentSub, renderCanvas.width / 2, textY);
         }
 
-        requestAnimationFrame(drawFrame);
+        requestAnimationFrame(renderLoop);
       }
 
-      drawFrame();
+      renderLoop();
 
+      // Render Progress နှင့် အသံချိန်ညှိမှု
       let lineIndex = 0;
       function speakForRender() {
         if (lineIndex >= lines.length) {
@@ -562,10 +587,14 @@
           return;
         }
 
-        const l = lines[lineIndex];
-        currentSubText = l.text;
+        const pct = Math.round(((lineIndex + 1) / lines.length) * 100);
+        progressPercent.innerText = `${pct}%`;
+        progressBarFill.style.width = `${pct}%`;
 
-        playMyanmarNeural(l.role, l.text, function() {
+        const l = lines[lineIndex];
+        currentSub = l.text;
+
+        playAudio(l.role, l.text, () => {
           lineIndex++;
           speakForRender();
         });
@@ -586,7 +615,7 @@
     exportSrtBtn.addEventListener('click', function() {
       const lines = getLines();
       if (lines.length === 0) {
-        alert('စာတန်းထိုး စာသားမရှိသေးပါခင်ဗျာ။');
+        alert('စာတန်းထိုး မရှိသေးပါခင်ဗျာ။');
         return;
       }
       let srtContent = '';
@@ -597,7 +626,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'recap_myanmar_subtitles.srt';
+      a.download = 'recap_5min_subtitles.srt';
       a.click();
       URL.revokeObjectURL(url);
     });
@@ -633,8 +662,8 @@
             div.innerHTML = `
               <div class="dialogue-header">
                 <select class="voice-role">
-                  <option value="my-MM-NilarNeural">👧 နီလာ (အမျိုးသမီးသံ စစ်စစ်)</option>
-                  <option value="my-MM-ThihaNeural">👨 သီဟ (ဇာတ်ကြောင်းပြောသံ စစ်စစ်)</option>
+                  <option value="nilar">👧 နီလာ (အမျိုးသမီးသံ)</option>
+                  <option value="thiha">👨 သီဟ (ဇာတ်ကြောင်းသံ)</option>
                 </select>
                 <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
               </div>
