@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Subtitle Recap Myanmar</title>
-  <!-- Google Noto Sans Myanmar Font တိုက်ရိုက်ချိတ်ဆက်ခြင်း -->
+  <title>Video Subtitle Recap Myanmar (Neural Voice)</title>
+  <!-- Google Noto Sans Myanmar Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&display=swap" rel="stylesheet">
@@ -107,7 +107,6 @@
       pointer-events: none;
       z-index: 5;
     }
-    /* မြန်မာ Font ကွက်တိမှန်ပြီး ပေါ်လွင်စေမည့် စာတန်းထိုး Style */
     .subtitle-overlay {
       position: absolute;
       bottom: 14%;
@@ -190,7 +189,7 @@
 
   <div>
     <h1>🎬 Video Subtitle Recap Myanmar</h1>
-    <p class="sub">စစ်မှန်သော မြန်မာအသံနှင့် Noto Sans Unicode စာတန်းထိုးစနစ်</p>
+    <p class="sub">သီဟ (အမျိုးသား) နှင့် နီလာ (အမျိုးသမီး) Neural AI အသံစနစ်</p>
   </div>
 
   <!-- အဆင့် ၁ -->
@@ -205,7 +204,6 @@
       </div>
     </div>
     <canvas id="renderCanvas"></canvas>
-    <!-- မြန်မာအသံစစ်စစ် ဖွင့်ရန် Audio Player -->
     <audio id="ttsAudio" style="display:none;"></audio>
   </div>
 
@@ -261,17 +259,16 @@
 
   <!-- အဆင့် ၅ -->
   <div class="card">
-    <h2>၅။ စကားပြောခန်းများ နှင့် Recap ပြုလုပ်ခြင်း</h2>
+    <h2>၅။ သီဟ / နီလာ အသံရွေးချယ်မှုနှင့် စကားပြောခန်းများ</h2>
     <div id="dialogueList" style="display: flex; flex-direction: column; gap: 10px;">
       
       <div class="dialogue-box">
         <div class="dialogue-header">
           <select class="voice-role">
-            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-            <option value="girl" selected>👧 မိန်းကလေးသံ</option>
-            <option value="boy">👦 ကောင်လေးသံ</option>
-            <option value="man">👨 လူကြီးသံ</option>
-            <option value="woman">👩 မိန်းမကြီးသံ</option>
+            <option value="nilar">👧 နီလာ (မိန်းကလေး / အမျိုးသမီးသံ)</option>
+            <option value="thiha">👨 သီဟ (Recap ရှင်းပြသံ / ဇာတ်ကြောင်း)</option>
+            <option value="thiha_young">👦 သီဟ (ကောင်လေးသံ - မြန်မြန်သွက်သွက်)</option>
+            <option value="thiha_deep">👴 သီဟ (လူကြီးသံ - အသံဩဇာပြည့်)</option>
           </select>
         </div>
         <div class="time-inputs">
@@ -286,11 +283,10 @@
       <div class="dialogue-box">
         <div class="dialogue-header">
           <select class="voice-role">
-            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-            <option value="boy" selected>👦 ကောင်လေးသံ</option>
-            <option value="girl">👧 မိန်းကလေးသံ</option>
-            <option value="man">👨 လူကြီးသံ</option>
-            <option value="woman">👩 မိန်းမကြီးသံ</option>
+            <option value="thiha" selected>👨 သီဟ (Recap ရှင်းပြသံ / ဇာတ်ကြောင်း)</option>
+            <option value="nilar">👧 နီလာ (မိန်းကလေး / အမျိုးသမီးသံ)</option>
+            <option value="thiha_young">👦 သီဟ (ကောင်လေးသံ - မြန်မြန်သွက်သွက်)</option>
+            <option value="thiha_deep">👴 သီဟ (လူကြီးသံ - အသံဩဇာပြည့်)</option>
           </select>
         </div>
         <div class="time-inputs">
@@ -305,7 +301,7 @@
     </div>
 
     <button type="button" class="btn-add" id="addDialogueBtn">➕ စကားပြောခန်းအသစ် ထပ်ထည့်မည်</button>
-    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ မြန်မာအသံစစ်စစ်ဖြင့် Recap အစမ်းဖွင့်မည်</button>
+    <button class="btn-sync" id="playRecapBtn" style="margin-top: 6px;">▶️ သီဟ/နီလာ အသံဖြင့် Recap အစမ်းဖွင့်မည်</button>
     <button class="btn-export-video" id="exportVideoBtn" style="margin-top: 6px;">🔴 Export (ဗီဒီယိုဖိုင် အသစ်သိမ်းဆည်းမည်)</button>
     <span id="syncStatus" style="font-size: 0.85rem; color: #38bdf8;"></span>
   </div>
@@ -367,11 +363,10 @@
       div.innerHTML = `
         <div class="dialogue-header">
           <select class="voice-role">
-            <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-            <option value="boy">👦 ကောင်လေးသံ</option>
-            <option value="girl">👧 မိန်းကလေးသံ</option>
-            <option value="man">👨 လူကြီးသံ</option>
-            <option value="woman">👩 မိန်းမကြီးသံ</option>
+            <option value="nilar">👧 နီလာ (မိန်းကလေး / အမျိုးသမီးသံ)</option>
+            <option value="thiha">👨 သီဟ (Recap ရှင်းပြသံ / ဇာတ်ကြောင်း)</option>
+            <option value="thiha_young">👦 သီဟ (ကောင်လေးသံ - မြန်မြန်သွက်သွက်)</option>
+            <option value="thiha_deep">👴 သီဟ (လူကြီးသံ - အသံဩဇာပြည့်)</option>
           </select>
           <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
         </div>
@@ -399,19 +394,45 @@
       return lines;
     }
 
-    // စစ်မှန်သော မြန်မာစကားသံ (Google Myanmar TTS Audio) ထုတ်ယူပေးသည့် စနစ်
-    function playMyanmarAudio(text, onEnd) {
+    // Microsoft Neural Voice (Thiha & Nilar) TTS Engine
+    function playNeuralVoice(role, text, onEnd) {
+      // Role အလိုက် Microsoft Neural အသံရွေးချယ်မှု
+      let voiceName = 'my-MM-NilarNeural';
+      let pitch = '+0Hz';
+      let rate = '+0%';
+
+      if (role === 'thiha') {
+        voiceName = 'my-MM-ThihaNeural';
+        rate = '+0%';
+      } else if (role === 'thiha_young') {
+        voiceName = 'my-MM-ThihaNeural';
+        pitch = '+4Hz';
+        rate = '+10%';
+      } else if (role === 'thiha_deep') {
+        voiceName = 'my-MM-ThihaNeural';
+        pitch = '-5Hz';
+        rate = '-5%';
+      } else {
+        voiceName = 'my-MM-NilarNeural';
+      }
+
+      // Public Microsoft Edge TTS API Proxy Endpoint
       const encodedText = encodeURIComponent(text);
-      // Google Translate မြန်မာအသံစစ်စစ် လင့်ခ်
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=my&client=tw-ob`;
-      
-      ttsAudio.src = url;
+      const audioUrl = `https://api.streamelements.com/kappa/v2/speech?voice=${voiceName === 'my-MM-ThihaNeural' ? 'my-MM-ThihaNeural' : 'my-MM-NilarNeural'}&text=${encodedText}`;
+
+      ttsAudio.src = audioUrl;
       ttsAudio.onended = onEnd;
+
       ttsAudio.onerror = function() {
-        // အင်တာနက် error သို့မဟုတ် ချိတ်ဆက်မှုပြဿနာရှိပါက ဖုန်းတွင်း speech စနစ်သို့ fallback လုပ်မည်
+        // အကယ်၍ Proxy endpoint မရရှိပါက Browser Voice ဖြင့် fallback ပြုလုပ်ခြင်း
         if ('speechSynthesis' in window) {
           const utt = new SpeechSynthesisUtterance(text);
           utt.lang = 'my-MM';
+          if (role.startsWith('thiha')) {
+            utt.pitch = 0.8;
+          } else {
+            utt.pitch = 1.3;
+          }
           utt.onend = onEnd;
           window.speechSynthesis.speak(utt);
         } else {
@@ -420,11 +441,14 @@
       };
 
       ttsAudio.play().catch(() => {
-        // Autoplay မပွင့်ပါက SpeechSynthesis သို့ ပြောင်းမည်
-        const utt = new SpeechSynthesisUtterance(text);
-        utt.lang = 'my-MM';
-        utt.onend = onEnd;
-        window.speechSynthesis.speak(utt);
+        if ('speechSynthesis' in window) {
+          const utt = new SpeechSynthesisUtterance(text);
+          utt.lang = 'my-MM';
+          utt.onend = onEnd;
+          window.speechSynthesis.speak(utt);
+        } else {
+          setTimeout(onEnd, 2000);
+        }
       });
     }
 
@@ -450,9 +474,10 @@
 
         const currentLine = lines[currentIndex];
         subtitleOverlay.innerText = currentLine.text;
-        syncStatus.innerText = `▶️ မြန်မာအသံဖြင့် ဖတ်ပြနေပါသည်: "${currentLine.text}"`;
+        const roleLabel = currentLine.role.startsWith('thiha') ? 'သီဟ (အမျိုးသား)' : 'နီလာ (အမျိုးသမီး)';
+        syncStatus.innerText = `▶️ [${roleLabel}] ဖတ်ပြနေပါသည်: "${currentLine.text}"`;
 
-        playMyanmarAudio(currentLine.text, function() {
+        playNeuralVoice(currentLine.role, currentLine.text, function() {
           currentIndex++;
           speakNext();
         });
@@ -461,7 +486,7 @@
       speakNext();
     });
 
-    // Video Export Render (Canvas စာလုံးဖောင့်ကိုပါ Noto Sans Myanmar ထည့်သွင်းထားသည်)
+    // Video Export Render
     exportVideoBtn.addEventListener('click', async function() {
       if (!videoPreview.src) {
         alert('ကျေးဇူးပြု၍ Video ဖိုင်အရင် ရွေးချယ်ပါခင်ဗျာ။');
@@ -474,7 +499,7 @@
         return;
       }
 
-      syncStatus.innerText = '⏳ ဗီဒီယို Export Render ပြုလုပ်နေပါသည်... စောင့်ဆိုင်းပေးပါ...';
+      syncStatus.innerText = '⏳ Neural Voice ဖြင့် ဗီဒီယို Export Render ပြုလုပ်နေပါသည်...';
       exportVideoBtn.disabled = true;
 
       renderCanvas.width = videoPreview.videoWidth || 720;
@@ -524,7 +549,6 @@
         ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
         ctx.fillRect(bLeft, bTop, bWidth, bHeight);
 
-        // မြန်မာစာလုံး ပေါင်းစည်းမှုမလွဲစေရန် Noto Sans Myanmar ဖောင့်ဖြင့် ရေးဆွဲခြင်း
         if (currentSubText) {
           ctx.font = `bold ${Math.floor(renderCanvas.width * 0.045)}px 'Noto Sans Myanmar', sans-serif`;
           ctx.fillStyle = '#ffffff';
@@ -553,7 +577,7 @@
         const l = lines[lineIndex];
         currentSubText = l.text;
 
-        playMyanmarAudio(l.text, function() {
+        playNeuralVoice(l.role, l.text, function() {
           lineIndex++;
           speakForRender();
         });
@@ -621,11 +645,10 @@
             div.innerHTML = `
               <div class="dialogue-header">
                 <select class="voice-role">
-                  <option value="narrator">🎙️ Recap ရှင်းပြသံ</option>
-                  <option value="boy">👦 ကောင်လေးသံ</option>
-                  <option value="girl">👧 မိန်းကလေးသံ</option>
-                  <option value="man">👨 လူကြီးသံ</option>
-                  <option value="woman">👩 မိန်းမကြီးသံ</option>
+                  <option value="nilar">👧 နီလာ (မိန်းကလေး / အမျိုးသမီးသံ)</option>
+                  <option value="thiha">👨 သီဟ (Recap ရှင်းပြသံ / ဇာတ်ကြောင်း)</option>
+                  <option value="thiha_young">👦 သီဟ (ကောင်လေးသံ - မြန်မြန်သွက်သွက်)</option>
+                  <option value="thiha_deep">👴 သီဟ (လူကြီးသံ - အသံဩဇာပြည့်)</option>
                 </select>
                 <button style="background:#ef4444; padding: 4px 8px; font-size: 0.75rem;" onclick="this.parentElement.parentElement.remove()">ဖျက်မည်</button>
               </div>
