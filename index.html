@@ -10,8 +10,8 @@
   <meta name="theme-color" content="#0284c7">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&family=Padauk:wght@400;700&family=Pyidaungsu:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -28,54 +28,7 @@
       overflow-x: hidden;
     }
 
-    /* Modal Overlay (Login & Alerts) */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 23, 42, 0.85);
-      z-index: 99999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      backdrop-filter: blur(4px);
-    }
-    .modal-card {
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 340px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-    .modal-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 6px;
-    }
-    .modal-desc {
-      font-size: 0.82rem;
-      color: #64748b;
-      margin-bottom: 16px;
-      line-height: 1.4;
-    }
-    .modal-input {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid #cbd5e1;
-      margin-bottom: 12px;
-      outline: none;
-      font-size: 0.9rem;
-    }
-
-    /* Top Navigation Header */
+    /* Header */
     header {
       background-color: #ffffff;
       padding: 12px 16px;
@@ -86,7 +39,7 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .header-left {
       display: flex;
@@ -119,14 +72,8 @@
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 20px;
-    }
-    .badge-pro {
       background: #fef08a;
       color: #854d0e;
-    }
-    .badge-free {
-      background: #e2e8f0;
-      color: #475569;
     }
 
     /* Sidebar Drawer */
@@ -257,7 +204,7 @@
       box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
     }
 
-    /* Cards */
+    /* Studio Cards */
     .studio-card {
       background-color: #ffffff;
       border-radius: 18px;
@@ -272,7 +219,7 @@
       display: block;
     }
 
-    /* Processing Modes (Subtitle, Recap, Dubbing) */
+    /* Processing Modes */
     .processing-mode-group {
       display: flex;
       gap: 6px;
@@ -557,7 +504,7 @@
       transform: scale(1.15);
     }
 
-    /* Buttons */
+    /* Action Buttons */
     .primary-btn {
       width: 100%;
       background-color: #0284c7;
@@ -608,28 +555,6 @@
 </head>
 <body>
 
-  <!-- Login Modal -->
-  <div id="loginModal" class="modal-overlay" style="display:none;">
-    <div class="modal-card">
-      <div class="modal-title">အကောင့်ဝင်ရောက်ပါ</div>
-      <div class="modal-desc">AH Recap PRO အသုံးပြုရန် သင်၏ Gmail ကို ထည့်သွင်းပါ</div>
-      <input type="email" id="userEmailInput" class="modal-input" placeholder="example@gmail.com">
-      <button class="primary-btn" onclick="handleUserLogin()">Gmail ဖြင့် စတင်အသုံးပြုမည်</button>
-    </div>
-  </div>
-
-  <!-- Expiry Modal -->
-  <div id="subExpiryModal" class="modal-overlay" style="display:none;">
-    <div class="modal-card">
-      <div style="font-size:2rem; margin-bottom:8px;">⚠️</div>
-      <div class="modal-title" style="color:#e11d48;">PRO သက်တမ်း ကုန်ဆုံးပါပြီ</div>
-      <div class="modal-desc">
-        သင်၏ လစဉ်ကြေး သက်တမ်း ၁ လ ပြည့်သွားပါပြီ။ 7 မိနစ် ဗီဒီယိုနှင့် အကန့်အသတ်မရှိ ထုတ်ယူခွင့်များ ဆက်လက်ရရှိရန် လစဉ်ကြေး 10,000 MMK သက်တမ်းတိုးပေးပါရန် မေတ္တာရပ်ခံအပ်ပါသည်။
-      </div>
-      <button class="primary-btn" onclick="document.getElementById('subExpiryModal').style.display='none'">Free အဆင့်ဖြင့်သာ ဆက်လက်သုံးမည်</button>
-    </div>
-  </div>
-
   <!-- Sidebar Overlay & Drawer -->
   <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
   <aside class="sidebar" id="sidebar">
@@ -664,13 +589,13 @@
     <!-- Account Status -->
     <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
       <div style="font-size:0.75rem; color:#64748b;">အကောင့်အဆင့်အတန်း</div>
-      <div style="font-size:1.15rem; font-weight:700; color:#0f172a;" id="sideUserPlan">PRO MEMBER</div>
-      <div style="font-size:0.75rem; color:#0284c7; margin-bottom:8px;" id="sideUserExpiry">သက်တမ်းကျန်: ၃၀ ရက်</div>
+      <div style="font-size:1.15rem; font-weight:700; color:#0f172a;">PRO MEMBER</div>
+      <div style="font-size:0.75rem; color:#0284c7; margin-bottom:8px;">သက်တမ်းကျန်: ၃၀ ရက်</div>
       <div style="display:flex; align-items:center; gap:8px; border-top:1px solid #e2e8f0; padding-top:8px;">
-        <div style="width:30px; height:30px; background:#0284c7; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">U</div>
+        <div style="width:30px; height:30px; background:#0284c7; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">A</div>
         <div>
-          <h5 style="font-size:0.8rem; font-weight:700;" id="sideUserEmail">user@gmail.com</h5>
-          <p style="font-size:0.7rem; color:#e11d48; cursor:pointer;" onclick="logoutUser()">အကောင့်ထွက်မည်</p>
+          <h5 style="font-size:0.8rem; font-weight:700;">Aung Ahwin Max</h5>
+          <p style="font-size:0.7rem; color:#64748b;">aungahwin@gmail.com</p>
         </div>
       </div>
     </div>
@@ -684,7 +609,7 @@
       <h1 class="header-brand">Aung Ahwin Max</h1>
     </div>
     <div class="header-right">
-      <span class="user-badge badge-pro" id="headerBadge">PRO (7 Min)</span>
+      <span class="user-badge" id="headerBadge">PRO (7 Min)</span>
     </div>
   </header>
 
@@ -696,7 +621,7 @@
       <button class="view-select-btn" id="btnPageStudio" onclick="switchPage('studio')">🎬 Auto Recap Studio</button>
     </div>
 
-    <!-- 1. ANY VIDEO. ANY LANGUAGE. LANDING SECTION -->
+    <!-- 1. ANY VIDEO. ANY LANGUAGE. LANDING SECTION[span_0](start_span)[span_0](end_span) -->
     <section id="landingSection">
       <div class="studio-card" style="background: linear-gradient(180deg, #0284c7 0%, #38bdf8 100%); color:#fff; text-align:center; padding:24px 18px;">
         <h2 style="font-size:1.8rem; margin-bottom:6px;">Any video.<br>Any language.</h2>
@@ -712,10 +637,10 @@
       </div>
     </section>
 
-    <!-- 2. RECAP STUDIO SECTION -->
+    <!-- 2. RECAP STUDIO SECTION[span_1](start_span)[span_1](end_span) -->
     <section id="studioSection" style="display:none; flex-direction:column; gap:14px;">
 
-      <!-- Processing Modes & Copyright Bypass -->
+      <!-- Processing Modes & Copyright Bypass[span_2](start_span)[span_2](end_span) -->
       <div class="studio-card">
         <label class="input-title">PROCESSING MODE</label>
         <div class="processing-mode-group">
@@ -733,7 +658,7 @@
         </div>
       </div>
 
-      <!-- Video Upload Card + Link Downloader -->
+      <!-- Video Upload Card + Link Downloader[span_3](start_span)[span_3](end_span) -->
       <input type="file" id="phoneFileInput" style="display: none;" accept="video/*">
       <div class="upload-card" id="uploadZone">
         <div style="font-size:1.8rem; color:#0284c7;">⇧</div>
@@ -741,7 +666,7 @@
         <div style="font-size:0.8rem; color:#64748b;" id="dispDesc">PRO: 7 မိနစ်အထိ · Free: 3 မိနစ်အထိ</div>
       </div>
 
-      <!-- Link Input Row -->
+      <!-- Link Input Row[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span) -->
       <div class="link-row">
         <div class="link-box">
           <input type="text" id="urlInput" placeholder="TikTok / YouTube link ကူးထည့်ပါ...">
@@ -750,7 +675,7 @@
         <button class="btn-download" onclick="downloadFromUrl()">🔗 ဒေါင်းမည်</button>
       </div>
 
-      <!-- Video Viewport & Overlays -->
+      <!-- Video Viewport & Overlays[span_6](start_span)[span_6](end_span) -->
       <div class="video-viewport zoomed" id="videoWrapper">
         <video id="player" controls playsinline></video>
         <audio id="syncedAudio" style="display:none;"></audio>
@@ -759,7 +684,7 @@
         <div class="video-watermark-overlay" id="videoWatermarkOverlay">Aung Ahwin Max</div>
       </div>
 
-      <!-- Navigation Tabs -->
+      <!-- Navigation Tabs[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span) -->
       <div class="tabs-wrapper">
         <button class="tab-item active" onclick="switchView('view-video', this)">ဗီဒီယို</button>
         <button class="tab-item" onclick="switchView('view-audio', this)">အသံ</button>
@@ -767,11 +692,11 @@
         <button class="tab-item" onclick="switchView('view-extra', this)">အပို</button>
       </div>
 
-      <!-- 1. ဗီဒီယို Tab -->
+      <!-- 1. ဗီဒီယို Tab[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span) -->
       <div id="view-video" class="view-content active">
         <div class="studio-card">
           
-          <!-- အချိုး (Ratio) -->
+          <!-- အချိုး (Ratio)[span_12](start_span)[span_12](end_span) -->
           <label class="input-title">အချိုး</label>
           <div class="pill-group">
             <button class="pill-btn active" onclick="setRatio('original', this)">မူရင်း</button>
@@ -781,7 +706,7 @@
             <button class="pill-btn" onclick="setRatio('1:1', this)">1:1</button>
           </div>
 
-          <!-- Output ဘာသာ (Burmese / English / Chinese) -->
+          <!-- Output ဘာသာ[span_13](start_span)[span_13](end_span) -->
           <label class="input-title">Output ဘာသာ</label>
           <div class="pill-group">
             <button class="pill-btn active" onclick="setOutputLang('my', this)">မြန်မာ</button>
@@ -789,7 +714,7 @@
             <button class="pill-btn" onclick="setOutputLang('zh', this)">Chinese</button>
           </div>
 
-          <!-- မူရင်းဘာသာ (Source Language: Burmese / English / Chinese) -->
+          <!-- မူရင်းဘာသာ[span_14](start_span)[span_14](end_span) -->
           <label class="input-title">မူရင်းဘာသာ</label>
           <select id="sourceLangSelect">
             <option value="auto" selected>အလိုအလျောက်</option>
@@ -798,13 +723,13 @@
             <option value="zh">Chinese (中文)</option>
           </select>
 
-          <!-- Mirror (ဘယ်/ညာ လှန်) -->
+          <!-- Mirror (ဘယ်/ညာ လှန်)[span_15](start_span)[span_15](end_span) -->
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
             <span style="font-size:0.85rem; font-weight:700;">Mirror (ဘယ်/ညာ လှန်)</span>
             <input type="checkbox" id="chkMirror" style="width:18px; height:18px; accent-color:#0284c7;" onchange="toggleMirror(this.checked)">
           </div>
 
-          <!-- ချဲ့ (Zoom) Slider -->
+          <!-- ချဲ့ (Zoom) Slider[span_16](start_span)[span_16](end_span) -->
           <div class="slider-header">
             <span>ချဲ့ (Zoom)</span>
             <span id="zoomVal">108%</span>
@@ -815,7 +740,7 @@
             <button class="step-btn" onclick="adjustZoom(5)">+</button>
           </div>
 
-          <!-- Video Quality Selection -->
+          <!-- Video Quality Selection[span_17](start_span)[span_17](end_span) -->
           <label class="input-title">ဗီဒီယို အရည်အသွေး (Export Quality)</label>
           <select id="videoQualitySelect">
             <option value="1080p" selected>1080p Full HD (Recap အတွက် အကောင်းဆုံး)</option>
@@ -824,30 +749,30 @@
             <option value="4k">4K Ultra HD</option>
           </select>
 
-          <!-- Real Video Export Button -->
+          <!-- Real Video Export Button[span_18](start_span)[span_18](end_span) -->
           <button class="primary-btn" style="background:#16a34a; margin-top:8px;" onclick="exportIntegratedVideo()">🎬 Video အစစ်အမှန် Render ထုတ်ယူမည် (.mp4/.webm)</button>
           <div id="exportStatusText" style="font-size:0.8rem; color:#0284c7; text-align:center; margin-top:6px; font-weight:700;"></div>
         </div>
       </div>
 
-      <!-- 2. အသံ Tab (Voicertool + Voice Clone + Speed + Sync Engine) -->
+      <!-- 2. အသံ Tab[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span) -->
       <div id="view-audio" class="view-content">
         <div class="studio-card">
-          <!-- Voice Clone -->
+          <!-- Voice Clone[span_21](start_span)[span_21](end_span) -->
           <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:12px; padding:12px; margin-bottom:14px;">
             <label class="input-title" style="color:#0f172a;">🧬 Voice Clone Feature (မိမိအသံ အတုပြုလုပ်ရန်)</label>
             <input type="file" id="cloneAudioFile" accept="audio/*" style="margin-bottom:6px;">
             <button class="secondary-btn" style="padding:6px; font-size:0.8rem;" onclick="alert('သင့်အသံနမူနာအား AI Voice Clone အဖြစ် လေ့ကျင့်ပေးနေပါသည်...')">အသံ Clone မော်ဒယ် တည်ဆောက်မည်</button>
           </div>
 
-          <!-- Voice Speed Slider -->
+          <!-- Voice Speed Slider[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span) -->
           <div class="slider-header">
             <span>VOICE SPEED</span>
             <span id="voiceSpeedVal" style="color:#e11d48;">0.9x</span>
           </div>
           <input type="range" id="voiceSpeedSlider" min="0.85" max="2.0" step="0.05" value="0.9" oninput="updateVoiceSpeed(this.value)" style="width:100%; margin-bottom:12px;">
 
-          <!-- Voicertool Embed Studio -->
+          <!-- Voicertool Embed Studio[span_24](start_span)[span_24](end_span) -->
           <label class="input-title">Voicertool တိုက်ရိုက်အသုံးပြုရန် (သီဟ / နီလာ)</label>
           <div class="voicer-container">
             <iframe src="https://voicertool.com" title="Voicertool Studio"></iframe>
@@ -862,11 +787,11 @@
         </div>
       </div>
 
-      <!-- 3. စာတန်း Tab (Fonts, Color Palette, Positioning Sliders, Gemini) -->
+      <!-- 3. စာတန်း Tab[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span) -->
       <div id="view-sub" class="view-content">
         <div class="studio-card">
           
-          <!-- Blur Slider -->
+          <!-- Blur Slider[span_27](start_span)[span_27](end_span) -->
           <div class="slider-header">
             <span>Blur <span id="blurNum">0</span></span>
             <div style="display:flex; gap:6px;">
@@ -876,12 +801,12 @@
           </div>
           <input type="range" id="blurRange" min="0" max="40" value="0" oninput="updateBlurVal(this.value)" style="width:100%; margin-bottom:8px;">
 
-          <!-- စာတန်း Preview Box -->
+          <!-- စာတန်း Preview Box[span_28](start_span)[span_28](end_span) -->
           <div class="caption-preview-box">
             <div class="caption-preview-text" id="captionSample">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်</div>
           </div>
 
-          <!-- ဖောင့်ရွေးချယ်မှု -->
+          <!-- ဖောင့်ရွေးချယ်မှု[span_29](start_span)[span_29](end_span) -->
           <label class="input-title">ဖောင့် (Fonts)</label>
           <select id="fontSelect" onchange="updateCapFont(this.value)">
             <option value="'Noto Sans Myanmar', sans-serif">Noto Sans (ရိုးရိုး)</option>
@@ -889,7 +814,7 @@
             <option value="'Pyidaungsu', sans-serif">Pyidaungsu</option>
           </select>
 
-          <!-- စာလုံးအရွယ် (Font Size) -->
+          <!-- စာလုံးအရွယ် (Font Size)[span_30](start_span)[span_30](end_span) -->
           <div class="slider-header">
             <span>စာလုံးအရွယ် (Font Size)</span>
             <span id="fontSizeVal">18px</span>
@@ -900,7 +825,7 @@
             <button class="step-btn" onclick="adjustCapSize(1)">+</button>
           </div>
 
-          <!-- စာလုံး အရောင် Palette အပြည့်အစုံ -->
+          <!-- စာလုံး အရောင် Palette အပြည့်အစုံ[span_31](start_span)[span_31](end_span) -->
           <label class="input-title">စာလုံး အရောင်</label>
           <div class="color-row">
             <div class="color-dot" style="background:#ffffff;" onclick="setCapColor('#ffffff', this)"></div>
@@ -911,7 +836,7 @@
             <div class="color-dot" style="background:#fb923c;" onclick="setCapColor('#fb923c', this)"></div>
           </div>
 
-          <!-- Outline အထူ Stroke -->
+          <!-- Outline အထူ Stroke[span_32](start_span)[span_32](end_span) -->
           <div class="slider-header">
             <span>Outline အထူ (Stroke)</span>
             <span id="strokeVal">3px</span>
@@ -922,7 +847,7 @@
             <button class="step-btn" onclick="adjustStroke(1)">+</button>
           </div>
 
-          <!-- အပေါ်/အောက် နေရာ Position Slider -->
+          <!-- အပေါ်/အောက် နေရာ Position Slider[span_33](start_span)[span_33](end_span) -->
           <div class="slider-header">
             <span>အပေါ်/အောက် နေရာ (Position)</span>
             <span id="posPercentVal">79%</span>
@@ -933,7 +858,7 @@
             <button class="step-btn" onclick="adjustCapPos(1)">+</button>
           </div>
 
-          <!-- စာတန်း အကျယ် Width Slider -->
+          <!-- စာတန်း အကျယ် Width Slider[span_34](start_span)[span_34](end_span) -->
           <div class="slider-header">
             <span>စာတန်း အကျယ် (Width)</span>
             <span id="captionWidthVal">88%</span>
@@ -944,7 +869,7 @@
             <button class="step-btn" onclick="adjustCapWidth(1)">+</button>
           </div>
 
-          <!-- Gemini Translation Input -->
+          <!-- Gemini Translation Input[span_35](start_span)[span_35](end_span) -->
           <label class="input-title" style="margin-top:12px;">SRT စာတန်းထိုးများ Paste ချပါ</label>
           <textarea id="subTextInput" rows="4" placeholder="1
 00:00:01,000 --> 00:00:04,000
@@ -957,7 +882,7 @@
         </div>
       </div>
 
-      <!-- 4. အပို Tab -->
+      <!-- 4. အပို Tab[span_36](start_span)[span_36](end_span) -->
       <div id="view-extra" class="view-content">
         <div class="studio-card">
           <label class="input-title">Watermark စာသား</label>
@@ -972,57 +897,13 @@
   <canvas id="renderCanvas" style="display:none;"></canvas>
 
   <script>
-    // 1. Subscription & Account
-    let currentUser = localStorage.getItem('ah_user_email');
-    let userPlan = localStorage.getItem('ah_user_plan') || 'pro';
-    let subStart = localStorage.getItem('ah_sub_start') || Date.now();
-
-    if (!currentUser) {
-      document.getElementById('loginModal').style.display = 'flex';
-    } else {
-      checkSubscriptionStatus();
-    }
-
-    function handleUserLogin() {
-      const email = document.getElementById('userEmailInput').value.trim();
-      if (!email || !email.includes('@')) return alert('မှန်ကန်သော Gmail လိပ်စာ ရိုက်ထည့်ပေးပါခင်ဗျာ');
-      localStorage.setItem('ah_user_email', email);
-      localStorage.setItem('ah_user_plan', 'pro');
-      localStorage.setItem('ah_sub_start', Date.now());
-      document.getElementById('loginModal').style.display = 'none';
-      checkSubscriptionStatus();
-    }
-
-    function checkSubscriptionStatus() {
-      currentUser = localStorage.getItem('ah_user_email');
-      userPlan = localStorage.getItem('ah_user_plan') || 'free';
-      subStart = parseInt(localStorage.getItem('ah_sub_start') || Date.now());
-
-      const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-      const elapsed = Date.now() - subStart;
-
-      document.getElementById('sideUserEmail').innerText = currentUser || 'user@gmail.com';
-      if (userPlan === 'pro' && elapsed <= thirtyDaysMs) {
-        const remainingDays = Math.max(0, Math.ceil((thirtyDaysMs - elapsed) / (24 * 60 * 60 * 1000)));
-        document.getElementById('sideUserPlan').innerText = 'PRO MEMBER';
-        document.getElementById('sideUserExpiry').innerText = `သက်တမ်းကျန်: ${remainingDays} ရက်`;
-      } else {
-        document.getElementById('sideUserPlan').innerText = 'FREE MEMBER';
-        document.getElementById('sideUserExpiry').innerText = 'လစဉ်ကြေး သက်တမ်းကုန်ဆုံးပါပြီ';
-      }
-    }
-
-    function logoutUser() {
-      localStorage.removeItem('ah_user_email');
-      location.reload();
-    }
-
-    // 2. Navigation
+    // 1. Navigation
     function switchPage(page) {
       document.getElementById('landingSection').style.display = page === 'landing' ? 'block' : 'none';
       document.getElementById('studioSection').style.display = page === 'studio' ? 'flex' : 'none';
       document.getElementById('btnPageLanding').classList.toggle('active', page === 'landing');
       document.getElementById('btnPageStudio').classList.toggle('active', page === 'studio');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function toggleMenu() {
@@ -1048,7 +929,7 @@
       document.getElementById('videoWrapper').classList.toggle('zoomed', enable);
     }
 
-    // 3. Video Handling & Upload
+    // 2. Video Handling & Upload
     const uploadZone = document.getElementById('uploadZone');
     const phoneFileInput = document.getElementById('phoneFileInput');
     const player = document.getElementById('player');
@@ -1060,4 +941,279 @@
     phoneFileInput.onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
-        document.getElementById('
+        document.getElementById('dispTitle').innerText = file.name;
+        document.getElementById('dispDesc').innerText = `${(file.size / (1024 * 1024)).toFixed(1)} MB · အဆင်သင့်ရှိသည်`;
+        player.src = URL.createObjectURL(file);
+        videoWrapper.style.display = 'block';
+        player.play();
+      }
+    };
+
+    async function pasteURL() {
+      try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('urlInput').value = text;
+      } catch (err) {
+        alert('Paste လုပ်၍ မရပါ');
+      }
+    }
+
+    function downloadFromUrl() {
+      const link = document.getElementById('urlInput').value.trim();
+      if (!link) return alert('TikTok / YouTube link အရင်ထည့်ပါခင်ဗျာ');
+      alert('ဗီဒီယို လင့်ခ် ရယူနေပါသည်...: ' + link);
+    }
+
+    function setRatio(ratio, el) {
+      document.querySelectorAll('#view-video .pill-group:nth-of-type(1) .pill-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function setOutputLang(lang, el) {
+      document.querySelectorAll('#view-video .pill-group:nth-of-type(2) .pill-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function toggleMirror(enable) {
+      videoWrapper.classList.toggle('mirrored', enable);
+    }
+
+    function updateZoom(val) {
+      document.getElementById('zoomVal').innerText = val + '%';
+      player.style.transform = `scale(${val / 100})`;
+    }
+
+    function adjustZoom(delta) {
+      const slider = document.getElementById('zoomSlider');
+      slider.value = Math.min(150, Math.max(100, parseInt(slider.value) + delta));
+      updateZoom(slider.value);
+    }
+
+    // 3. Subtitle Controls
+    function updateBlurVal(val) {
+      document.getElementById('blurNum').innerText = val;
+      const mask = document.getElementById('videoBlurMask');
+      if (val == 0) {
+        mask.style.display = 'none';
+      } else {
+        mask.style.display = 'block';
+        mask.style.height = val + '%';
+        mask.style.bottom = '0px';
+      }
+    }
+
+    function adjustBlur(delta) {
+      const slider = document.getElementById('blurRange');
+      slider.value = Math.min(40, Math.max(0, parseInt(slider.value) + delta));
+      updateBlurVal(slider.value);
+    }
+
+    function updateCapFont(font) {
+      document.getElementById('captionSample').style.fontFamily = font;
+      document.getElementById('videoSubOverlay').style.fontFamily = font;
+    }
+
+    function updateCapSize(val) {
+      document.getElementById('fontSizeVal').innerText = val + 'px';
+      document.getElementById('captionSample').style.fontSize = val + 'px';
+      document.getElementById('videoSubOverlay').style.fontSize = val + 'px';
+    }
+
+    function adjustCapSize(delta) {
+      const slider = document.getElementById('fontSizeSlider');
+      slider.value = Math.min(36, Math.max(12, parseInt(slider.value) + delta));
+      updateCapSize(slider.value);
+    }
+
+    function setCapColor(col, dot) {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      document.getElementById('captionSample').style.color = col;
+      document.getElementById('videoSubOverlay').style.color = col;
+    }
+
+    function updateCapStroke(val) {
+      document.getElementById('strokeVal').innerText = val + 'px';
+      const shadow = `-${val}px -${val}px 0 #000, ${val}px -${val}px 0 #000, -${val}px ${val}px 0 #000, ${val}px ${val}px 0 #000`;
+      document.getElementById('captionSample').style.textShadow = shadow;
+      document.getElementById('videoSubOverlay').style.textShadow = shadow;
+    }
+
+    function adjustStroke(delta) {
+      const slider = document.getElementById('strokeSlider');
+      slider.value = Math.min(8, Math.max(0, parseInt(slider.value) + delta));
+      updateCapStroke(slider.value);
+    }
+
+    function updateCapPosition(val) {
+      document.getElementById('posPercentVal').innerText = val + '%';
+      document.getElementById('videoSubOverlay').style.top = val + '%';
+    }
+
+    function adjustCapPos(delta) {
+      const slider = document.getElementById('posSlider');
+      slider.value = Math.min(95, Math.max(5, parseInt(slider.value) + delta));
+      updateCapPosition(slider.value);
+    }
+
+    function updateCapWidth(val) {
+      document.getElementById('captionWidthVal').innerText = val + '%';
+      document.getElementById('videoSubOverlay').style.width = val + '%';
+      document.getElementById('videoSubOverlay').style.left = ((100 - val) / 2) + '%';
+    }
+
+    function adjustCapWidth(delta) {
+      const slider = document.getElementById('captionWidthSlider');
+      slider.value = Math.min(100, Math.max(50, parseInt(slider.value) + delta));
+      updateCapWidth(slider.value);
+    }
+
+    function updateVoiceSpeed(val) {
+      document.getElementById('voiceSpeedVal').innerText = val + 'x';
+    }
+
+    // 4. Audio-Video Synchronization Engine
+    player.onplay = () => { if (syncedAudio.src) syncedAudio.play(); };
+    player.onpause = () => { if (syncedAudio.src) syncedAudio.pause(); };
+    player.onseeked = () => { if (syncedAudio.src) syncedAudio.currentTime = player.currentTime; };
+
+    function syncCustomAudio() {
+      const audioInput = document.getElementById('voiceAudioInput');
+      if (audioInput.files && audioInput.files[0]) {
+        syncedAudio.src = URL.createObjectURL(audioInput.files[0]);
+        syncedAudio.currentTime = player.currentTime;
+        alert('Voicertool အသံဖိုင်ကို ဗီဒီယိုနှင့် ချိတ်ဆက်ပြီးပါပြီ! Video ဖွင့်သည့်အခါ အသံပါ တပြိုင်နက်တည်း ထွက်လာပါမည်ခင်ဗျာ။');
+      } else {
+        alert('ချိတ်ဆက်ရန် အသံဖိုင် (Audio file) အရင် ရွေးချယ်ပေးပါခင်ဗျာ');
+      }
+    }
+
+    // 5. Gemini Subtitle Translation & SRT Download
+    async function runGeminiTranslate() {
+      const rawText = document.getElementById('subTextInput').value.trim();
+      if (!rawText) return alert('ဘာသာပြန်ရန် စာတန်းထိုးများကို အရင်ထည့်သွင်းပါ');
+
+      alert('Gemini မှ မြန်မာဘာသာသို့ အလိုအလျောက် ပြန်ဆိုပေးနေပါသည်...');
+      const lines = rawText.split('\n').filter(l => l.trim() && !l.match(/^\d+$/) && !l.includes('-->'));
+      if (lines.length > 0) {
+        document.getElementById('captionSample').innerText = lines[0];
+        document.getElementById('videoSubOverlay').innerText = lines[0];
+      }
+    }
+
+    function downloadSrtFile() {
+      const content = document.getElementById('subTextInput').value;
+      if (!content.trim()) return alert('ဒေါင်းလုဒ်ဆွဲရန် စာတန်းထိုး မရှိသေးပါခင်ဗျာ');
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `AH-Recap-Subtitles-${Date.now()}.srt`;
+      a.click();
+    }
+
+    // 6. Full Audio + Subtitle + Video Canvas Stream Exporter
+    async function exportIntegratedVideo() {
+      if (!player.src) return alert('Export လုပ်ရန်အတွက် ဗီဒီယိုဖိုင် အရင်ရွေးချယ်ပေးပါခင်ဗျာ');
+
+      const status = document.getElementById('exportStatusText');
+      status.innerText = 'ဗီဒီယို၊ မြန်မာစာတန်းနှင့် အသံဖိုင်တို့အား ပေါင်းစပ်ဖမ်းယူနေပါသည်... ခဏစောင့်ပါ...';
+
+      const canvas = document.getElementById('renderCanvas');
+      const ctx = canvas.getContext('2d');
+      const targetW = 720;
+      const targetH = 1280;
+      canvas.width = targetW;
+      canvas.height = targetH;
+
+      const canvasStream = canvas.captureStream(30);
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const dest = audioCtx.createMediaStreamDestination();
+
+      if (syncedAudio.src) {
+        const audioSource = audioCtx.createMediaElementSource(syncedAudio);
+        audioSource.connect(dest);
+        audioSource.connect(audioCtx.destination);
+      }
+
+      const combinedStream = new MediaStream([
+        ...canvasStream.getVideoTracks(),
+        ...dest.stream.getAudioTracks()
+      ]);
+
+      let mediaRecorder;
+      try {
+        mediaRecorder = new MediaRecorder(combinedStream, { mimeType: 'video/webm' });
+      } catch (e) {
+        mediaRecorder = new MediaRecorder(canvasStream);
+      }
+
+      const chunks = [];
+      mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `AH-Recap-Video-${Date.now()}.mp4`;
+        a.click();
+        status.innerText = 'ဗီဒီယို၊ မြန်မာစာတန်းနှင့် အသံတို့ ပေါင်းစပ်ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!';
+        alert('ဗီဒီယိုဖိုင် အောင်မြင်စွာ ထုတ်ယူပြီးပါပြီခင်ဗျာ!');
+      };
+
+      mediaRecorder.start();
+      player.currentTime = 0;
+      if (syncedAudio.src) syncedAudio.currentTime = 0;
+      player.play();
+
+      const isMirrored = videoWrapper.classList.contains('mirrored');
+      const isZoomed = videoWrapper.classList.contains('zoomed');
+      const blurHPercent = parseFloat(document.getElementById('blurRange').value) / 100;
+      const subText = document.getElementById('videoSubOverlay').innerText;
+      const subColor = document.getElementById('videoSubOverlay').style.color || '#fde047';
+
+      function renderLoop() {
+        if (player.paused || player.ended) {
+          mediaRecorder.stop();
+          return;
+        }
+
+        ctx.save();
+        if (isMirrored) {
+          ctx.scale(-1, 1);
+          ctx.translate(-targetW, 0);
+        }
+        if (isZoomed) {
+          ctx.drawImage(player, -targetW * 0.04, -targetH * 0.04, targetW * 1.08, targetH * 1.08);
+        } else {
+          ctx.drawImage(player, 0, 0, targetW, targetH);
+        }
+        ctx.restore();
+
+        // Render Blur Mask
+        if (blurHPercent > 0) {
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          ctx.fillRect(0, targetH * (1 - blurHPercent), targetW, targetH * blurHPercent);
+        }
+
+        // Render Subtitles
+        if (subText.trim()) {
+          ctx.font = 'bold 32px "Noto Sans Myanmar", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = subColor;
+          ctx.strokeStyle = '#000000';
+          ctx.lineWidth = 6;
+          const yPos = targetH * (parseFloat(document.getElementById('posSlider').value) / 100);
+          ctx.strokeText(subText, targetW / 2, yPos);
+          ctx.fillText(subText, targetW / 2, yPos);
+        }
+
+        requestAnimationFrame(renderLoop);
+      }
+      renderLoop();
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
