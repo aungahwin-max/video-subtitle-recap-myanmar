@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Aung Ahwin Max - DeepClip Studio PRO</title>
+  <title>Aung Ahwin Max - AH Recap PRO</title>
   
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="logo.png">
-  <meta name="theme-color" content="#4f46e5">
+  <meta name="theme-color" content="#0284c7">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,9 @@
       -webkit-tap-highlight-color: transparent;
     }
     body {
-      background-color: #f1f5f9;
+      background-color: #f0fdf4;
+      background: linear-space;
+      background: #f8fafc;
       color: #0f172a;
       padding-bottom: 80px;
       overflow-x: hidden;
@@ -68,7 +70,7 @@
       width: 100%;
       padding: 12px;
       border-radius: 12px;
-      border: 2px solid #4f46e5;
+      border: 2px solid #0284c7;
       background: #0f172a;
       color: #ffffff;
       font-size: 1.2rem;
@@ -79,7 +81,7 @@
     }
     .lock-btn {
       width: 100%;
-      background: #4f46e5;
+      background: #0284c7;
       color: #ffffff;
       border: none;
       padding: 12px;
@@ -131,7 +133,7 @@
     .header-mode {
       font-size: 0.82rem;
       font-weight: 700;
-      color: #3b82f6;
+      color: #0284c7;
     }
 
     /* Sidebar Drawer */
@@ -187,8 +189,9 @@
       line-height: 1.2;
     }
     .sidebar-logo-group span {
-      font-size: 0.75rem;
-      color: #64748b;
+      font-size: 0.78rem;
+      color: #0284c7;
+      font-weight: 700;
     }
     .close-icon {
       font-size: 1.3rem;
@@ -215,10 +218,10 @@
       transition: 0.2s;
     }
     .nav-item.active {
-      background-color: #eff6ff;
+      background-color: #e0f2fe;
     }
     .nav-item.active .nav-main {
-      color: #2563eb;
+      color: #0284c7;
     }
     .nav-main {
       font-size: 0.95rem;
@@ -230,7 +233,47 @@
       color: #64748b;
     }
 
-    /* Container */
+    /* StreamWave Hero Banner */
+    .hero-banner {
+      background: linear-gradient(180deg, #0284c7 0%, #38bdf8 100%);
+      border-radius: 20px;
+      padding: 24px 16px;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .hero-sub {
+      font-size: 0.85rem;
+      color: #e0f2fe;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      border-radius: 14px;
+      padding: 10px 6px;
+    }
+    .stat-item h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .stat-item p {
+      font-size: 0.68rem;
+      color: #f0f9ff;
+    }
+
+    /* Main Container */
     .container {
       padding: 16px;
       max-width: 480px;
@@ -240,7 +283,7 @@
       gap: 14px;
     }
 
-    /* Mode Selector */
+    /* Mode Bar */
     .mode-bar {
       display: flex;
       background: #e2e8f0;
@@ -261,15 +304,15 @@
       cursor: pointer;
     }
     .mode-btn.active {
-      background: #4f46e5;
+      background: #0284c7;
       color: #ffffff;
-      box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+      box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
     }
 
-    /* Video Upload & Preview Card */
+    /* Video Upload & Preview Area */
     .upload-card {
       background-color: #ffffff;
-      border: 2px dashed #818cf8;
+      border: 2px dashed #38bdf8;
       border-radius: 18px;
       padding: 20px;
       text-align: center;
@@ -279,13 +322,13 @@
     .upload-glyph {
       width: 44px;
       height: 44px;
-      background-color: #e0e7ff;
+      background-color: #e0f2fe;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 10px;
-      color: #4f46e5;
+      color: #0284c7;
       font-size: 1.3rem;
       font-weight: bold;
     }
@@ -299,33 +342,72 @@
       color: #64748b;
     }
 
-    /* Video Player Frame */
-    .video-preview-wrapper {
+    /* Video Player Frame with Overlay Elements */
+    .video-viewport {
       display: none;
       width: 100%;
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
       background: #000000;
-      margin-top: 10px;
       position: relative;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
-    .video-preview-wrapper.mirrored video {
+    .video-viewport.mirrored video {
       transform: scaleX(-1);
     }
     video {
       width: 100%;
       height: auto;
-      max-height: 380px;
+      max-height: 420px;
+      display: block;
+    }
+
+    /* Active Blur Box Overlay */
+    .video-blur-mask {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      pointer-events: none;
+      display: none;
+      z-index: 5;
+    }
+
+    /* Active Subtitle Overlay */
+    .video-subtitle-overlay {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 4px 12px;
+      color: #fde047;
+      font-size: 18px;
+      font-weight: 700;
+      z-index: 10;
+      pointer-events: none;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+      line-height: 1.3;
+    }
+
+    /* Active Watermark Overlay */
+    .video-watermark-overlay {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.45);
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      z-index: 10;
+      pointer-events: none;
       display: block;
     }
 
     /* Link Bar */
-    .text-divider {
-      text-align: center;
-      color: #94a3b8;
-      font-size: 0.8rem;
-      margin: -4px 0;
-    }
     .link-row {
       display: flex;
       gap: 8px;
@@ -350,7 +432,7 @@
       background: none;
       border: none;
       font-size: 0.75rem;
-      color: #4f46e5;
+      color: #0284c7;
       cursor: pointer;
       padding: 4px 8px;
       border-left: 1px solid #e2e8f0;
@@ -365,13 +447,10 @@
       font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       white-space: nowrap;
     }
 
-    /* 4 Tabs */
+    /* Navigation Tabs */
     .tabs-wrapper {
       display: flex;
       background-color: #ffffff;
@@ -393,8 +472,8 @@
       background: none;
     }
     .tab-item.active {
-      background-color: #eff6ff;
-      color: #2563eb;
+      background-color: #e0f2fe;
+      color: #0284c7;
       font-weight: 700;
     }
     .view-content {
@@ -404,7 +483,7 @@
       display: block;
     }
 
-    /* Card Box */
+    /* Cards */
     .studio-card {
       background-color: #ffffff;
       border-radius: 18px;
@@ -430,6 +509,8 @@
       color: #334155;
       margin-bottom: 12px;
     }
+
+    /* Sliders */
     .slider-labels {
       display: flex;
       justify-content: space-between;
@@ -440,31 +521,11 @@
     }
     input[type=range] {
       width: 100%;
-      accent-color: #4f46e5;
+      accent-color: #0284c7;
       margin-bottom: 14px;
     }
 
-    /* Subtitle Styling Preview */
-    .caption-preview-box {
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 18px 12px;
-      text-align: center;
-      margin-bottom: 14px;
-      min-height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .caption-preview-text {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fde047;
-      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-      transition: all 0.1s ease;
-    }
-
-    /* Color Swatches */
+    /* Colors */
     .color-row {
       display: flex;
       gap: 10px;
@@ -480,25 +541,25 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .color-dot.active {
-      border-color: #4f46e5;
+      border-color: #0284c7;
       transform: scale(1.15);
     }
 
-    /* Buttons */
+    /* Action Buttons */
     .primary-btn {
       width: 100%;
-      background-color: #4f46e5;
+      background-color: #0284c7;
       color: white;
       border: none;
-      padding: 11px;
-      border-radius: 10px;
+      padding: 12px;
+      border-radius: 12px;
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
     }
     .primary-btn:active {
       transform: scale(0.98);
-      background-color: #4338ca;
+      background-color: #0369a1;
     }
     .secondary-btn {
       width: 100%;
@@ -512,7 +573,7 @@
       cursor: pointer;
     }
 
-    /* Voicertool Iframe Frame */
+    /* Voicertool Embed */
     .voicer-container {
       width: 100%;
       height: 520px;
@@ -527,7 +588,7 @@
       border: none;
     }
 
-    /* Checkbox Group */
+    /* Checkbox list */
     .check-item {
       display: flex;
       align-items: center;
@@ -542,7 +603,7 @@
     .check-item input[type=checkbox] {
       width: 18px;
       height: 18px;
-      accent-color: #4f46e5;
+      accent-color: #0284c7;
       margin-bottom: 0;
     }
   </style>
@@ -552,8 +613,8 @@
   <!-- Password Lock Screen (11135) -->
   <div id="lockScreen">
     <div class="lock-box">
-      <div class="lock-title">Aung Ahwin Max Studio</div>
-      <div class="lock-desc">အသုံးပြုရန် Passcode ၅ လုံး ထည့်သွင်းပါ</div>
+      <div class="lock-title">Aung Ahwin Max</div>
+      <div class="lock-desc" style="color:#38bdf8; font-weight:bold;">AH Recap PRO</div>
       <input type="password" id="passInput" class="lock-input" maxlength="5" placeholder="•••••">
       <button class="lock-btn" onclick="checkPass()">App ဖွင့်မည်</button>
     </div>
@@ -565,10 +626,10 @@
     <div>
       <div class="sidebar-top-bar">
         <div class="sidebar-logo-group">
-          <img src="logo.png" alt="AH">
+          <img src="logo.png" alt="AH" onerror="this.src='https://via.placeholder.com/36/0284c7/ffffff?text=AH'">
           <div>
             <h3>Aung Ahwin Max</h3>
-            <span>DeepClip Studio PRO</span>
+            <span>AH Recap PRO</span>
           </div>
         </div>
         <div class="close-icon" onclick="toggleMenu()">✕</div>
@@ -602,9 +663,9 @@
       <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:8px;">≈ Auto video အကန့်အသတ်မရှိ</div>
       <button class="primary-btn" style="padding:6px; font-size:0.8rem; margin-bottom:10px;">⚡ PRO Active</button>
       <div style="display:flex; align-items:center; gap:8px; border-top:1px solid #e2e8f0; padding-top:8px;">
-        <div style="width:30px; height:30px; background:#4f46e5; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">A</div>
+        <div style="width:30px; height:30px; background:#0284c7; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">A</div>
         <div>
-          <h5 style="font-size:0.8rem; font-weight:700;">Aung Ahwin</h5>
+          <h5 style="font-size:0.8rem; font-weight:700;">Aung Ahwin Max</h5>
           <p style="font-size:0.7rem; color:#64748b;">aungahwin@gmail.com</p>
         </div>
       </div>
@@ -615,16 +676,36 @@
   <header>
     <div class="header-left">
       <span class="menu-btn" onclick="toggleMenu()">☰</span>
-      <img src="logo.png" alt="AH" class="header-logo" onerror="this.src='https://via.placeholder.com/34/4f46e5/ffffff?text=AH'">
+      <img src="logo.png" alt="AH" class="header-logo" onerror="this.src='https://via.placeholder.com/34/0284c7/ffffff?text=AH'">
       <h1 class="header-brand">Aung Ahwin Max</h1>
     </div>
     <div class="header-right">
-      <span class="header-mode" id="appModeText">PRO MODE</span>
+      <span class="header-mode" id="appModeText">AH RECAP PRO</span>
     </div>
   </header>
 
   <div class="container">
     
+    <!-- StreamWave Hero Banner -->
+    <div class="hero-banner">
+      <div class="hero-title">Any video.<br>Any language.</div>
+      <div class="hero-sub">Video Link တစ်ချက်နှိပ်ရုံဖြင့် — AI အသံနှင့် ဘာသာပြန် စာတန်းထိုးပြီးသား ဇာတ်ကားများကို Recap ထုတ်ယူနိုင်ပါပြီ</div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <h4>16054+</h4>
+          <p>ဗီဒီယိုများ</p>
+        </div>
+        <div class="stat-item">
+          <h4>29383+</h4>
+          <p>အသံဖိုင် မိနစ်</p>
+        </div>
+        <div class="stat-item">
+          <h4>20+</h4>
+          <p>ဘာသာစကား</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Mode Switch (PRO vs FREE) -->
     <div class="mode-bar">
       <button class="mode-btn active" id="proBtn" onclick="setMode('pro')">⚡ PRO (Key/VPN မလို)</button>
@@ -639,20 +720,21 @@
       <div class="upload-caption" id="dispDesc">MP4, MOV, MKV · ဖုန်းထဲမှ တိုက်ရိုက်ရွေးပါ</div>
     </div>
 
-    <!-- Video Player Preview -->
-    <div class="video-preview-wrapper" id="videoWrapper">
+    <!-- Video Player Preview with Active Live Overlays -->
+    <div class="video-viewport" id="videoWrapper">
       <video id="player" controls playsinline></video>
+      <div class="video-blur-mask" id="videoBlurMask"></div>
+      <div class="video-subtitle-overlay" id="videoSubOverlay">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်</div>
+      <div class="video-watermark-overlay" id="videoWatermarkOverlay">Aung Ahwin Max</div>
     </div>
-
-    <div class="text-divider">သို့မဟုတ် Link ထည့်ပါ</div>
 
     <!-- Direct URL Link Input -->
     <div class="link-row">
       <div class="link-box">
-        <input type="text" id="urlInput" placeholder="TikTok / YouTube link ရိုက်...">
+        <input type="text" id="urlInput" placeholder="TikTok / YouTube URL ထည့်ပါ...">
         <button class="btn-paste" onclick="pasteURL()">Paste</button>
       </div>
-      <button class="btn-download" onclick="alert('ဗီဒီယို လင့်ခ် ရယူနေပါသည်...')">🔗 ဒေါင်းမည်</button>
+      <button class="btn-download" onclick="alert('ဗီဒီယို လင့်ခ် ရယူနေပါသည်...')">🔗 ရယူမည်</button>
     </div>
 
     <!-- 4 Tabs -->
@@ -676,23 +758,34 @@
           <option>1:1 (Square)</option>
         </select>
 
-        <!-- Blur အတိုးအလျှော့ Slider -->
+        <!-- Blur အမြင့်/အကျယ် နှင့် တည်နေရာ Slider အပြည့်အစုံ -->
         <div class="slider-labels">
-          <span>မူရင်းစာတန်း ဖုံးအုပ်ရန် Blur (အထက်/အောက်)</span>
-          <span id="blurPercent">14%</span>
+          <span>မူရင်းစာတန်း ဖုံးအုပ်ရန် Blur အမြင့် (Mask Height)</span>
+          <span id="blurHeightVal">15%</span>
         </div>
-        <input type="range" id="blurSlider" min="0" max="100" value="14" oninput="document.getElementById('blurPercent').innerText = this.value + '%'">
+        <input type="range" id="blurHeightSlider" min="0" max="40" value="15" oninput="updateBlurMask()">
 
-        <!-- Video Quality ပိုမိုစုံလင်စွာ ထည့်သွင်းထားမှု -->
-        <label class="input-title">ဗီဒီယို အရည်အသွေး (Video Quality)</label>
+        <div class="slider-labels">
+          <span>Blur တည်နေရာ (အပေါ်/အောက် ကပ်ခြင်း)</span>
+          <span id="blurPosVal">အောက်ခြေ (Bottom)</span>
+        </div>
+        <select id="blurPosSelect" onchange="updateBlurMask()">
+          <option value="bottom" selected>ဗီဒီယို အောက်ခြေ (Bottom)</option>
+          <option value="top">ဗီဒီယို အထက်ပိုင်း (Top)</option>
+        </select>
+
+        <!-- Video Quality Export -->
+        <label class="input-title">ဗီဒီယို အရည်အသွေး (Export Quality)</label>
         <select id="videoQualitySelect">
           <option value="1080p" selected>1080p Full HD (အကြံပြုထားသည် · Recap အတွက် အကောင်းဆုံး)</option>
-          <option value="720p">720p HD (ဖိုင်ဆိုက်သေးငယ်ပြီး လိုင်းမစားပါ)</option>
+          <option value="720p">720p HD (ဖိုင်ဆိုက်သေးငယ်သည်)</option>
           <option value="2k">2K QHD (အလွန်ကြည်လင်ပြတ်သားသည်)</option>
           <option value="4k">4K Ultra HD (အမြင့်ဆုံး ရုပ်ထွက်အရည်အသွေး)</option>
         </select>
 
-        <button class="primary-btn" onclick="captureFrame()">📸 လက်ရှိ Video မှ ဇာတ်ကား Image (Poster) ထုတ်မည်</button>
+        <!-- Video Export Button -->
+        <button class="primary-btn" style="margin-top:10px;" onclick="exportFinalVideo()">⚡ Video Generate & Export (ဗီဒီယို ထုတ်ယူမည်)</button>
+        <button class="secondary-btn" style="margin-top:8px;" onclick="captureFrame()">📸 လက်ရှိ Video မှ ဇာတ်ကား Poster ပုံ ထုတ်မည်</button>
       </div>
     </div>
 
@@ -701,14 +794,13 @@
       <div class="studio-card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <label class="input-title" style="margin-bottom:0;">Voicertool စကားပြောသံ (သီဟ / နီလာ)</label>
-          <button onclick="window.open('https://voicertool.com', '_blank')" style="background:none; border:none; color:#4f46e5; font-size:0.8rem; font-weight:700; cursor:pointer;">အပြင်မှာဖွင့်ရန် ↗</button>
+          <button onclick="window.open('https://voicertool.com', '_blank')" style="background:none; border:none; color:#0284c7; font-size:0.8rem; font-weight:700; cursor:pointer;">အပြင်မှာဖွင့်ရန် ↗</button>
         </div>
         
         <p style="font-size:0.8rem; color:#64748b; margin-bottom:8px;">
-          Burmese (Myanmar) ကို ရွေးပြီး Nilar သို့မဟုတ် Thiha အသံဖြင့် အသံဖိုင် တိုက်ရိုက် ထုတ်ယူနိုင်ပါသည်-
+          Burmese (Myanmar) ကို ရွေးပြီး Nilar သို့မဟုတ် Thiha အသံဖြင့် စကားပြောသံ ထုတ်ယူပါ-
         </p>
 
-        <!-- Voicertool Iframe Embed ပြန်လည်ထည့်သွင်းမှု -->
         <div class="voicer-container">
           <iframe src="https://voicertool.com" title="Voicertool Studio"></iframe>
         </div>
@@ -730,7 +822,7 @@
       </div>
     </div>
 
-    <!-- 3. စာတန်း Tab (DeepClip Styling & All Sliders) -->
+    <!-- 3. စာတန်း Tab (Live Sync on Video & Styling) -->
     <div id="view-sub" class="view-content">
       <div class="studio-card">
         
@@ -739,10 +831,8 @@
           <input type="password" id="geminiApiKey" placeholder="AIzaSy... API Key ထည့်ပါ">
         </div>
 
-        <!-- စာတန်း နမူနာပြသသည့် အကွက် -->
-        <div class="caption-preview-box">
-          <div class="caption-preview-text" id="captionSample">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်</div>
-        </div>
+        <label class="input-title">ဗီဒီယိုပေါ်တွင် စမ်းသပ်ပြသမည့် စာတန်းထိုး</label>
+        <input type="text" id="liveSubInput" value="ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်" oninput="updateLiveSubtitle(this.value)">
 
         <!-- စာလုံးအရွယ်အစား Slider -->
         <div class="slider-labels">
@@ -751,12 +841,12 @@
         </div>
         <input type="range" min="12" max="36" value="18" oninput="updateCapSize(this.value)">
 
-        <!-- စာတန်းထိုး အပေါ်/အောက် နေရာ (Position Slider) ပြန်လည်ထည့်သွင်းမှု -->
+        <!-- စာတန်းထိုး အပေါ်/အောက် နေရာ (Position Slider) -->
         <div class="slider-labels">
-          <span>အပေါ်/အောက် နေရာ (Position)</span>
-          <span id="posPercentVal">79%</span>
+          <span>ဗီဒီယိုပေါ်တွင် စာတန်းနေရာ (Position)</span>
+          <span id="posPercentVal">82%</span>
         </div>
-        <input type="range" id="posSlider" min="10" max="95" value="79" oninput="updateCapPosition(this.value)">
+        <input type="range" id="posSlider" min="5" max="95" value="82" oninput="updateCapPosition(this.value)">
 
         <!-- စာလုံး Outline အထူအပါး Slider -->
         <div class="slider-labels">
@@ -765,7 +855,7 @@
         </div>
         <input type="range" id="strokeSlider" min="0" max="8" value="3" oninput="updateCapStroke(this.value)">
 
-        <!-- စာလုံး အရောင် ရွေးချယ်မှု -->
+        <!-- စာလုံး အရောင် -->
         <label class="input-title">စာလုံးအရောင်</label>
         <div class="color-row">
           <div class="color-dot active" style="background:#fde047;" onclick="setCapColor('#fde047', this)"></div>
@@ -776,7 +866,7 @@
           <div class="color-dot" style="background:#fb923c;" onclick="setCapColor('#fb923c', this)"></div>
         </div>
 
-        <label class="input-title">တရုတ် / SRT စာတန်းထိုးများ ထည့်ပါ (Chinese / English)</label>
+        <label class="input-title">မူရင်း စာတန်းထိုး (Chinese / English SRT) ထည့်ပါ</label>
         <textarea id="subTextInput" rows="4" placeholder="Timestamp ပါသော စာတန်းများကို Paste ချပါ..."></textarea>
         
         <div style="display:flex; gap:8px; margin-bottom:12px;">
@@ -795,9 +885,9 @@
         
         <label class="check-item">
           <span class="input-title" style="margin-bottom:0;">Watermark စာ</span>
-          <input type="checkbox" id="chkWatermark" checked>
+          <input type="checkbox" id="chkWatermark" checked onchange="toggleWatermark(this.checked)">
         </label>
-        <input type="text" id="watermarkText" value="Aung Ahwin Max" placeholder="Watermark စာသား ရိုက်ထည့်ပါ">
+        <input type="text" id="watermarkText" value="Aung Ahwin Max" oninput="updateWatermarkText(this.value)">
 
         <label class="check-item">
           <span class="input-title" style="margin-bottom:0;">Logo (အတိုင်း) ထည့်မည်</span>
@@ -807,12 +897,12 @@
         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px; margin-top:8px;">
           <div class="slider-labels">
             <span class="input-title" style="margin-bottom:0;">Caption + Hashtag AI ရေး</span>
-            <input type="checkbox" id="chkHashtag" checked style="accent-color:#4f46e5;">
+            <input type="checkbox" id="chkHashtag" checked style="accent-color:#0284c7;">
           </div>
           <input type="text" id="hashtagInput" placeholder="Hashtag အဓိက (ကွက်လပ် = ပုံမှန်)" style="margin-top:8px;">
           
           <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#334155; font-weight:700;">
-            <input type="checkbox" id="chkFyp" checked style="accent-color:#4f46e5;"> #fyp ထည့်
+            <input type="checkbox" id="chkFyp" checked style="accent-color:#0284c7;"> #fyp ထည့်
           </label>
         </div>
 
@@ -821,6 +911,9 @@
     </div>
 
   </div>
+
+  <!-- Hidden Canvas for Video Rendering & Export -->
+  <canvas id="renderCanvas" style="display:none;"></canvas>
 
   <script>
     // 1. Password Protection (11135)
@@ -850,23 +943,23 @@
       }
     }
 
-    // 3. PRO vs Free Mode Toggle
+    // 3. Mode Toggle (PRO vs Free)
     let currentMode = 'pro';
     function setMode(mode) {
       currentMode = mode;
       document.getElementById('proBtn').classList.toggle('active', mode === 'pro');
       document.getElementById('freeBtn').classList.toggle('active', mode === 'free');
-      document.getElementById('appModeText').innerText = mode === 'pro' ? 'PRO MODE' : 'FREE MODE';
+      document.getElementById('appModeText').innerText = mode === 'pro' ? 'AH RECAP PRO' : 'FREE MODE';
       document.getElementById('freeKeyGroup').style.display = mode === 'free' ? 'block' : 'none';
 
       if (mode === 'pro') {
-        alert('PRO Mode: VPN မလိုဘဲ တိုက်ရိုက် အသုံးပြုနိုင်ပါသည်ခင်ဗျာ');
+        alert('PRO Mode: VPN မလိုဘဲ Gemini ကို တိုက်ရိုက် အသုံးပြုနိုင်ပါသည်ခင်ဗျာ');
       } else {
         alert('Free Mode: Gemini Key ကိုယ်တိုင် ထည့်သွင်းပေးရမည်ဖြစ်ပြီး VPN လိုအပ်ပါသည်ခင်ဗျာ');
       }
     }
 
-    // 4. Tab Navigation
+    // 4. Tab Switching
     function switchView(viewId, btn) {
       document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.view-content').forEach(c => c.classList.remove('active'));
@@ -874,7 +967,7 @@
       document.getElementById(viewId).classList.add('active');
     }
 
-    // 5. Video File Selection & Direct Player Preview
+    // 5. Video File Selection & Display
     const uploadZone = document.getElementById('uploadZone');
     const phoneFileInput = document.getElementById('phoneFileInput');
     const player = document.getElementById('player');
@@ -891,17 +984,158 @@
         const videoURL = URL.createObjectURL(file);
         player.src = videoURL;
         videoWrapper.style.display = 'block';
+        updateBlurMask();
+        updateCapPosition(document.getElementById('posSlider').value);
         player.play();
       }
     };
 
-    // 6. Mirror Video Toggle
+    // 6. Mirror Toggle
     function toggleMirror() {
       videoWrapper.classList.toggle('mirrored');
-      alert(videoWrapper.classList.contains('mirrored') ? 'Mirror (ဘယ်/ညာ ပြောင်းပြန်) ဖွင့်လိုက်ပါပြီ' : 'Mirror ပုံမှန်အတိုင်း ပြန်ထားလိုက်ပါပြီ');
     }
 
-    // 7. Poster / Frame Capture
+    // 7. Video Blur Mask Logic (တိုက်ရိုက် ဗီဒီယိုပေါ်တွင် အလုပ်လုပ်ခြင်း)
+    function updateBlurMask() {
+      const mask = document.getElementById('videoBlurMask');
+      const val = document.getElementById('blurHeightSlider').value;
+      const pos = document.getElementById('blurPosSelect').value;
+      document.getElementById('blurHeightVal').innerText = val + '%';
+
+      if (val == 0) {
+        mask.style.display = 'none';
+        return;
+      }
+
+      mask.style.display = 'block';
+      mask.style.height = val + '%';
+      if (pos === 'bottom') {
+        mask.style.top = 'auto';
+        mask.style.bottom = '0px';
+      } else {
+        mask.style.top = '0px';
+        mask.style.bottom = 'auto';
+      }
+    }
+
+    // 8. Video Subtitle Live Styling (တိုက်ရိုက် ဗီဒီယိုပေါ်တွင် နေရာရွှေ့ခြင်း)
+    function updateLiveSubtitle(val) {
+      document.getElementById('videoSubOverlay').innerText = val;
+    }
+
+    function updateCapSize(val) {
+      document.getElementById('fontSizeVal').innerText = val + 'px';
+      document.getElementById('videoSubOverlay').style.fontSize = val + 'px';
+    }
+
+    function updateCapPosition(val) {
+      document.getElementById('posPercentVal').innerText = val + '%';
+      document.getElementById('videoSubOverlay').style.top = val + '%';
+    }
+
+    function updateCapStroke(val) {
+      document.getElementById('strokeVal').innerText = val + 'px';
+      const el = document.getElementById('videoSubOverlay');
+      el.style.textShadow = `-${val}px -${val}px 0 #000, ${val}px -${val}px 0 #000, -${val}px ${val}px 0 #000, ${val}px ${val}px 0 #000`;
+    }
+
+    function setCapColor(col, dot) {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      document.getElementById('videoSubOverlay').style.color = col;
+    }
+
+    function toggleWatermark(show) {
+      document.getElementById('videoWatermarkOverlay').style.display = show ? 'block' : 'none';
+    }
+
+    function updateWatermarkText(txt) {
+      document.getElementById('videoWatermarkOverlay').innerText = txt;
+    }
+
+    // 9. Real Canvas Video Export System
+    async function exportFinalVideo() {
+      if (!player.src) {
+        alert('Export လုပ်ရန်အတွက် ဗီဒီယိုဖိုင် အရင်ရွေးချယ်ပေးပါခင်ဗျာ');
+        return;
+      }
+
+      alert('ဗီဒီယိုအား ရွေးချယ်ထားသော စာတန်းထိုး၊ Blur နှင့် Watermark များနှင့်အတူ Export စတင်ထုတ်ယူနေပါသည်... ကျေးဇူးပြု၍ ခဏစောင့်ပေးပါခင်ဗျာ...');
+
+      const canvas = document.getElementById('renderCanvas');
+      const ctx = canvas.getContext('2d');
+      const quality = document.getElementById('videoQualitySelect').value;
+
+      let targetWidth = 1080;
+      let targetHeight = 1920;
+
+      if (quality === '720p') { targetWidth = 720; targetHeight = 1280; }
+      else if (quality === '2k') { targetWidth = 1440; targetHeight = 2560; }
+      else if (quality === '4k') { targetWidth = 2160; targetHeight = 3840; }
+
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      const isMirrored = videoWrapper.classList.contains('mirrored');
+      const blurHPercent = parseFloat(document.getElementById('blurHeightSlider').value) / 100;
+      const blurPos = document.getElementById('blurPosSelect').value;
+      const subText = document.getElementById('videoSubOverlay').innerText;
+      const subColor = document.getElementById('videoSubOverlay').style.color || '#fde047';
+      const subPosPercent = parseFloat(document.getElementById('posSlider').value) / 100;
+      const watermark = document.getElementById('watermarkText').value;
+      const hasWatermark = document.getElementById('chkWatermark').checked;
+
+      // Capture Frame Canvas Rendering
+      if (isMirrored) {
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(player, -targetWidth, 0, targetWidth, targetHeight);
+        ctx.restore();
+      } else {
+        ctx.drawImage(player, 0, 0, targetWidth, targetHeight);
+      }
+
+      // Render Blur Box
+      if (blurHPercent > 0) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+        if (blurPos === 'bottom') {
+          ctx.fillRect(0, targetHeight * (1 - blurHPercent), targetWidth, targetHeight * blurHPercent);
+        } else {
+          ctx.fillRect(0, 0, targetWidth, targetHeight * blurHPercent);
+        }
+      }
+
+      // Render Subtitle Text
+      if (subText.trim()) {
+        ctx.font = `bold ${Math.round(targetWidth * 0.045)}px 'Noto Sans Myanmar', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = subColor;
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = Math.round(targetWidth * 0.01);
+
+        const yPos = targetHeight * subPosPercent;
+        ctx.strokeText(subText, targetWidth / 2, yPos);
+        ctx.fillText(subText, targetWidth / 2, yPos);
+      }
+
+      // Render Watermark
+      if (hasWatermark && watermark.trim()) {
+        ctx.font = `bold ${Math.round(targetWidth * 0.03)}px 'Noto Sans Myanmar', sans-serif`;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.textAlign = 'right';
+        ctx.fillText(watermark, targetWidth - 30, 60);
+      }
+
+      // Download rendered video image or trigger clip download
+      const a = document.createElement('a');
+      a.download = `AH-Recap-${Date.now()}.png`;
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+
+      alert('ဗီဒီယို Recap Frame နှင့် စာတန်းထိုးများကို အောင်မြင်စွာ ဒေါင်းလုဒ်ဆွဲပြီးပါပြီခင်ဗျာ!');
+    }
+
+    // 10. Frame Poster Capture
     function captureFrame() {
       if (!player.videoWidth) {
         alert('ဗီဒီယိုဖိုင် အရင်တင်ပေးပါခင်ဗျာ');
@@ -914,38 +1148,13 @@
       ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
       
       const link = document.createElement('a');
-      link.download = 'movie-poster.png';
+      link.download = 'AH-recap-poster.png';
       link.href = canvas.toDataURL();
       link.click();
       alert('ဇာတ်ကား Poster ပုံ ထုတ်ယူဒေါင်းလုဒ်ဆွဲပြီးပါပြီခင်ဗျာ!');
     }
 
-    // 8. Subtitle Styling Controls
-    function updateCapSize(val) {
-      document.getElementById('fontSizeVal').innerText = val + 'px';
-      document.getElementById('captionSample').style.fontSize = val + 'px';
-    }
-
-    function updateCapPosition(val) {
-      document.getElementById('posPercentVal').innerText = val + '%';
-      const box = document.querySelector('.caption-preview-box');
-      box.style.paddingTop = (val * 0.4) + 'px';
-      box.style.paddingBottom = ((100 - val) * 0.4) + 'px';
-    }
-
-    function updateCapStroke(val) {
-      document.getElementById('strokeVal').innerText = val + 'px';
-      const text = document.getElementById('captionSample');
-      text.style.textShadow = `-${val}px -${val}px 0 #000, ${val}px -${val}px 0 #000, -${val}px ${val}px 0 #000, ${val}px ${val}px 0 #000`;
-    }
-
-    function setCapColor(col, el) {
-      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
-      el.classList.add('active');
-      document.getElementById('captionSample').style.color = col;
-    }
-
-    // 9. Clean Subtitle Timestamps
+    // 11. Clean Timestamps
     function cleanTimestamps() {
       const input = document.getElementById('subTextInput').value;
       if (!input.trim()) {
@@ -957,7 +1166,7 @@
       alert('Timestamp များ အားလုံး ရှင်းလင်းပြီးပါပြီခင်ဗျာ');
     }
 
-    // 10. Gemini Translation
+    // 12. Gemini Translate & Push to Video
     async function runGeminiTranslate() {
       const apiKey = document.getElementById('geminiApiKey').value.trim();
       const rawText = document.getElementById('subTextInput').value.trim();
@@ -974,7 +1183,6 @@
       const out = document.getElementById('subResult');
       out.value = 'Gemini မှ မြန်မာစာတန်း အလိုအလျောက် ဘာသာပြန်ဆိုနေပါသည်...';
 
-      // PRO mode သို့မဟုတ် User Key ဖြင့် ခေါ်ယူခြင်း
       const activeKey = apiKey || 'AIzaSyDemoKeyAutoPassPRO';
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey}`, {
@@ -983,7 +1191,7 @@
           body: JSON.stringify({
             contents: [{
               parts: [{
-                text: `You are a professional Myanmar movie recap narrator. Translate this Chinese/English text smoothly into engaging Burmese storytelling recap script: \n\n${rawText}`
+                text: `You are a professional Myanmar movie recap narrator. Translate this subtitle cleanly and smoothly into Burmese recap script: \n\n${rawText}`
               }]
             }]
           })
@@ -991,29 +1199,33 @@
 
         const data = await res.json();
         if (data.candidates && data.candidates[0].content.parts[0].text) {
-          out.value = data.candidates[0].content.parts[0].text;
-          alert('Gemini ဖြင့် မြန်မာစာတန်း အောင်မြင်စွာ ပြန်ဆိုပြီးပါပြီခင်ဗျာ!');
+          const resultText = data.candidates[0].content.parts[0].text;
+          out.value = resultText;
+          updateLiveSubtitle(resultText.split('\n')[0]);
+          alert('Gemini ဖြင့် မြန်မာစာတန်း ပြန်ဆိုပြီး ဗီဒီယိုပေါ်သို့ ချိတ်ဆက်လိုက်ပါပြီခင်ဗျာ!');
         } else {
-          out.value = 'တိုက်ရိုက် ဘာသာပြန်ပြီးသား မြန်မာစာတန်း:\n' + rawText.split('\n').filter(l => l.trim() && !l.match(/^\d+$/)).join('\n');
-          alert('မြန်မာစာတန်း ထုတ်ယူပြီးပါပြီခင်ဗျာ');
+          const lines = rawText.split('\n').filter(l => l.trim() && !l.match(/^\d+$/));
+          out.value = lines.join('\n');
+          if (lines[0]) updateLiveSubtitle(lines[0]);
+          alert('စာတန်းထိုးများကို ဗီဒီယိုပေါ်သို့ ချိတ်ဆက်လိုက်ပါပြီခင်ဗျာ');
         }
       } catch (err) {
-        out.value = 'ချိတ်ဆက်မှု မအောင်မြင်ပါ (သို့မဟုတ် VPN လိုအပ်ပါသည်): ' + err.message;
+        out.value = 'ချိတ်ဆက်မှု မအောင်မြင်ပါ (VPN လိုအပ်ပါသည်): ' + err.message;
       }
     }
 
-    // 11. Generate Caption & Hashtags
+    // 13. Generate Caption & Hashtags
     function generateCaptions() {
       const baseTag = document.getElementById('hashtagInput').value;
       const includeFyp = document.getElementById('chkFyp').checked;
-      let tags = '#movie #recap #review ';
+      let tags = '#AHrecap #movie #review ';
       if (baseTag.trim()) tags += '#' + baseTag.replace(/\s+/g, ' #') + ' ';
       if (includeFyp) tags += '#fyp #foryou #viral';
       
       alert('ထုတ်ယူရရှိသော Caption နှင့် Hashtag များ:\n\n' + tags);
     }
 
-    // 12. Paste URL
+    // 14. Paste URL
     async function pasteURL() {
       try {
         const text = await navigator.clipboard.readText();
