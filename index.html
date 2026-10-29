@@ -437,7 +437,7 @@
       color: #ffffff;
     }
 
-    /* Voice Version Dark Box (Screenshot Style) */
+    /* Voice Version Dark Box */
     .voice-version-box {
       background: #0b1120;
       border: 1px solid #1e293b;
@@ -694,7 +694,7 @@
       <button class="view-select-btn" id="btnPageStudio" onclick="switchPage('studio')">🎬 Auto Recap Studio</button>
     </div>
 
-    <!-- 1. ANY VIDEO. ANY LANGUAGE. LANDING SECTION[span_3](start_span)[span_3](end_span) -->
+    <!-- 1. ANY VIDEO. ANY LANGUAGE. LANDING SECTION -->
     <section id="landingSection">
       <div class="studio-card" style="background: linear-gradient(180deg, #0284c7 0%, #38bdf8 100%); color:#fff; text-align:center; padding:24px 18px;">
         <h2 style="font-size:1.8rem; margin-bottom:6px;">Any video.<br>Any language.</h2>
@@ -710,10 +710,10 @@
       </div>
     </section>
 
-    <!-- 2. RECAP STUDIO SECTION[span_4](start_span)[span_4](end_span) -->
+    <!-- 2. RECAP STUDIO SECTION -->
     <section id="studioSection" style="display:none; flex-direction:column; gap:14px;">
 
-      <!-- Processing Modes & Copyright Bypass[span_5](start_span)[span_5](end_span) -->
+      <!-- Processing Modes & Copyright Bypass -->
       <div class="studio-card">
         <label class="input-title">PROCESSING MODE</label>
         <div class="processing-mode-group">
@@ -731,7 +731,7 @@
         </div>
       </div>
 
-      <!-- Video Upload Card + Link Downloader[span_6](start_span)[span_6](end_span) -->
+      <!-- Video Upload Card + Link Downloader -->
       <input type="file" id="phoneFileInput" style="display: none;" accept="video/*">
       <div class="upload-card" id="uploadZone">
         <div style="font-size:1.8rem; color:#0284c7;">⇧</div>
@@ -739,7 +739,7 @@
         <div style="font-size:0.8rem; color:#64748b;" id="dispDesc">PRO: 7 မိနစ်အထိ · Free: 3 မိနစ်အထိ</div>
       </div>
 
-      <!-- Link Input Row[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span) -->
+      <!-- Link Input Row -->
       <div class="link-row">
         <div class="link-box">
           <input type="text" id="urlInput" placeholder="TikTok / YouTube link ကူးထည့်ပါ...">
@@ -748,7 +748,7 @@
         <button class="btn-download" onclick="downloadFromUrl()">🔗 ဒေါင်းမည်</button>
       </div>
 
-      <!-- Video Viewport & Overlays[span_9](start_span)[span_9](end_span) -->
+      <!-- Video Viewport & Overlays -->
       <div class="video-viewport zoomed" id="videoWrapper">
         <video id="player" controls playsinline></video>
         <audio id="syncedAudio" style="display:none;"></audio>
@@ -757,7 +757,7 @@
         <div class="video-watermark-overlay" id="videoWatermarkOverlay">Aung Ahwin Max</div>
       </div>
 
-      <!-- Navigation Tabs[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span) -->
+      <!-- Navigation Tabs -->
       <div class="tabs-wrapper">
         <button class="tab-item active" onclick="switchView('view-video', this)">ဗီဒီယို</button>
         <button class="tab-item" onclick="switchView('view-audio', this)">အသံ</button>
@@ -765,11 +765,11 @@
         <button class="tab-item" onclick="switchView('view-extra', this)">အပို</button>
       </div>
 
-      <!-- 1. ဗီဒီယို Tab[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span) -->
+      <!-- 1. ဗီဒီယို Tab -->
       <div id="view-video" class="view-content active">
         <div class="studio-card">
           
-          <!-- အချိုး (Ratio)[span_15](start_span)[span_15](end_span) -->
+          <!-- အချိုး (Ratio) -->
           <label class="input-title">အချိုး</label>
           <div class="pill-group">
             <button class="pill-btn active" onclick="setRatio('original', this)">မူရင်း</button>
@@ -779,7 +779,7 @@
             <button class="pill-btn" onclick="setRatio('1:1', this)">1:1</button>
           </div>
 
-          <!-- Output ဘာသာ[span_16](start_span)[span_16](end_span) -->
+          <!-- Output ဘာသာ -->
           <label class="input-title">Output ဘာသာ</label>
           <div class="pill-group">
             <button class="pill-btn active" onclick="setOutputLang('my', this)">မြန်မာ</button>
@@ -787,7 +787,7 @@
             <button class="pill-btn" onclick="setOutputLang('zh', this)">Chinese</button>
           </div>
 
-          <!-- မူရင်းဘာသာ[span_17](start_span)[span_17](end_span) -->
+          <!-- မူရင်းဘာသာ -->
           <label class="input-title">မူရင်းဘာသာ</label>
           <select id="sourceLangSelect">
             <option value="auto" selected>အလိုအလျောက်</option>
@@ -796,13 +796,13 @@
             <option value="zh">Chinese (中文)</option>
           </select>
 
-          <!-- Mirror (ဘယ်/ညာ လှန်)[span_18](start_span)[span_18](end_span) -->
+          <!-- Mirror (ဘယ်/ညာ လှန်) -->
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
             <span style="font-size:0.85rem; font-weight:700;">Mirror (ဘယ်/ညာ လှန်)</span>
             <input type="checkbox" id="chkMirror" style="width:18px; height:18px; accent-color:#0284c7;" onchange="toggleMirror(this.checked)">
           </div>
 
-          <!-- ချဲ့ (Zoom) Slider[span_19](start_span)[span_19](end_span) -->
+          <!-- ချဲ့ (Zoom) Slider -->
           <div class="slider-header">
             <span>ချဲ့ (Zoom)</span>
             <span id="zoomVal">108%</span>
@@ -813,7 +813,7 @@
             <button class="step-btn" onclick="adjustZoom(5)">+</button>
           </div>
 
-          <!-- Video Quality Selection[span_20](start_span)[span_20](end_span) -->
+          <!-- Video Quality Selection -->
           <label class="input-title">ဗီဒီယို အရည်အသွေး (Export Quality)</label>
           <select id="videoQualitySelect">
             <option value="1080p" selected>1080p Full HD (Recap အတွက် အကောင်းဆုံး)</option>
@@ -822,20 +822,20 @@
             <option value="4k">4K Ultra HD</option>
           </select>
 
-          <!-- Real Video Export Button[span_21](start_span)[span_21](end_span) -->
-          <button class="primary-btn" style="background:#16a34a; margin-top:8px;" onclick="exportIntegratedVideo()">🎬 Video အစစ်အမှန် Render ထုတ်ယူမည် (.mp4/.webm)</button>
+          <!-- Fast Browser Video & Audio Auto-Sync Render -->
+          <button class="primary-btn" style="background:#16a34a; margin-top:10px;" onclick="exportIntegratedVideo()">🎬 Video + အသံ Auto-Sync Render ထုတ်ယူမည် (.mp4)</button>
           <div id="exportStatusText" style="font-size:0.8rem; color:#0284c7; text-align:center; margin-top:6px; font-weight:700;"></div>
 
-          <!-- Logo Image / Poster Frame ထုတ်ယူသည့် စနစ် -->
-          <button class="secondary-btn" style="margin-top:10px;" onclick="captureLogoImage()">📸 လက်ရှိ Video မှ Logo / Poster ပုံရိပ် ထုတ်ယူမည်</button>
+          <!-- AI Thumbnail / Poster Frame ထုတ်ယူခြင်း -->
+          <button class="secondary-btn" style="margin-top:8px; background:#4f46e5;" onclick="generateAiThumbnail()">🎨 AI Thumbnail / Poster ပုံ ထုတ်မည်</button>
         </div>
       </div>
 
-      <!-- 2. အသံ Tab (Voice Version 3 မျိုး + Speed + Clone + Voicertool)[span_22](start_span)[span_22](end_span) -->
+      <!-- 2. အသံ Tab -->
       <div id="view-audio" class="view-content">
         <div class="studio-card">
           
-          <!-- ပုံထဲကအတိုင်း Dark Box Voice Version (3 မျိုး) စနစ်[span_23](start_span)[span_23](end_span) -->
+          <!-- Voice Version Box (ပုံစံအတိအကျ) -->
           <div class="voice-version-box">
             <span class="title-label">VOICE VERSION</span>
             <div class="voice-version-group">
@@ -868,21 +868,21 @@
             </div>
           </div>
 
-          <!-- Voice Speed Slider[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span) -->
+          <!-- Voice Speed Slider[span_0](start_span)[span_0](end_span) -->
           <div class="slider-header">
             <span>VOICE SPEED</span>
             <span id="voiceSpeedVal" style="color:#e11d48;">0.9x</span>
           </div>
           <input type="range" id="voiceSpeedSlider" min="0.85" max="2.0" step="0.05" value="0.9" oninput="updateVoiceSpeed(this.value)" style="width:100%; margin-bottom:14px;">
 
-          <!-- Voice Clone[span_26](start_span)[span_26](end_span) -->
+          <!-- Voice Clone -->
           <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:12px; padding:12px; margin-bottom:14px;">
             <label class="input-title" style="color:#0f172a;">🧬 Voice Clone Feature (မိမိအသံ အတုပြုလုပ်ရန်)</label>
             <input type="file" id="cloneAudioFile" accept="audio/*" style="margin-bottom:6px;">
             <button class="secondary-btn" style="padding:6px; font-size:0.8rem;" onclick="alert('သင့်အသံနမူနာအား AI Voice Clone အဖြစ် လေ့ကျင့်ပေးနေပါသည်...')">အသံ Clone မော်ဒယ် တည်ဆောက်မည်</button>
           </div>
 
-          <!-- Voicertool Embed Studio[span_27](start_span)[span_27](end_span) -->
+          <!-- Voicertool Embed Studio -->
           <label class="input-title">Voicertool တိုက်ရိုက်အသုံးပြုရန် (သီဟ / နီလာ)</label>
           <div class="voicer-container">
             <iframe src="https://voicertool.com" title="Voicertool Studio"></iframe>
@@ -897,11 +897,11 @@
         </div>
       </div>
 
-      <!-- 3. စာတန်း Tab[span_28](start_span)[span_28](end_span)[span_29](start_span)[span_29](end_span) -->
+      <!-- 3. စာတန်း Tab -->
       <div id="view-sub" class="view-content">
         <div class="studio-card">
           
-          <!-- Blur Slider[span_30](start_span)[span_30](end_span) -->
+          <!-- Blur Slider -->
           <div class="slider-header">
             <span>Blur <span id="blurNum">0</span></span>
             <div style="display:flex; gap:6px;">
@@ -911,12 +911,12 @@
           </div>
           <input type="range" id="blurRange" min="0" max="40" value="0" oninput="updateBlurVal(this.value)" style="width:100%; margin-bottom:8px;">
 
-          <!-- စာတန်း Preview Box[span_31](start_span)[span_31](end_span) -->
+          <!-- စာတန်း Preview Box -->
           <div class="caption-preview-box">
             <div class="caption-preview-text" id="captionSample">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်</div>
           </div>
 
-          <!-- ဖောင့်ရွေးချယ်မှု[span_32](start_span)[span_32](end_span) -->
+          <!-- ဖောင့်ရွေးချယ်မှု -->
           <label class="input-title">ဖောင့် (Fonts)</label>
           <select id="fontSelect" onchange="updateCapFont(this.value)">
             <option value="'Noto Sans Myanmar', sans-serif">Noto Sans (ရိုးရိုး)</option>
@@ -924,7 +924,7 @@
             <option value="'Pyidaungsu', sans-serif">Pyidaungsu</option>
           </select>
 
-          <!-- စာလုံးအရွယ် (Font Size)[span_33](start_span)[span_33](end_span) -->
+          <!-- စာလုံးအရွယ် (Font Size) -->
           <div class="slider-header">
             <span>စာလုံးအရွယ် (Font Size)</span>
             <span id="fontSizeVal">18px</span>
@@ -935,7 +935,7 @@
             <button class="step-btn" onclick="adjustCapSize(1)">+</button>
           </div>
 
-          <!-- စာလုံး အရောင် Palette အပြည့်အစုံ[span_34](start_span)[span_34](end_span) -->
+          <!-- စာလုံး အရောင် Palette အပြည့်အစုံ -->
           <label class="input-title">စာလုံး အရောင်</label>
           <div class="color-row">
             <div class="color-dot" style="background:#ffffff;" onclick="setCapColor('#ffffff', this)"></div>
@@ -946,7 +946,7 @@
             <div class="color-dot" style="background:#fb923c;" onclick="setCapColor('#fb923c', this)"></div>
           </div>
 
-          <!-- Outline အထူ Stroke[span_35](start_span)[span_35](end_span) -->
+          <!-- Outline အထူ Stroke -->
           <div class="slider-header">
             <span>Outline အထူ (Stroke)</span>
             <span id="strokeVal">3px</span>
@@ -957,7 +957,7 @@
             <button class="step-btn" onclick="adjustStroke(1)">+</button>
           </div>
 
-          <!-- အပေါ်/အောက် နေရာ Position Slider[span_36](start_span)[span_36](end_span) -->
+          <!-- အပေါ်/အောက် နေရာ Position Slider -->
           <div class="slider-header">
             <span>အပေါ်/အောက် နေရာ (Position)</span>
             <span id="posPercentVal">79%</span>
@@ -968,7 +968,7 @@
             <button class="step-btn" onclick="adjustCapPos(1)">+</button>
           </div>
 
-          <!-- စာတန်း အကျယ် Width Slider[span_37](start_span)[span_37](end_span) -->
+          <!-- စာတန်း အကျယ် Width Slider -->
           <div class="slider-header">
             <span>စာတန်း အကျယ် (Width)</span>
             <span id="captionWidthVal">88%</span>
@@ -979,7 +979,7 @@
             <button class="step-btn" onclick="adjustCapWidth(1)">+</button>
           </div>
 
-          <!-- Gemini Translation Input[span_38](start_span)[span_38](end_span) -->
+          <!-- Gemini Translation Input -->
           <label class="input-title" style="margin-top:12px;">SRT စာတန်းထိုးများ Paste ချပါ</label>
           <textarea id="subTextInput" rows="4" placeholder="1
 00:00:01,000 --> 00:00:04,000
@@ -992,7 +992,7 @@
         </div>
       </div>
 
-      <!-- 4. အပို Tab (Caption + Hashtag AI ရေးရန် & #fyp ထည့်ရန်) -->
+      <!-- 4. အပို Tab -->
       <div id="view-extra" class="view-content">
         <div class="studio-card">
           <label class="input-title">Watermark စာသား</label>
@@ -1000,7 +1000,7 @@
 
           <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:14px; margin-top:8px;">
             <label class="input-title" style="color:#0284c7;">🚀 Caption + Hashtag AI ရေးရန်</label>
-            <input type="text" id="hashtagTopicInput" placeholder="ဇာတ်ကားခေါင်းစဉ် သို့မဟုတ် အဓိက စကားလုံး (ဥပမာ- Action, 修仙)...">
+            <input type="text" id="hashtagTopicInput" placeholder="ဇာတ်ကားခေါင်းစဉ် သို့မဟုတ် အဓိက စကားလုံး...">
             
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
               <input type="checkbox" id="chkIncludeFyp" checked style="width:18px; height:18px; accent-color:#0284c7;">
@@ -1008,7 +1008,6 @@
             </div>
 
             <button class="primary-btn" style="background:#0f172a;" onclick="generateAiCaptions()">✨ Auto Caption & Hashtags ရယူမည်</button>
-
             <textarea id="aiCaptionResult" rows="4" style="margin-top:12px; font-size:0.85rem;" placeholder="AI က ရေးပေးသော Caption နှင့် Hashtag များ ဤနေရာတွင် ပေါ်လာပါမည်..."></textarea>
             <button class="secondary-btn" style="padding:8px;" onclick="copyAiCaption()">📋 Caption ကူးယူမည် (Copy)</button>
           </div>
@@ -1022,7 +1021,7 @@
   <canvas id="renderCanvas" style="display:none;"></canvas>
 
   <script>
-    // 1. Navigation
+    // Navigation
     function switchPage(page) {
       document.getElementById('landingSection').style.display = page === 'landing' ? 'block' : 'none';
       document.getElementById('studioSection').style.display = page === 'studio' ? 'flex' : 'none';
@@ -1054,7 +1053,7 @@
       document.getElementById('videoWrapper').classList.toggle('zoomed', enable);
     }
 
-    // 2. Video Handling & Upload
+    // Video Handling & Upload
     const uploadZone = document.getElementById('uploadZone');
     const phoneFileInput = document.getElementById('phoneFileInput');
     const player = document.getElementById('player');
@@ -1114,26 +1113,35 @@
       updateZoom(slider.value);
     }
 
-    // 3. Logo Image / Frame Extraction
-    function captureLogoImage() {
+    // AI Thumbnail / Poster Generator
+    function generateAiThumbnail() {
       if (!player.videoWidth) {
-        alert('ဗီဒီယို အရင်ရွေးချယ်ပြီး ဖွင့်ထားပေးပါခင်ဗျာ');
+        alert('Thumbnail ထုတ်ရန် ဗီဒီယို အရင်ရွေးချယ်ပေးပါခင်ဗျာ');
         return;
       }
       const canvas = document.createElement('canvas');
-      canvas.width = player.videoWidth;
-      canvas.height = player.videoHeight;
+      canvas.width = 1080;
+      canvas.height = 1920;
       const ctx = canvas.getContext('2d');
-      ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(player, 0, 0, 1080, 1920);
+
+      // Add Cinematic Gradient & Title Banner
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      ctx.fillRect(0, 1300, 1080, 620);
+
+      ctx.font = 'bold 64px "Noto Sans Myanmar", sans-serif';
+      ctx.fillStyle = '#fde047';
+      ctx.textAlign = 'center';
+      ctx.fillText(document.getElementById('hashtagTopicInput').value || 'RECAP MOVIE', 540, 1600);
 
       const link = document.createElement('a');
-      link.download = `AH-Logo-Frame-${Date.now()}.png`;
-      link.href = canvas.toDataURL('image/png');
+      link.download = `AH-AI-Thumbnail-${Date.now()}.jpg`;
+      link.href = canvas.toDataURL('image/jpeg', 0.95);
       link.click();
-      alert('လက်ရှိ ဖရိန်မှ Logo / Poster ပုံရိပ် အောင်မြင်စွာ ဒေါင်းလုဒ်ဆွဲပြီးပါပြီခင်ဗျာ!');
+      alert('AI Thumbnail Poster အောင်မြင်စွာ ထုတ်ယူဒေါင်းလုဒ်ဆွဲပြီးပါပြီခင်ဗျာ!');
     }
 
-    // 4. Voice Version & Preview Controllers (ပုံစံအတိအကျ)
+    // Voice Version & Preview Controllers
     let currentVName = 'Version 3';
     let currentVType = 'Warm';
 
@@ -1174,15 +1182,13 @@
       }
     }
 
-    // 5. Caption & Hashtag AI System & #fyp
+    // Caption & Hashtag AI System
     function generateAiCaptions() {
       const topic = document.getElementById('hashtagTopicInput').value.trim() || 'ဇာတ်ကားအညွှန်း';
       const hasFyp = document.getElementById('chkIncludeFyp').checked;
 
       let result = `🎬 ${topic} အစအဆုံး စိတ်ဝင်စားဖွယ် Movie Recap ကို ကြည့်ရှုခံစားလိုက်ပါ! \n\n#AHRecap #MovieRecap #MovieReview #ဇာတ်ကားအညွှန်း #${topic.replace(/\s+/g, '')}`;
-      if (hasFyp) {
-        result += ` #fyp #foryou #viral #trending`;
-      }
+      if (hasFyp) result += ` #fyp #foryou #viral #trending`;
 
       document.getElementById('aiCaptionResult').value = result;
       alert('Caption နှင့် Hashtags များ အောင်မြင်စွာ ထုတ်ယူပြီးပါပြီခင်ဗျာ!');
@@ -1195,13 +1201,12 @@
       alert('Caption အားလုံးကို Clipboard ပေါ်သို့ Copy ကူးပြီးပါပြီခင်ဗျာ!');
     }
 
-    // 6. Subtitle Styling Controllers
+    // Subtitle Controls
     function updateBlurVal(val) {
       document.getElementById('blurNum').innerText = val;
       const mask = document.getElementById('videoBlurMask');
-      if (val == 0) {
-        mask.style.display = 'none';
-      } else {
+      if (val == 0) mask.style.display = 'none';
+      else {
         mask.style.display = 'block';
         mask.style.height = val + '%';
         mask.style.bottom = '0px';
@@ -1274,7 +1279,7 @@
       updateCapWidth(slider.value);
     }
 
-    // 7. Audio-Video Synchronization Engine
+    // Audio-Video Synchronization Engine
     player.onplay = () => { if (syncedAudio.src) syncedAudio.play(); };
     player.onpause = () => { if (syncedAudio.src) syncedAudio.pause(); };
     player.onseeked = () => { if (syncedAudio.src) syncedAudio.currentTime = player.currentTime; };
@@ -1290,7 +1295,7 @@
       }
     }
 
-    // 8. Gemini Subtitle Translation & SRT Download
+    // Gemini Translation & SRT
     async function runGeminiTranslate() {
       const rawText = document.getElementById('subTextInput').value.trim();
       if (!rawText) return alert('ဘာသာပြန်ရန် စာတန်းထိုးများကို အရင်ထည့်သွင်းပါ');
@@ -1313,7 +1318,7 @@
       a.click();
     }
 
-    // 9. Integrated Audio + Subtitle + Video Canvas Exporter
+    // In-Browser MediaStream Video Exporter (Web-Only Auto Sync)
     async function exportIntegratedVideo() {
       if (!player.src) return alert('Export လုပ်ရန်အတွက် ဗီဒီယိုဖိုင် အရင်ရွေးချယ်ပေးပါခင်ဗျာ');
 
@@ -1390,13 +1395,11 @@
         }
         ctx.restore();
 
-        // Render Blur
         if (blurHPercent > 0) {
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           ctx.fillRect(0, targetH * (1 - blurHPercent), targetW, targetH * blurHPercent);
         }
 
-        // Render Subtitles
         if (subText.trim()) {
           ctx.font = 'bold 32px "Noto Sans Myanmar", sans-serif';
           ctx.textAlign = 'center';
