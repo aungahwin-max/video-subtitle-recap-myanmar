@@ -341,6 +341,7 @@
       position: relative;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
       margin-top: 10px;
+      user-select: none;
     }
     .video-viewport.mirrored video { transform: scaleX(-1); }
     .video-viewport.zoomed video { transform: scale(1.08); }
@@ -357,18 +358,25 @@
       display: none;
       z-index: 5;
     }
+
+    /* Draggable Subtitle Element */
     .video-subtitle-overlay {
       position: absolute;
-      left: 10%; width: 80%;
+      left: 10%;
+      top: 79%;
+      width: 80%;
       text-align: center;
-      padding: 4px 12px;
+      padding: 4px 8px;
       color: #fde047;
       font-size: 18px;
       font-weight: 700;
-      z-index: 10;
-      pointer-events: none;
+      z-index: 20;
       text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
       line-height: 1.3;
+      cursor: move;
+      touch-action: none;
+      border: 1px dashed rgba(255,255,255,0.4);
+      border-radius: 6px;
     }
     .video-watermark-overlay {
       position: absolute;
@@ -437,7 +445,7 @@
       color: #ffffff;
     }
 
-    /* Voice Version Dark Box */
+    /* Voice Version Box */
     .voice-version-box {
       background: #0b1120;
       border: 1px solid #1e293b;
@@ -753,7 +761,9 @@
         <video id="player" controls playsinline></video>
         <audio id="syncedAudio" style="display:none;"></audio>
         <div class="video-blur-mask" id="videoBlurMask"></div>
-        <div class="video-subtitle-overlay" id="videoSubOverlay">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ်</div>
+        
+        <!-- Draggable Subtitle Box (စိတ်ကြိုက်နေရာရွှေ့နိုင်သည့် စာတန်း) -->
+        <div class="video-subtitle-overlay" id="videoSubOverlay">ဒီနေရာမှာ စာတန်းထိုး ပေါ်မယ် (လက်ဖြင့်ဖိဆွဲပါ)</div>
         <div class="video-watermark-overlay" id="videoWatermarkOverlay">Aung Ahwin Max</div>
       </div>
 
@@ -822,12 +832,12 @@
             <option value="4k">4K Ultra HD</option>
           </select>
 
-          <!-- Fast Browser Video & Audio Auto-Sync Render -->
+          <!-- Video + Audio Auto-Sync Render Button -->
           <button class="primary-btn" style="background:#16a34a; margin-top:10px;" onclick="exportIntegratedVideo()">🎬 Video + အသံ Auto-Sync Render ထုတ်ယူမည် (.mp4)</button>
           <div id="exportStatusText" style="font-size:0.8rem; color:#0284c7; text-align:center; margin-top:6px; font-weight:700;"></div>
 
-          <!-- AI Thumbnail / Poster Frame ထုတ်ယူခြင်း -->
-          <button class="secondary-btn" style="margin-top:8px; background:#4f46e5;" onclick="generateAiThumbnail()">🎨 AI Thumbnail / Poster ပုံ ထုတ်မည်</button>
+          <!-- Thumbnail AI Poster Frame ထုတ်ယူခြင်း -->
+          <button class="secondary-btn" style="margin-top:8px; background:#4f46e5;" onclick="generateAiThumbnail()">🎨 Thumbnail AI ဖြင့် Cinematic Poster ပုံထုတ်မည်</button>
         </div>
       </div>
 
@@ -835,7 +845,7 @@
       <div id="view-audio" class="view-content">
         <div class="studio-card">
           
-          <!-- Voice Version Box (ပုံစံအတိအကျ) -->
+          <!-- Voice Version Box -->
           <div class="voice-version-box">
             <span class="title-label">VOICE VERSION</span>
             <div class="voice-version-group">
@@ -957,7 +967,7 @@
             <button class="step-btn" onclick="adjustStroke(1)">+</button>
           </div>
 
-          <!-- အပေါ်/အောက် နေရာ Position Slider -->
+          <!-- အပေါ်/အောက် နေရာ Position Slider (Draggable ဖြင့်လည်း တွဲဖက်ချိန်နိုင်သည်) -->
           <div class="slider-header">
             <span>အပေါ်/အောက် နေရာ (Position)</span>
             <span id="posPercentVal">79%</span>
@@ -1059,6 +1069,7 @@
     const player = document.getElementById('player');
     const syncedAudio = document.getElementById('syncedAudio');
     const videoWrapper = document.getElementById('videoWrapper');
+    const subOverlay = document.getElementById('videoSubOverlay');
 
     uploadZone.onclick = () => phoneFileInput.click();
 
@@ -1113,7 +1124,62 @@
       updateZoom(slider.value);
     }
 
-    // AI Thumbnail / Poster Generator
+    // ----------------------------------------------------------------
+    // 1. စာတန်းကို Video ပေါ်တွင် လက်ဖြင့် လွတ်လပ်စွာ ဆွဲရွှေ့နိုင်သည့်စနစ် (Draggable)
+    // ----------------------------------------------------------------
+    let isDragging = false;
+    let startX, startY;
+    let subPercentLeft = 10;
+    let subPercentTop = 79;
+
+    function onDragStart(e) {
+      isDragging = true;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      startX = clientX - subOverlay.offsetLeft;
+      startY = clientY - subOverlay.offsetTop;
+    }
+
+    function onDragMove(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      const rect = videoWrapper.getBoundingClientRect();
+      let newLeft = clientX - startX;
+      let newTop = clientY - startY;
+
+      // Limit boundaries within video container
+      newLeft = Math.max(0, Math.min(newLeft, rect.width - subOverlay.offsetWidth));
+      newTop = Math.max(0, Math.min(newTop, rect.height - subOverlay.offsetHeight));
+
+      subPercentLeft = (newLeft / rect.width) * 100;
+      subPercentTop = (newTop / rect.height) * 100;
+
+      subOverlay.style.left = subPercentLeft + '%';
+      subOverlay.style.top = subPercentTop + '%';
+
+      // Update position slider
+      document.getElementById('posSlider').value = Math.round(subPercentTop);
+      document.getElementById('posPercentVal').innerText = Math.round(subPercentTop) + '%';
+    }
+
+    function onDragEnd() {
+      isDragging = false;
+    }
+
+    subOverlay.addEventListener('mousedown', onDragStart);
+    window.addEventListener('mousemove', onDragMove);
+    window.addEventListener('mouseup', onDragEnd);
+
+    subOverlay.addEventListener('touchstart', onDragStart, { passive: false });
+    window.addEventListener('touchmove', onDragMove, { passive: false });
+    window.addEventListener('touchend', onDragEnd);
+
+    // ----------------------------------------------------------------
+    // 2. Thumbnail AI ဖြင့် Cinematic Poster ပုံထုတ်သည့် စနစ်
+    // ----------------------------------------------------------------
     function generateAiThumbnail() {
       if (!player.videoWidth) {
         alert('Thumbnail ထုတ်ရန် ဗီဒီယို အရင်ရွေးချယ်ပေးပါခင်ဗျာ');
@@ -1123,22 +1189,44 @@
       canvas.width = 1080;
       canvas.height = 1920;
       const ctx = canvas.getContext('2d');
+
+      // Draw high resolution frame
       ctx.drawImage(player, 0, 0, 1080, 1920);
 
-      // Add Cinematic Gradient & Title Banner
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
-      ctx.fillRect(0, 1300, 1080, 620);
+      // AI Cinematic Vignette & Bottom Poster Gradient
+      const grad = ctx.createLinearGradient(0, 1000, 0, 1920);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(0.3, 'rgba(15, 23, 42, 0.7)');
+      grad.addColorStop(1, 'rgba(2, 6, 23, 0.98)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 1000, 1080, 920);
 
-      ctx.font = 'bold 64px "Noto Sans Myanmar", sans-serif';
-      ctx.fillStyle = '#fde047';
+      // Draw Header Tag
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 36px "Noto Sans Myanmar", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(document.getElementById('hashtagTopicInput').value || 'RECAP MOVIE', 540, 1600);
+      ctx.fillText('⚡ AI RECAP HIGHLIGHT', 540, 1420);
+
+      // Draw Movie Title Poster
+      const topic = document.getElementById('hashtagTopicInput').value.trim() || 'ဇာတ်ကားအညွှန်း';
+      ctx.fillStyle = '#fde047';
+      ctx.font = 'bold 68px "Noto Sans Myanmar", sans-serif';
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+      ctx.shadowOffsetX = 4;
+      ctx.shadowOffsetY = 4;
+      ctx.shadowBlur = 10;
+      ctx.fillText(topic, 540, 1530);
+
+      // Watermark
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 34px "Noto Sans Myanmar", sans-serif';
+      ctx.fillText('Aung Ahwin Max · 1080p Ultra HD', 540, 1680);
 
       const link = document.createElement('a');
-      link.download = `AH-AI-Thumbnail-${Date.now()}.jpg`;
-      link.href = canvas.toDataURL('image/jpeg', 0.95);
+      link.download = `AH-Thumbnail-AI-${Date.now()}.jpg`;
+      link.href = canvas.toDataURL('image/jpeg', 0.96);
       link.click();
-      alert('AI Thumbnail Poster အောင်မြင်စွာ ထုတ်ယူဒေါင်းလုဒ်ဆွဲပြီးပါပြီခင်ဗျာ!');
+      alert('Thumbnail AI ဖြင့် Cinematic Poster အောင်မြင်စွာ ထုတ်ယူပြီးပါပြီခင်ဗျာ!');
     }
 
     // Voice Version & Preview Controllers
@@ -1257,6 +1345,7 @@
     }
 
     function updateCapPosition(val) {
+      subPercentTop = parseFloat(val);
       document.getElementById('posPercentVal').innerText = val + '%';
       document.getElementById('videoSubOverlay').style.top = val + '%';
     }
@@ -1270,7 +1359,8 @@
     function updateCapWidth(val) {
       document.getElementById('captionWidthVal').innerText = val + '%';
       document.getElementById('videoSubOverlay').style.width = val + '%';
-      document.getElementById('videoSubOverlay').style.left = ((100 - val) / 2) + '%';
+      subPercentLeft = (100 - val) / 2;
+      document.getElementById('videoSubOverlay').style.left = subPercentLeft + '%';
     }
 
     function adjustCapWidth(delta) {
@@ -1279,17 +1369,58 @@
       updateCapWidth(slider.value);
     }
 
-    // Audio-Video Synchronization Engine
+    // ----------------------------------------------------------------
+    // 3. Web Audio API & MediaRecorder Auto-Sync Engine (အသံနှင့် ဗီဒီယို အစစ်အမှန်ချိတ်ဆက်မှု)
+    // ----------------------------------------------------------------
+    let parsedSRT = [];
+
+    // Parse SRT timestamps to seconds for Auto-Sync
+    function parseSRTtoTimeline(text) {
+      parsedSRT = [];
+      const regex = /(\d+)\s+(\d{2}:\d{2}:\d{2}[,\.]\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}[,\.]\d{3})\s+([\s\S]*?)(?=\n\s*\n|\s*$)/g;
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        const startSec = timeToSeconds(match[2]);
+        const endSec = timeToSeconds(match[3]);
+        const sub = match[4].trim();
+        parsedSRT.push({ start: startSec, end: endSec, text: sub });
+      }
+    }
+
+    function timeToSeconds(t) {
+      const parts = t.replace(',', '.').split(':');
+      return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+    }
+
+    // Auto-update subtitle text based on exact video playback time
+    player.ontimeupdate = () => {
+      const cur = player.currentTime;
+      if (parsedSRT.length > 0) {
+        const active = parsedSRT.find(item => cur >= item.start && cur <= item.end);
+        if (active) {
+          subOverlay.innerText = active.text;
+        }
+      }
+      // Audio sync safeguard
+      if (syncedAudio.src && !syncedAudio.paused) {
+        if (Math.abs(syncedAudio.currentTime - cur) > 0.3) {
+          syncedAudio.currentTime = cur;
+        }
+      }
+    };
+
     player.onplay = () => { if (syncedAudio.src) syncedAudio.play(); };
     player.onpause = () => { if (syncedAudio.src) syncedAudio.pause(); };
-    player.onseeked = () => { if (syncedAudio.src) syncedAudio.currentTime = player.currentTime; };
+    player.onseeked = () => {
+      if (syncedAudio.src) syncedAudio.currentTime = player.currentTime;
+    };
 
     function syncCustomAudio() {
       const audioInput = document.getElementById('voiceAudioInput');
       if (audioInput.files && audioInput.files[0]) {
         syncedAudio.src = URL.createObjectURL(audioInput.files[0]);
         syncedAudio.currentTime = player.currentTime;
-        alert('Voicertool အသံဖိုင်ကို ဗီဒီယိုနှင့် ချိတ်ဆက်ပြီးပါပြီ! Video ဖွင့်သည့်အခါ အသံပါ တပြိုင်နက်တည်း ထွက်လာပါမည်ခင်ဗျာ။');
+        alert('Voicertool အသံဖိုင်ကို ဗီဒီယိုနှင့် အောင်မြင်စွာ ချိတ်ဆက်ပြီးပါပြီ! Timeline အလိုက် အသံနှင့် စာတန်းထိုး တပြိုင်နက် Auto-Sync ဖြစ်ပါမည်ခင်ဗျာ။');
       } else {
         alert('ချိတ်ဆက်ရန် အသံဖိုင် (Audio file) အရင် ရွေးချယ်ပေးပါခင်ဗျာ');
       }
@@ -1301,6 +1432,8 @@
       if (!rawText) return alert('ဘာသာပြန်ရန် စာတန်းထိုးများကို အရင်ထည့်သွင်းပါ');
 
       alert('Gemini မှ မြန်မာဘာသာသို့ အလိုအလျောက် ပြန်ဆိုပေးနေပါသည်...');
+      parseSRTtoTimeline(rawText);
+
       const lines = rawText.split('\n').filter(l => l.trim() && !l.match(/^\d+$/) && !l.includes('-->'));
       if (lines.length > 0) {
         document.getElementById('captionSample').innerText = lines[0];
@@ -1318,12 +1451,12 @@
       a.click();
     }
 
-    // In-Browser MediaStream Video Exporter (Web-Only Auto Sync)
+    // In-Browser MediaStream Video Exporter with Exact Dragged Subtitle Coordinates
     async function exportIntegratedVideo() {
       if (!player.src) return alert('Export လုပ်ရန်အတွက် ဗီဒီယိုဖိုင် အရင်ရွေးချယ်ပေးပါခင်ဗျာ');
 
       const status = document.getElementById('exportStatusText');
-      status.innerText = 'ဗီဒီယို၊ မြန်မာစာတန်းနှင့် အသံဖိုင်တို့အား ပေါင်းစပ်ဖမ်းယူနေပါသည်... ခဏစောင့်ပါ...';
+      status.innerText = 'ဗီဒီယို၊ မြန်မာစာတန်းနှင့် အသံဖိုင်တို့အား Auto-Sync ပေါင်းစပ်ဖမ်းယူနေပါသည်... ခဏစောင့်ပါ...';
 
       const canvas = document.getElementById('renderCanvas');
       const ctx = canvas.getContext('2d');
@@ -1336,6 +1469,7 @@
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const dest = audioCtx.createMediaStreamDestination();
 
+      // Web Audio API Audio Routing
       if (syncedAudio.src) {
         const audioSource = audioCtx.createMediaElementSource(syncedAudio);
         audioSource.connect(dest);
@@ -1360,9 +1494,9 @@
         const blob = new Blob(chunks, { type: 'video/webm' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `AH-Recap-Video-${Date.now()}.mp4`;
+        a.download = `AH-Recap-AutoSync-${Date.now()}.mp4`;
         a.click();
-        status.innerText = 'ဗီဒီယို၊ မြန်မာစာတန်းနှင့် အသံတို့ ပေါင်းစပ်ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!';
+        status.innerText = 'ဗီဒီယို၊ မြန်မာစာတန်းနှင့် အသံတို့ Auto-Sync ဖြင့် အောင်မြင်စွာ ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!';
         alert('ဗီဒီယိုဖိုင် အောင်မြင်စွာ ထုတ်ယူပြီးပါပြီခင်ဗျာ!');
       };
 
@@ -1374,7 +1508,6 @@
       const isMirrored = videoWrapper.classList.contains('mirrored');
       const isZoomed = videoWrapper.classList.contains('zoomed');
       const blurHPercent = parseFloat(document.getElementById('blurRange').value) / 100;
-      const subText = document.getElementById('videoSubOverlay').innerText;
       const subColor = document.getElementById('videoSubOverlay').style.color || '#fde047';
 
       function renderLoop() {
@@ -1395,20 +1528,27 @@
         }
         ctx.restore();
 
+        // Render Blur
         if (blurHPercent > 0) {
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           ctx.fillRect(0, targetH * (1 - blurHPercent), targetW, targetH * blurHPercent);
         }
 
-        if (subText.trim()) {
+        // Render Draggable Subtitle at exact dragged position
+        const currentText = subOverlay.innerText;
+        if (currentText.trim()) {
           ctx.font = 'bold 32px "Noto Sans Myanmar", sans-serif';
           ctx.textAlign = 'center';
           ctx.fillStyle = subColor;
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = 6;
-          const yPos = targetH * (parseFloat(document.getElementById('posSlider').value) / 100);
-          ctx.strokeText(subText, targetW / 2, yPos);
-          ctx.fillText(subText, targetW / 2, yPos);
+
+          // Calculate exact X and Y based on user drag percentage
+          const targetX = targetW * ((subPercentLeft + (parseFloat(document.getElementById('captionWidthSlider').value) / 2)) / 100);
+          const targetY = targetH * (subPercentTop / 100) + 24;
+
+          ctx.strokeText(currentText, targetX, targetY);
+          ctx.fillText(currentText, targetX, targetY);
         }
 
         requestAnimationFrame(renderLoop);
